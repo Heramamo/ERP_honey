@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres_erp
+
+    restart: always
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: erp_honey
+
+    ports:
+      - "5433:5433"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+
+    container_name: backend_erp
+
+    restart: always
+
+    depends_on:
+      - postgres
+
+    env_file:
+      - ./backend/.env
+
+    ports:
+      - "3001:3000"
+      - "5556:5555"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+    command: npm run start:dev
+
+  frontend:
+    build: ./frontend
+
+    container_name: frontend-erp
+
+    restart: always
+
+    depends_on:
+      - backend
+
+    env_file:
+      - ./frontend/.env
+
+    ports:
+      - "5174:5173"
+
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+    command: npm run dev -- --host
+
+volumes:
+  postgres_data:

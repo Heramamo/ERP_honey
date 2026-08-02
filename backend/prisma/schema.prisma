@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  moduleFormat    = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ProjectStatus {
+  Pending
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
+enum TaskStatus {
+  Pending
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  first_name String
+  last_name  String
+  email      String   @unique
+  password   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  projects Project[]
+   memberships ProjectMember[]
+   assignments TaskAssignment[]
+}
+
+model Project {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String?
+  status      ProjectStatus @default(IN_PROGRESS)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  ownerId Int
+  owner   User   @relation(fields: [ownerId], references: [id])
+  task    Task[]
+  memberships ProjectMember[]
+}
+
+model Task {
+  id         Int        @id @default(autoincrement())
+  title      String
+  decription String?
+  status     TaskStatus
+  dueDate    DateTime?
+
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+  assignments TaskAssignment[]
+}
+
+model ProjectMember {
+  id Int @id @default(autoincrement())
+  projectId Int
+  userId Int
+  role String
+
+  project Project @relation(fields: [projectId],references: [id])
+  user User @relation(fields: [userId], references: [id])
+}
+
+model TaskAssignment{
+  id Int @id @default(autoincrement())
+  taskId Int
+  UserId Int
+  assignedAt DateTime @default(now())
+
+  task Task @relation(fields: [taskId], references: [id])
+  user User @relation(fields: [UserId], references: [id])
+}
