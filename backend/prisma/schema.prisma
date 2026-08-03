@@ -13,82 +13,79 @@ datasource db {
   provider = "postgresql"
 }
 
-enum ProjectStatus {
-  Pending
-  IN_PROGRESS
-  COMPLETED
-  CANCELED
+model Enseignant{
+  id          Int      @id @default(autoincrement())
+  nom         String
+  prenom      String
+  email       String   @unique
+  tauxHoraireBase  Float
+  statut      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  feuilleDeTemps FeuilleDeTemps[]
+  paie Paie[]
 }
 
-enum TaskStatus {
-  Pending
-  IN_PROGRESS
-  COMPLETED
-  CANCELED
+model FeuilleDeTemps{
+  id          Int      @id @default(autoincrement())
+  enseignantId Int
+  date        DateTime
+  heuresEffectuees Float
+  heuresSupp Float
+  typeActivite String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  enseignant Enseignant @relation(fields: [enseignantId], references: [id])
 }
 
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
+model Paie{
+  id          Int      @id @default(autoincrement())
+  enseignantId Int
+  totalSalaire Float
+  statutpaie String
+  date        DateTime
+  mois        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  enseignant Enseignant @relation(fields: [enseignantId], references: [id])
 }
 
-model User {
-  id         Int      @id @default(autoincrement())
-  first_name String
-  last_name  String
-  email      String   @unique
-  password   String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Pole{
+  id          Int      @id @default(autoincrement())
+  nom         String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  projects Project[]
-   memberships ProjectMember[]
-   assignments TaskAssignment[]
+  charges Charge[]
+  revenus Revenu[]
 }
 
-model Project {
-  id          Int           @id @default(autoincrement())
-  name        String
-  description String?
-  status      ProjectStatus @default(IN_PROGRESS)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-
-  ownerId Int
-  owner   User   @relation(fields: [ownerId], references: [id])
-  task    Task[]
-  memberships ProjectMember[]
+model Charge{
+  id          Int      @id @default(autoincrement())
+  libelle     String
+  montant     Float
+  date        DateTime
+  typeCharge  String
+  idPole      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  pole Pole @relation(fields: [idPole], references: [id])
 }
 
-model Task {
-  id         Int        @id @default(autoincrement())
-  title      String
-  decription String?
-  status     TaskStatus
-  dueDate    DateTime?
+model Revenu{
+  id          Int      @id @default(autoincrement())
+  libelle     String
+  montant     Float
+  date        DateTime
+  typeRevenu  String
+  idPole      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  projectId Int
-  project   Project @relation(fields: [projectId], references: [id])
-  assignments TaskAssignment[]
-}
-
-model ProjectMember {
-  id Int @id @default(autoincrement())
-  projectId Int
-  userId Int
-  role String
-
-  project Project @relation(fields: [projectId],references: [id])
-  user User @relation(fields: [userId], references: [id])
-}
-
-model TaskAssignment{
-  id Int @id @default(autoincrement())
-  taskId Int
-  UserId Int
-  assignedAt DateTime @default(now())
-
-  task Task @relation(fields: [taskId], references: [id])
-  user User @relation(fields: [UserId], references: [id])
+  pole Pole @relation(fields: [idPole], references: [id])
 }
