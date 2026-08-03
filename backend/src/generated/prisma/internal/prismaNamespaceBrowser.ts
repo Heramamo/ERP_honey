@@ -51,11 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User',
-  Project: 'Project',
-  Task: 'Task',
-  ProjectMember: 'ProjectMember',
-  TaskAssignment: 'TaskAssignment'
+  Enseignant: 'Enseignant',
+  FeuilleDeTemps: 'FeuilleDeTemps',
+  Paie: 'Paie',
+  Pole: 'Pole',
+  Charge: 'Charge',
+  Revenu: 'Revenu'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -74,62 +75,85 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const UserScalarFieldEnum = {
+export const EnseignantScalarFieldEnum = {
   id: 'id',
-  first_name: 'first_name',
-  last_name: 'last_name',
+  nom: 'nom',
+  prenom: 'prenom',
   email: 'email',
-  password: 'password',
+  tauxHoraireBase: 'tauxHoraireBase',
+  statut: 'statut',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type EnseignantScalarFieldEnum = (typeof EnseignantScalarFieldEnum)[keyof typeof EnseignantScalarFieldEnum]
 
 
-export const ProjectScalarFieldEnum = {
+export const FeuilleDeTempsScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  description: 'description',
-  status: 'status',
+  enseignantId: 'enseignantId',
+  date: 'date',
+  heuresEffectuees: 'heuresEffectuees',
+  heuresSupp: 'heuresSupp',
+  typeActivite: 'typeActivite',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  ownerId: 'ownerId'
+  updatedAt: 'updatedAt'
 } as const
 
-export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+export type FeuilleDeTempsScalarFieldEnum = (typeof FeuilleDeTempsScalarFieldEnum)[keyof typeof FeuilleDeTempsScalarFieldEnum]
 
 
-export const TaskScalarFieldEnum = {
+export const PaieScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  decription: 'decription',
-  status: 'status',
-  dueDate: 'dueDate',
-  projectId: 'projectId'
+  enseignantId: 'enseignantId',
+  totalSalaire: 'totalSalaire',
+  statutpaie: 'statutpaie',
+  date: 'date',
+  mois: 'mois',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+export type PaieScalarFieldEnum = (typeof PaieScalarFieldEnum)[keyof typeof PaieScalarFieldEnum]
 
 
-export const ProjectMemberScalarFieldEnum = {
+export const PoleScalarFieldEnum = {
   id: 'id',
-  projectId: 'projectId',
-  userId: 'userId',
-  role: 'role'
+  nom: 'nom',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type ProjectMemberScalarFieldEnum = (typeof ProjectMemberScalarFieldEnum)[keyof typeof ProjectMemberScalarFieldEnum]
+export type PoleScalarFieldEnum = (typeof PoleScalarFieldEnum)[keyof typeof PoleScalarFieldEnum]
 
 
-export const TaskAssignmentScalarFieldEnum = {
+export const ChargeScalarFieldEnum = {
   id: 'id',
-  taskId: 'taskId',
-  UserId: 'UserId',
-  assignedAt: 'assignedAt'
+  libelle: 'libelle',
+  montant: 'montant',
+  date: 'date',
+  typeCharge: 'typeCharge',
+  idPole: 'idPole',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type TaskAssignmentScalarFieldEnum = (typeof TaskAssignmentScalarFieldEnum)[keyof typeof TaskAssignmentScalarFieldEnum]
+export type ChargeScalarFieldEnum = (typeof ChargeScalarFieldEnum)[keyof typeof ChargeScalarFieldEnum]
+
+
+export const RevenuScalarFieldEnum = {
+  id: 'id',
+  libelle: 'libelle',
+  montant: 'montant',
+  date: 'date',
+  typeRevenu: 'typeRevenu',
+  idPole: 'idPole',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RevenuScalarFieldEnum = (typeof RevenuScalarFieldEnum)[keyof typeof RevenuScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -146,12 +170,4 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

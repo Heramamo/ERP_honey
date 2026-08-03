@@ -8,9 +8,10 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User.js'
-export type * from './models/Project.js'
-export type * from './models/Task.js'
-export type * from './models/ProjectMember.js'
-export type * from './models/TaskAssignment.js'
+export type * from './models/Enseignant.js'
+export type * from './models/FeuilleDeTemps.js'
+export type * from './models/Paie.js'
+export type * from './models/Pole.js'
+export type * from './models/Charge.js'
+export type * from './models/Revenu.js'
 export type * from './commonInputTypes.js'
