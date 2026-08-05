@@ -33,7 +33,7 @@ services:
 
     ports:
       - "3001:3000"
-      - "5556:5555"
+      - "5557:5557"
     volumes:
       - ./backend:/app
       - /app/node_modules

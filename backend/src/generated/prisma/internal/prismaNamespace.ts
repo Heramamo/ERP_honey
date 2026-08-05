@@ -397,6 +397,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  Utilisateur: 'Utilisateur',
   Enseignant: 'Enseignant',
   FeuilleDeTemps: 'FeuilleDeTemps',
   Paie: 'Paie',
@@ -418,10 +419,84 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "enseignant" | "feuilleDeTemps" | "paie" | "pole" | "charge" | "revenu"
+    modelProps: "utilisateur" | "enseignant" | "feuilleDeTemps" | "paie" | "pole" | "charge" | "revenu"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    Utilisateur: {
+      payload: Prisma.$UtilisateurPayload<ExtArgs>
+      fields: Prisma.UtilisateurFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UtilisateurFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UtilisateurFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload>
+        }
+        findFirst: {
+          args: Prisma.UtilisateurFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UtilisateurFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload>
+        }
+        findMany: {
+          args: Prisma.UtilisateurFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload>[]
+        }
+        create: {
+          args: Prisma.UtilisateurCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload>
+        }
+        createMany: {
+          args: Prisma.UtilisateurCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UtilisateurCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload>[]
+        }
+        delete: {
+          args: Prisma.UtilisateurDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload>
+        }
+        update: {
+          args: Prisma.UtilisateurUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload>
+        }
+        deleteMany: {
+          args: Prisma.UtilisateurDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UtilisateurUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UtilisateurUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload>[]
+        }
+        upsert: {
+          args: Prisma.UtilisateurUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UtilisateurPayload>
+        }
+        aggregate: {
+          args: Prisma.UtilisateurAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUtilisateur>
+        }
+        groupBy: {
+          args: Prisma.UtilisateurGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UtilisateurGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UtilisateurCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UtilisateurCountAggregateOutputType> | number
+        }
+      }
+    }
     Enseignant: {
       payload: Prisma.$EnseignantPayload<ExtArgs>
       fields: Prisma.EnseignantFieldRefs
@@ -905,6 +980,20 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const UtilisateurScalarFieldEnum = {
+  id_utilisateur: 'id_utilisateur',
+  email: 'email',
+  mot_de_passe: 'mot_de_passe',
+  nom: 'nom',
+  prenom: 'prenom',
+  role: 'role',
+  date_creation: 'date_creation',
+  id_enseignant: 'id_enseignant'
+} as const
+
+export type UtilisateurScalarFieldEnum = (typeof UtilisateurScalarFieldEnum)[keyof typeof UtilisateurScalarFieldEnum]
+
+
 export const EnseignantScalarFieldEnum = {
   id: 'id',
   nom: 'nom',
@@ -1002,6 +1091,14 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 
 /**
  * Field references
@@ -1037,16 +1134,16 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'Float'
+ * Reference to a field of type 'Role'
  */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
     
 
 
 /**
- * Reference to a field of type 'Float[]'
+ * Reference to a field of type 'Role[]'
  */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
     
 
 
@@ -1061,6 +1158,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1214,6 +1325,7 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
  */
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
+  utilisateur?: Prisma.UtilisateurOmit
   enseignant?: Prisma.EnseignantOmit
   feuilleDeTemps?: Prisma.FeuilleDeTempsOmit
   paie?: Prisma.PaieOmit

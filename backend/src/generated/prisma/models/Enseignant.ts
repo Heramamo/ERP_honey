@@ -244,6 +244,7 @@ export type EnseignantWhereInput = {
   statut?: Prisma.StringFilter<"Enseignant"> | string
   createdAt?: Prisma.DateTimeFilter<"Enseignant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Enseignant"> | Date | string
+  utilisateur?: Prisma.XOR<Prisma.UtilisateurNullableScalarRelationFilter, Prisma.UtilisateurWhereInput> | null
   feuilleDeTemps?: Prisma.FeuilleDeTempsListRelationFilter
   paie?: Prisma.PaieListRelationFilter
 }
@@ -257,6 +258,7 @@ export type EnseignantOrderByWithRelationInput = {
   statut?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  utilisateur?: Prisma.UtilisateurOrderByWithRelationInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsOrderByRelationAggregateInput
   paie?: Prisma.PaieOrderByRelationAggregateInput
 }
@@ -273,6 +275,7 @@ export type EnseignantWhereUniqueInput = Prisma.AtLeast<{
   statut?: Prisma.StringFilter<"Enseignant"> | string
   createdAt?: Prisma.DateTimeFilter<"Enseignant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Enseignant"> | Date | string
+  utilisateur?: Prisma.XOR<Prisma.UtilisateurNullableScalarRelationFilter, Prisma.UtilisateurWhereInput> | null
   feuilleDeTemps?: Prisma.FeuilleDeTempsListRelationFilter
   paie?: Prisma.PaieListRelationFilter
 }, "id" | "email">
@@ -315,6 +318,7 @@ export type EnseignantCreateInput = {
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  utilisateur?: Prisma.UtilisateurCreateNestedOneWithoutEnseignantInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsCreateNestedManyWithoutEnseignantInput
   paie?: Prisma.PaieCreateNestedManyWithoutEnseignantInput
 }
@@ -328,6 +332,7 @@ export type EnseignantUncheckedCreateInput = {
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  utilisateur?: Prisma.UtilisateurUncheckedCreateNestedOneWithoutEnseignantInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedCreateNestedManyWithoutEnseignantInput
   paie?: Prisma.PaieUncheckedCreateNestedManyWithoutEnseignantInput
 }
@@ -340,6 +345,7 @@ export type EnseignantUpdateInput = {
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  utilisateur?: Prisma.UtilisateurUpdateOneWithoutEnseignantNestedInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsUpdateManyWithoutEnseignantNestedInput
   paie?: Prisma.PaieUpdateManyWithoutEnseignantNestedInput
 }
@@ -353,6 +359,7 @@ export type EnseignantUncheckedUpdateInput = {
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  utilisateur?: Prisma.UtilisateurUncheckedUpdateOneWithoutEnseignantNestedInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedUpdateManyWithoutEnseignantNestedInput
   paie?: Prisma.PaieUncheckedUpdateManyWithoutEnseignantNestedInput
 }
@@ -387,6 +394,11 @@ export type EnseignantUncheckedUpdateManyInput = {
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type EnseignantNullableScalarRelationFilter = {
+  is?: Prisma.EnseignantWhereInput | null
+  isNot?: Prisma.EnseignantWhereInput | null
 }
 
 export type EnseignantCountOrderByAggregateInput = {
@@ -437,23 +449,23 @@ export type EnseignantScalarRelationFilter = {
   isNot?: Prisma.EnseignantWhereInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type EnseignantCreateNestedOneWithoutUtilisateurInput = {
+  create?: Prisma.XOR<Prisma.EnseignantCreateWithoutUtilisateurInput, Prisma.EnseignantUncheckedCreateWithoutUtilisateurInput>
+  connectOrCreate?: Prisma.EnseignantCreateOrConnectWithoutUtilisateurInput
+  connect?: Prisma.EnseignantWhereUniqueInput
+}
+
+export type EnseignantUpdateOneWithoutUtilisateurNestedInput = {
+  create?: Prisma.XOR<Prisma.EnseignantCreateWithoutUtilisateurInput, Prisma.EnseignantUncheckedCreateWithoutUtilisateurInput>
+  connectOrCreate?: Prisma.EnseignantCreateOrConnectWithoutUtilisateurInput
+  upsert?: Prisma.EnseignantUpsertWithoutUtilisateurInput
+  disconnect?: Prisma.EnseignantWhereInput | boolean
+  delete?: Prisma.EnseignantWhereInput | boolean
+  connect?: Prisma.EnseignantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EnseignantUpdateToOneWithWhereWithoutUtilisateurInput, Prisma.EnseignantUpdateWithoutUtilisateurInput>, Prisma.EnseignantUncheckedUpdateWithoutUtilisateurInput>
 }
 
 export type FloatFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
-export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
   decrement?: number
@@ -489,6 +501,72 @@ export type EnseignantUpdateOneRequiredWithoutPaieNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EnseignantUpdateToOneWithWhereWithoutPaieInput, Prisma.EnseignantUpdateWithoutPaieInput>, Prisma.EnseignantUncheckedUpdateWithoutPaieInput>
 }
 
+export type EnseignantCreateWithoutUtilisateurInput = {
+  nom: string
+  prenom: string
+  email: string
+  tauxHoraireBase: number
+  statut: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  feuilleDeTemps?: Prisma.FeuilleDeTempsCreateNestedManyWithoutEnseignantInput
+  paie?: Prisma.PaieCreateNestedManyWithoutEnseignantInput
+}
+
+export type EnseignantUncheckedCreateWithoutUtilisateurInput = {
+  id?: number
+  nom: string
+  prenom: string
+  email: string
+  tauxHoraireBase: number
+  statut: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedCreateNestedManyWithoutEnseignantInput
+  paie?: Prisma.PaieUncheckedCreateNestedManyWithoutEnseignantInput
+}
+
+export type EnseignantCreateOrConnectWithoutUtilisateurInput = {
+  where: Prisma.EnseignantWhereUniqueInput
+  create: Prisma.XOR<Prisma.EnseignantCreateWithoutUtilisateurInput, Prisma.EnseignantUncheckedCreateWithoutUtilisateurInput>
+}
+
+export type EnseignantUpsertWithoutUtilisateurInput = {
+  update: Prisma.XOR<Prisma.EnseignantUpdateWithoutUtilisateurInput, Prisma.EnseignantUncheckedUpdateWithoutUtilisateurInput>
+  create: Prisma.XOR<Prisma.EnseignantCreateWithoutUtilisateurInput, Prisma.EnseignantUncheckedCreateWithoutUtilisateurInput>
+  where?: Prisma.EnseignantWhereInput
+}
+
+export type EnseignantUpdateToOneWithWhereWithoutUtilisateurInput = {
+  where?: Prisma.EnseignantWhereInput
+  data: Prisma.XOR<Prisma.EnseignantUpdateWithoutUtilisateurInput, Prisma.EnseignantUncheckedUpdateWithoutUtilisateurInput>
+}
+
+export type EnseignantUpdateWithoutUtilisateurInput = {
+  nom?: Prisma.StringFieldUpdateOperationsInput | string
+  prenom?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
+  statut?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  feuilleDeTemps?: Prisma.FeuilleDeTempsUpdateManyWithoutEnseignantNestedInput
+  paie?: Prisma.PaieUpdateManyWithoutEnseignantNestedInput
+}
+
+export type EnseignantUncheckedUpdateWithoutUtilisateurInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  nom?: Prisma.StringFieldUpdateOperationsInput | string
+  prenom?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
+  statut?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedUpdateManyWithoutEnseignantNestedInput
+  paie?: Prisma.PaieUncheckedUpdateManyWithoutEnseignantNestedInput
+}
+
 export type EnseignantCreateWithoutFeuilleDeTempsInput = {
   nom: string
   prenom: string
@@ -497,6 +575,7 @@ export type EnseignantCreateWithoutFeuilleDeTempsInput = {
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  utilisateur?: Prisma.UtilisateurCreateNestedOneWithoutEnseignantInput
   paie?: Prisma.PaieCreateNestedManyWithoutEnseignantInput
 }
 
@@ -509,6 +588,7 @@ export type EnseignantUncheckedCreateWithoutFeuilleDeTempsInput = {
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  utilisateur?: Prisma.UtilisateurUncheckedCreateNestedOneWithoutEnseignantInput
   paie?: Prisma.PaieUncheckedCreateNestedManyWithoutEnseignantInput
 }
 
@@ -536,6 +616,7 @@ export type EnseignantUpdateWithoutFeuilleDeTempsInput = {
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  utilisateur?: Prisma.UtilisateurUpdateOneWithoutEnseignantNestedInput
   paie?: Prisma.PaieUpdateManyWithoutEnseignantNestedInput
 }
 
@@ -548,6 +629,7 @@ export type EnseignantUncheckedUpdateWithoutFeuilleDeTempsInput = {
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  utilisateur?: Prisma.UtilisateurUncheckedUpdateOneWithoutEnseignantNestedInput
   paie?: Prisma.PaieUncheckedUpdateManyWithoutEnseignantNestedInput
 }
 
@@ -559,6 +641,7 @@ export type EnseignantCreateWithoutPaieInput = {
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  utilisateur?: Prisma.UtilisateurCreateNestedOneWithoutEnseignantInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsCreateNestedManyWithoutEnseignantInput
 }
 
@@ -571,6 +654,7 @@ export type EnseignantUncheckedCreateWithoutPaieInput = {
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  utilisateur?: Prisma.UtilisateurUncheckedCreateNestedOneWithoutEnseignantInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedCreateNestedManyWithoutEnseignantInput
 }
 
@@ -598,6 +682,7 @@ export type EnseignantUpdateWithoutPaieInput = {
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  utilisateur?: Prisma.UtilisateurUpdateOneWithoutEnseignantNestedInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsUpdateManyWithoutEnseignantNestedInput
 }
 
@@ -610,6 +695,7 @@ export type EnseignantUncheckedUpdateWithoutPaieInput = {
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  utilisateur?: Prisma.UtilisateurUncheckedUpdateOneWithoutEnseignantNestedInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedUpdateManyWithoutEnseignantNestedInput
 }
 
@@ -662,6 +748,7 @@ export type EnseignantSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   statut?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  utilisateur?: boolean | Prisma.Enseignant$utilisateurArgs<ExtArgs>
   feuilleDeTemps?: boolean | Prisma.Enseignant$feuilleDeTempsArgs<ExtArgs>
   paie?: boolean | Prisma.Enseignant$paieArgs<ExtArgs>
   _count?: boolean | Prisma.EnseignantCountOutputTypeDefaultArgs<ExtArgs>
@@ -702,6 +789,7 @@ export type EnseignantSelectScalar = {
 
 export type EnseignantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nom" | "prenom" | "email" | "tauxHoraireBase" | "statut" | "createdAt" | "updatedAt", ExtArgs["result"]["enseignant"]>
 export type EnseignantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  utilisateur?: boolean | Prisma.Enseignant$utilisateurArgs<ExtArgs>
   feuilleDeTemps?: boolean | Prisma.Enseignant$feuilleDeTempsArgs<ExtArgs>
   paie?: boolean | Prisma.Enseignant$paieArgs<ExtArgs>
   _count?: boolean | Prisma.EnseignantCountOutputTypeDefaultArgs<ExtArgs>
@@ -712,6 +800,7 @@ export type EnseignantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type $EnseignantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Enseignant"
   objects: {
+    utilisateur: Prisma.$UtilisateurPayload<ExtArgs> | null
     feuilleDeTemps: Prisma.$FeuilleDeTempsPayload<ExtArgs>[]
     paie: Prisma.$PaiePayload<ExtArgs>[]
   }
@@ -1118,6 +1207,7 @@ readonly fields: EnseignantFieldRefs;
  */
 export interface Prisma__EnseignantClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  utilisateur<T extends Prisma.Enseignant$utilisateurArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enseignant$utilisateurArgs<ExtArgs>>): Prisma.Prisma__UtilisateurClient<runtime.Types.Result.GetResult<Prisma.$UtilisateurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   feuilleDeTemps<T extends Prisma.Enseignant$feuilleDeTempsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enseignant$feuilleDeTempsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeuilleDeTempsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   paie<T extends Prisma.Enseignant$paieArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enseignant$paieArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaiePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1547,6 +1637,25 @@ export type EnseignantDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Enseignants to delete.
    */
   limit?: number
+}
+
+/**
+ * Enseignant.utilisateur
+ */
+export type Enseignant$utilisateurArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Utilisateur
+   */
+  select?: Prisma.UtilisateurSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Utilisateur
+   */
+  omit?: Prisma.UtilisateurOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UtilisateurInclude<ExtArgs> | null
+  where?: Prisma.UtilisateurWhereInput
 }
 
 /**

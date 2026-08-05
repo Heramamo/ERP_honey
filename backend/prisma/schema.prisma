@@ -13,6 +13,27 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  ADMIN
+  RH
+  FINANCE
+  ENSEIGNANT
+}
+
+model Utilisateur {
+  id_utilisateur  Int      @id @default(autoincrement())
+  email           String   @unique
+  mot_de_passe    String  
+  nom             String
+  prenom          String
+  role            Role     @default(ENSEIGNANT)
+  date_creation   DateTime @default(now())
+
+  
+  id_enseignant   Int?     @unique
+  enseignant      Enseignant? @relation(fields: [id_enseignant], references: [id], onDelete: SetNull)
+}
+
 model Enseignant{
   id          Int      @id @default(autoincrement())
   nom         String
@@ -23,6 +44,8 @@ model Enseignant{
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+
+  utilisateur       Utilisateur?
   feuilleDeTemps FeuilleDeTemps[]
   paie Paie[]
 }
