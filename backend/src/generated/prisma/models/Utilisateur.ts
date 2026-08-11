@@ -28,12 +28,10 @@ export type AggregateUtilisateur = {
 
 export type UtilisateurAvgAggregateOutputType = {
   id_utilisateur: number | null
-  id_enseignant: number | null
 }
 
 export type UtilisateurSumAggregateOutputType = {
   id_utilisateur: number | null
-  id_enseignant: number | null
 }
 
 export type UtilisateurMinAggregateOutputType = {
@@ -44,7 +42,6 @@ export type UtilisateurMinAggregateOutputType = {
   prenom: string | null
   role: $Enums.Role | null
   date_creation: Date | null
-  id_enseignant: number | null
 }
 
 export type UtilisateurMaxAggregateOutputType = {
@@ -55,7 +52,6 @@ export type UtilisateurMaxAggregateOutputType = {
   prenom: string | null
   role: $Enums.Role | null
   date_creation: Date | null
-  id_enseignant: number | null
 }
 
 export type UtilisateurCountAggregateOutputType = {
@@ -66,19 +62,16 @@ export type UtilisateurCountAggregateOutputType = {
   prenom: number
   role: number
   date_creation: number
-  id_enseignant: number
   _all: number
 }
 
 
 export type UtilisateurAvgAggregateInputType = {
   id_utilisateur?: true
-  id_enseignant?: true
 }
 
 export type UtilisateurSumAggregateInputType = {
   id_utilisateur?: true
-  id_enseignant?: true
 }
 
 export type UtilisateurMinAggregateInputType = {
@@ -89,7 +82,6 @@ export type UtilisateurMinAggregateInputType = {
   prenom?: true
   role?: true
   date_creation?: true
-  id_enseignant?: true
 }
 
 export type UtilisateurMaxAggregateInputType = {
@@ -100,7 +92,6 @@ export type UtilisateurMaxAggregateInputType = {
   prenom?: true
   role?: true
   date_creation?: true
-  id_enseignant?: true
 }
 
 export type UtilisateurCountAggregateInputType = {
@@ -111,7 +102,6 @@ export type UtilisateurCountAggregateInputType = {
   prenom?: true
   role?: true
   date_creation?: true
-  id_enseignant?: true
   _all?: true
 }
 
@@ -209,7 +199,6 @@ export type UtilisateurGroupByOutputType = {
   prenom: string
   role: $Enums.Role
   date_creation: Date
-  id_enseignant: number | null
   _count: UtilisateurCountAggregateOutputType | null
   _avg: UtilisateurAvgAggregateOutputType | null
   _sum: UtilisateurSumAggregateOutputType | null
@@ -243,7 +232,6 @@ export type UtilisateurWhereInput = {
   prenom?: Prisma.StringFilter<"Utilisateur"> | string
   role?: Prisma.EnumRoleFilter<"Utilisateur"> | $Enums.Role
   date_creation?: Prisma.DateTimeFilter<"Utilisateur"> | Date | string
-  id_enseignant?: Prisma.IntNullableFilter<"Utilisateur"> | number | null
   enseignant?: Prisma.XOR<Prisma.EnseignantNullableScalarRelationFilter, Prisma.EnseignantWhereInput> | null
 }
 
@@ -255,14 +243,12 @@ export type UtilisateurOrderByWithRelationInput = {
   prenom?: Prisma.SortOrder
   role?: Prisma.SortOrder
   date_creation?: Prisma.SortOrder
-  id_enseignant?: Prisma.SortOrderInput | Prisma.SortOrder
   enseignant?: Prisma.EnseignantOrderByWithRelationInput
 }
 
 export type UtilisateurWhereUniqueInput = Prisma.AtLeast<{
   id_utilisateur?: number
   email?: string
-  id_enseignant?: number
   AND?: Prisma.UtilisateurWhereInput | Prisma.UtilisateurWhereInput[]
   OR?: Prisma.UtilisateurWhereInput[]
   NOT?: Prisma.UtilisateurWhereInput | Prisma.UtilisateurWhereInput[]
@@ -272,7 +258,7 @@ export type UtilisateurWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumRoleFilter<"Utilisateur"> | $Enums.Role
   date_creation?: Prisma.DateTimeFilter<"Utilisateur"> | Date | string
   enseignant?: Prisma.XOR<Prisma.EnseignantNullableScalarRelationFilter, Prisma.EnseignantWhereInput> | null
-}, "id_utilisateur" | "email" | "id_enseignant">
+}, "id_utilisateur" | "email">
 
 export type UtilisateurOrderByWithAggregationInput = {
   id_utilisateur?: Prisma.SortOrder
@@ -282,7 +268,6 @@ export type UtilisateurOrderByWithAggregationInput = {
   prenom?: Prisma.SortOrder
   role?: Prisma.SortOrder
   date_creation?: Prisma.SortOrder
-  id_enseignant?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UtilisateurCountOrderByAggregateInput
   _avg?: Prisma.UtilisateurAvgOrderByAggregateInput
   _max?: Prisma.UtilisateurMaxOrderByAggregateInput
@@ -301,7 +286,6 @@ export type UtilisateurScalarWhereWithAggregatesInput = {
   prenom?: Prisma.StringWithAggregatesFilter<"Utilisateur"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"Utilisateur"> | $Enums.Role
   date_creation?: Prisma.DateTimeWithAggregatesFilter<"Utilisateur"> | Date | string
-  id_enseignant?: Prisma.IntNullableWithAggregatesFilter<"Utilisateur"> | number | null
 }
 
 export type UtilisateurCreateInput = {
@@ -322,7 +306,7 @@ export type UtilisateurUncheckedCreateInput = {
   prenom: string
   role?: $Enums.Role
   date_creation?: Date | string
-  id_enseignant?: number | null
+  enseignant?: Prisma.EnseignantUncheckedCreateNestedOneWithoutUtilisateurInput
 }
 
 export type UtilisateurUpdateInput = {
@@ -343,7 +327,7 @@ export type UtilisateurUncheckedUpdateInput = {
   prenom?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   date_creation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  id_enseignant?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  enseignant?: Prisma.EnseignantUncheckedUpdateOneWithoutUtilisateurNestedInput
 }
 
 export type UtilisateurCreateManyInput = {
@@ -354,7 +338,6 @@ export type UtilisateurCreateManyInput = {
   prenom: string
   role?: $Enums.Role
   date_creation?: Date | string
-  id_enseignant?: number | null
 }
 
 export type UtilisateurUpdateManyMutationInput = {
@@ -374,7 +357,6 @@ export type UtilisateurUncheckedUpdateManyInput = {
   prenom?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   date_creation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  id_enseignant?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UtilisateurCountOrderByAggregateInput = {
@@ -385,12 +367,10 @@ export type UtilisateurCountOrderByAggregateInput = {
   prenom?: Prisma.SortOrder
   role?: Prisma.SortOrder
   date_creation?: Prisma.SortOrder
-  id_enseignant?: Prisma.SortOrder
 }
 
 export type UtilisateurAvgOrderByAggregateInput = {
   id_utilisateur?: Prisma.SortOrder
-  id_enseignant?: Prisma.SortOrder
 }
 
 export type UtilisateurMaxOrderByAggregateInput = {
@@ -401,7 +381,6 @@ export type UtilisateurMaxOrderByAggregateInput = {
   prenom?: Prisma.SortOrder
   role?: Prisma.SortOrder
   date_creation?: Prisma.SortOrder
-  id_enseignant?: Prisma.SortOrder
 }
 
 export type UtilisateurMinOrderByAggregateInput = {
@@ -412,17 +391,15 @@ export type UtilisateurMinOrderByAggregateInput = {
   prenom?: Prisma.SortOrder
   role?: Prisma.SortOrder
   date_creation?: Prisma.SortOrder
-  id_enseignant?: Prisma.SortOrder
 }
 
 export type UtilisateurSumOrderByAggregateInput = {
   id_utilisateur?: Prisma.SortOrder
-  id_enseignant?: Prisma.SortOrder
 }
 
-export type UtilisateurNullableScalarRelationFilter = {
-  is?: Prisma.UtilisateurWhereInput | null
-  isNot?: Prisma.UtilisateurWhereInput | null
+export type UtilisateurScalarRelationFilter = {
+  is?: Prisma.UtilisateurWhereInput
+  isNot?: Prisma.UtilisateurWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -445,42 +422,16 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type UtilisateurCreateNestedOneWithoutEnseignantInput = {
   create?: Prisma.XOR<Prisma.UtilisateurCreateWithoutEnseignantInput, Prisma.UtilisateurUncheckedCreateWithoutEnseignantInput>
   connectOrCreate?: Prisma.UtilisateurCreateOrConnectWithoutEnseignantInput
   connect?: Prisma.UtilisateurWhereUniqueInput
 }
 
-export type UtilisateurUncheckedCreateNestedOneWithoutEnseignantInput = {
-  create?: Prisma.XOR<Prisma.UtilisateurCreateWithoutEnseignantInput, Prisma.UtilisateurUncheckedCreateWithoutEnseignantInput>
-  connectOrCreate?: Prisma.UtilisateurCreateOrConnectWithoutEnseignantInput
-  connect?: Prisma.UtilisateurWhereUniqueInput
-}
-
-export type UtilisateurUpdateOneWithoutEnseignantNestedInput = {
+export type UtilisateurUpdateOneRequiredWithoutEnseignantNestedInput = {
   create?: Prisma.XOR<Prisma.UtilisateurCreateWithoutEnseignantInput, Prisma.UtilisateurUncheckedCreateWithoutEnseignantInput>
   connectOrCreate?: Prisma.UtilisateurCreateOrConnectWithoutEnseignantInput
   upsert?: Prisma.UtilisateurUpsertWithoutEnseignantInput
-  disconnect?: Prisma.UtilisateurWhereInput | boolean
-  delete?: Prisma.UtilisateurWhereInput | boolean
-  connect?: Prisma.UtilisateurWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UtilisateurUpdateToOneWithWhereWithoutEnseignantInput, Prisma.UtilisateurUpdateWithoutEnseignantInput>, Prisma.UtilisateurUncheckedUpdateWithoutEnseignantInput>
-}
-
-export type UtilisateurUncheckedUpdateOneWithoutEnseignantNestedInput = {
-  create?: Prisma.XOR<Prisma.UtilisateurCreateWithoutEnseignantInput, Prisma.UtilisateurUncheckedCreateWithoutEnseignantInput>
-  connectOrCreate?: Prisma.UtilisateurCreateOrConnectWithoutEnseignantInput
-  upsert?: Prisma.UtilisateurUpsertWithoutEnseignantInput
-  disconnect?: Prisma.UtilisateurWhereInput | boolean
-  delete?: Prisma.UtilisateurWhereInput | boolean
   connect?: Prisma.UtilisateurWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UtilisateurUpdateToOneWithWhereWithoutEnseignantInput, Prisma.UtilisateurUpdateWithoutEnseignantInput>, Prisma.UtilisateurUncheckedUpdateWithoutEnseignantInput>
 }
@@ -549,7 +500,6 @@ export type UtilisateurSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   prenom?: boolean
   role?: boolean
   date_creation?: boolean
-  id_enseignant?: boolean
   enseignant?: boolean | Prisma.Utilisateur$enseignantArgs<ExtArgs>
 }, ExtArgs["result"]["utilisateur"]>
 
@@ -561,8 +511,6 @@ export type UtilisateurSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   prenom?: boolean
   role?: boolean
   date_creation?: boolean
-  id_enseignant?: boolean
-  enseignant?: boolean | Prisma.Utilisateur$enseignantArgs<ExtArgs>
 }, ExtArgs["result"]["utilisateur"]>
 
 export type UtilisateurSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -573,8 +521,6 @@ export type UtilisateurSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   prenom?: boolean
   role?: boolean
   date_creation?: boolean
-  id_enseignant?: boolean
-  enseignant?: boolean | Prisma.Utilisateur$enseignantArgs<ExtArgs>
 }, ExtArgs["result"]["utilisateur"]>
 
 export type UtilisateurSelectScalar = {
@@ -585,19 +531,14 @@ export type UtilisateurSelectScalar = {
   prenom?: boolean
   role?: boolean
   date_creation?: boolean
-  id_enseignant?: boolean
 }
 
-export type UtilisateurOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_utilisateur" | "email" | "mot_de_passe" | "nom" | "prenom" | "role" | "date_creation" | "id_enseignant", ExtArgs["result"]["utilisateur"]>
+export type UtilisateurOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_utilisateur" | "email" | "mot_de_passe" | "nom" | "prenom" | "role" | "date_creation", ExtArgs["result"]["utilisateur"]>
 export type UtilisateurInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   enseignant?: boolean | Prisma.Utilisateur$enseignantArgs<ExtArgs>
 }
-export type UtilisateurIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  enseignant?: boolean | Prisma.Utilisateur$enseignantArgs<ExtArgs>
-}
-export type UtilisateurIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  enseignant?: boolean | Prisma.Utilisateur$enseignantArgs<ExtArgs>
-}
+export type UtilisateurIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UtilisateurIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UtilisateurPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Utilisateur"
@@ -612,7 +553,6 @@ export type $UtilisateurPayload<ExtArgs extends runtime.Types.Extensions.Interna
     prenom: string
     role: $Enums.Role
     date_creation: Date
-    id_enseignant: number | null
   }, ExtArgs["result"]["utilisateur"]>
   composites: {}
 }
@@ -1044,7 +984,6 @@ export interface UtilisateurFieldRefs {
   readonly prenom: Prisma.FieldRef<"Utilisateur", 'String'>
   readonly role: Prisma.FieldRef<"Utilisateur", 'Role'>
   readonly date_creation: Prisma.FieldRef<"Utilisateur", 'DateTime'>
-  readonly id_enseignant: Prisma.FieldRef<"Utilisateur", 'Int'>
 }
     
 
@@ -1299,10 +1238,6 @@ export type UtilisateurCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    */
   data: Prisma.UtilisateurCreateManyInput | Prisma.UtilisateurCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UtilisateurIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1373,10 +1308,6 @@ export type UtilisateurUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * Limit how many Utilisateurs to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UtilisateurIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

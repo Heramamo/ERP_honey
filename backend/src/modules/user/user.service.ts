@@ -27,6 +27,7 @@ export class UserService {
                     nom,
                     prenom,
                     role,
+
                 },
                 select: {
                     id_utilisateur: true,
@@ -34,15 +35,20 @@ export class UserService {
                     nom: true,
                     prenom: true,
                     role: true,
-                    //statut: true,
+
                     date_creation: true,
                     id_enseignant: true,
                 },
             })
+            const payload = { sub: newUser.id_utilisateur, email: newUser.email, role: newUser.role };
+            const token = await this.jwtService.signAsync(payload);
+
             return {
-                message: 'Utilisateur créé avec succès',
-                data: newUser,
-            }
+                message: 'Compte créé avec succès',
+                access_token: token,
+                user: newUser,
+                requiresTeacherProfile: newUser.role === 'ENSEIGNANT', 
+            }   
         }
         catch {
             throw new InternalServerErrorException(
@@ -65,7 +71,7 @@ export class UserService {
             user: {
                 id: user.id_utilisateur,
                 email: user.email,
-                
+
             },
         };
     }

@@ -83,8 +83,7 @@ export const UtilisateurScalarFieldEnum = {
   nom: 'nom',
   prenom: 'prenom',
   role: 'role',
-  date_creation: 'date_creation',
-  id_enseignant: 'id_enseignant'
+  date_creation: 'date_creation'
 } as const
 
 export type UtilisateurScalarFieldEnum = (typeof UtilisateurScalarFieldEnum)[keyof typeof UtilisateurScalarFieldEnum]
@@ -92,13 +91,11 @@ export type UtilisateurScalarFieldEnum = (typeof UtilisateurScalarFieldEnum)[key
 
 export const EnseignantScalarFieldEnum = {
   id: 'id',
-  nom: 'nom',
-  prenom: 'prenom',
-  email: 'email',
   tauxHoraireBase: 'tauxHoraireBase',
   statut: 'statut',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  id_utilisateur: 'id_utilisateur'
 } as const
 
 export type EnseignantScalarFieldEnum = (typeof EnseignantScalarFieldEnum)[keyof typeof EnseignantScalarFieldEnum]
@@ -185,12 +182,4 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

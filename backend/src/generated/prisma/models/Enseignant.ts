@@ -29,44 +29,40 @@ export type AggregateEnseignant = {
 export type EnseignantAvgAggregateOutputType = {
   id: number | null
   tauxHoraireBase: number | null
+  id_utilisateur: number | null
 }
 
 export type EnseignantSumAggregateOutputType = {
   id: number | null
   tauxHoraireBase: number | null
+  id_utilisateur: number | null
 }
 
 export type EnseignantMinAggregateOutputType = {
   id: number | null
-  nom: string | null
-  prenom: string | null
-  email: string | null
   tauxHoraireBase: number | null
   statut: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  id_utilisateur: number | null
 }
 
 export type EnseignantMaxAggregateOutputType = {
   id: number | null
-  nom: string | null
-  prenom: string | null
-  email: string | null
   tauxHoraireBase: number | null
   statut: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  id_utilisateur: number | null
 }
 
 export type EnseignantCountAggregateOutputType = {
   id: number
-  nom: number
-  prenom: number
-  email: number
   tauxHoraireBase: number
   statut: number
   createdAt: number
   updatedAt: number
+  id_utilisateur: number
   _all: number
 }
 
@@ -74,44 +70,40 @@ export type EnseignantCountAggregateOutputType = {
 export type EnseignantAvgAggregateInputType = {
   id?: true
   tauxHoraireBase?: true
+  id_utilisateur?: true
 }
 
 export type EnseignantSumAggregateInputType = {
   id?: true
   tauxHoraireBase?: true
+  id_utilisateur?: true
 }
 
 export type EnseignantMinAggregateInputType = {
   id?: true
-  nom?: true
-  prenom?: true
-  email?: true
   tauxHoraireBase?: true
   statut?: true
   createdAt?: true
   updatedAt?: true
+  id_utilisateur?: true
 }
 
 export type EnseignantMaxAggregateInputType = {
   id?: true
-  nom?: true
-  prenom?: true
-  email?: true
   tauxHoraireBase?: true
   statut?: true
   createdAt?: true
   updatedAt?: true
+  id_utilisateur?: true
 }
 
 export type EnseignantCountAggregateInputType = {
   id?: true
-  nom?: true
-  prenom?: true
-  email?: true
   tauxHoraireBase?: true
   statut?: true
   createdAt?: true
   updatedAt?: true
+  id_utilisateur?: true
   _all?: true
 }
 
@@ -203,13 +195,11 @@ export type EnseignantGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 
 export type EnseignantGroupByOutputType = {
   id: number
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt: Date
   updatedAt: Date
+  id_utilisateur: number
   _count: EnseignantCountAggregateOutputType | null
   _avg: EnseignantAvgAggregateOutputType | null
   _sum: EnseignantSumAggregateOutputType | null
@@ -237,27 +227,23 @@ export type EnseignantWhereInput = {
   OR?: Prisma.EnseignantWhereInput[]
   NOT?: Prisma.EnseignantWhereInput | Prisma.EnseignantWhereInput[]
   id?: Prisma.IntFilter<"Enseignant"> | number
-  nom?: Prisma.StringFilter<"Enseignant"> | string
-  prenom?: Prisma.StringFilter<"Enseignant"> | string
-  email?: Prisma.StringFilter<"Enseignant"> | string
   tauxHoraireBase?: Prisma.FloatFilter<"Enseignant"> | number
   statut?: Prisma.StringFilter<"Enseignant"> | string
   createdAt?: Prisma.DateTimeFilter<"Enseignant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Enseignant"> | Date | string
-  utilisateur?: Prisma.XOR<Prisma.UtilisateurNullableScalarRelationFilter, Prisma.UtilisateurWhereInput> | null
+  id_utilisateur?: Prisma.IntFilter<"Enseignant"> | number
+  utilisateur?: Prisma.XOR<Prisma.UtilisateurScalarRelationFilter, Prisma.UtilisateurWhereInput>
   feuilleDeTemps?: Prisma.FeuilleDeTempsListRelationFilter
   paie?: Prisma.PaieListRelationFilter
 }
 
 export type EnseignantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  nom?: Prisma.SortOrder
-  prenom?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   tauxHoraireBase?: Prisma.SortOrder
   statut?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id_utilisateur?: Prisma.SortOrder
   utilisateur?: Prisma.UtilisateurOrderByWithRelationInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsOrderByRelationAggregateInput
   paie?: Prisma.PaieOrderByRelationAggregateInput
@@ -265,30 +251,26 @@ export type EnseignantOrderByWithRelationInput = {
 
 export type EnseignantWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  email?: string
+  id_utilisateur?: number
   AND?: Prisma.EnseignantWhereInput | Prisma.EnseignantWhereInput[]
   OR?: Prisma.EnseignantWhereInput[]
   NOT?: Prisma.EnseignantWhereInput | Prisma.EnseignantWhereInput[]
-  nom?: Prisma.StringFilter<"Enseignant"> | string
-  prenom?: Prisma.StringFilter<"Enseignant"> | string
   tauxHoraireBase?: Prisma.FloatFilter<"Enseignant"> | number
   statut?: Prisma.StringFilter<"Enseignant"> | string
   createdAt?: Prisma.DateTimeFilter<"Enseignant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Enseignant"> | Date | string
-  utilisateur?: Prisma.XOR<Prisma.UtilisateurNullableScalarRelationFilter, Prisma.UtilisateurWhereInput> | null
+  utilisateur?: Prisma.XOR<Prisma.UtilisateurScalarRelationFilter, Prisma.UtilisateurWhereInput>
   feuilleDeTemps?: Prisma.FeuilleDeTempsListRelationFilter
   paie?: Prisma.PaieListRelationFilter
-}, "id" | "email">
+}, "id" | "id_utilisateur">
 
 export type EnseignantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  nom?: Prisma.SortOrder
-  prenom?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   tauxHoraireBase?: Prisma.SortOrder
   statut?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id_utilisateur?: Prisma.SortOrder
   _count?: Prisma.EnseignantCountOrderByAggregateInput
   _avg?: Prisma.EnseignantAvgOrderByAggregateInput
   _max?: Prisma.EnseignantMaxOrderByAggregateInput
@@ -301,84 +283,65 @@ export type EnseignantScalarWhereWithAggregatesInput = {
   OR?: Prisma.EnseignantScalarWhereWithAggregatesInput[]
   NOT?: Prisma.EnseignantScalarWhereWithAggregatesInput | Prisma.EnseignantScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Enseignant"> | number
-  nom?: Prisma.StringWithAggregatesFilter<"Enseignant"> | string
-  prenom?: Prisma.StringWithAggregatesFilter<"Enseignant"> | string
-  email?: Prisma.StringWithAggregatesFilter<"Enseignant"> | string
   tauxHoraireBase?: Prisma.FloatWithAggregatesFilter<"Enseignant"> | number
   statut?: Prisma.StringWithAggregatesFilter<"Enseignant"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Enseignant"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Enseignant"> | Date | string
+  id_utilisateur?: Prisma.IntWithAggregatesFilter<"Enseignant"> | number
 }
 
 export type EnseignantCreateInput = {
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  utilisateur?: Prisma.UtilisateurCreateNestedOneWithoutEnseignantInput
+  utilisateur: Prisma.UtilisateurCreateNestedOneWithoutEnseignantInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsCreateNestedManyWithoutEnseignantInput
   paie?: Prisma.PaieCreateNestedManyWithoutEnseignantInput
 }
 
 export type EnseignantUncheckedCreateInput = {
   id?: number
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  utilisateur?: Prisma.UtilisateurUncheckedCreateNestedOneWithoutEnseignantInput
+  id_utilisateur: number
   feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedCreateNestedManyWithoutEnseignantInput
   paie?: Prisma.PaieUncheckedCreateNestedManyWithoutEnseignantInput
 }
 
 export type EnseignantUpdateInput = {
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  utilisateur?: Prisma.UtilisateurUpdateOneWithoutEnseignantNestedInput
+  utilisateur?: Prisma.UtilisateurUpdateOneRequiredWithoutEnseignantNestedInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsUpdateManyWithoutEnseignantNestedInput
   paie?: Prisma.PaieUpdateManyWithoutEnseignantNestedInput
 }
 
 export type EnseignantUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  utilisateur?: Prisma.UtilisateurUncheckedUpdateOneWithoutEnseignantNestedInput
+  id_utilisateur?: Prisma.IntFieldUpdateOperationsInput | number
   feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedUpdateManyWithoutEnseignantNestedInput
   paie?: Prisma.PaieUncheckedUpdateManyWithoutEnseignantNestedInput
 }
 
 export type EnseignantCreateManyInput = {
   id?: number
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  id_utilisateur: number
 }
 
 export type EnseignantUpdateManyMutationInput = {
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -387,13 +350,11 @@ export type EnseignantUpdateManyMutationInput = {
 
 export type EnseignantUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_utilisateur?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type EnseignantNullableScalarRelationFilter = {
@@ -403,45 +364,41 @@ export type EnseignantNullableScalarRelationFilter = {
 
 export type EnseignantCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  nom?: Prisma.SortOrder
-  prenom?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   tauxHoraireBase?: Prisma.SortOrder
   statut?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id_utilisateur?: Prisma.SortOrder
 }
 
 export type EnseignantAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tauxHoraireBase?: Prisma.SortOrder
+  id_utilisateur?: Prisma.SortOrder
 }
 
 export type EnseignantMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  nom?: Prisma.SortOrder
-  prenom?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   tauxHoraireBase?: Prisma.SortOrder
   statut?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id_utilisateur?: Prisma.SortOrder
 }
 
 export type EnseignantMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  nom?: Prisma.SortOrder
-  prenom?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   tauxHoraireBase?: Prisma.SortOrder
   statut?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  id_utilisateur?: Prisma.SortOrder
 }
 
 export type EnseignantSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tauxHoraireBase?: Prisma.SortOrder
+  id_utilisateur?: Prisma.SortOrder
 }
 
 export type EnseignantScalarRelationFilter = {
@@ -455,7 +412,23 @@ export type EnseignantCreateNestedOneWithoutUtilisateurInput = {
   connect?: Prisma.EnseignantWhereUniqueInput
 }
 
+export type EnseignantUncheckedCreateNestedOneWithoutUtilisateurInput = {
+  create?: Prisma.XOR<Prisma.EnseignantCreateWithoutUtilisateurInput, Prisma.EnseignantUncheckedCreateWithoutUtilisateurInput>
+  connectOrCreate?: Prisma.EnseignantCreateOrConnectWithoutUtilisateurInput
+  connect?: Prisma.EnseignantWhereUniqueInput
+}
+
 export type EnseignantUpdateOneWithoutUtilisateurNestedInput = {
+  create?: Prisma.XOR<Prisma.EnseignantCreateWithoutUtilisateurInput, Prisma.EnseignantUncheckedCreateWithoutUtilisateurInput>
+  connectOrCreate?: Prisma.EnseignantCreateOrConnectWithoutUtilisateurInput
+  upsert?: Prisma.EnseignantUpsertWithoutUtilisateurInput
+  disconnect?: Prisma.EnseignantWhereInput | boolean
+  delete?: Prisma.EnseignantWhereInput | boolean
+  connect?: Prisma.EnseignantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EnseignantUpdateToOneWithWhereWithoutUtilisateurInput, Prisma.EnseignantUpdateWithoutUtilisateurInput>, Prisma.EnseignantUncheckedUpdateWithoutUtilisateurInput>
+}
+
+export type EnseignantUncheckedUpdateOneWithoutUtilisateurNestedInput = {
   create?: Prisma.XOR<Prisma.EnseignantCreateWithoutUtilisateurInput, Prisma.EnseignantUncheckedCreateWithoutUtilisateurInput>
   connectOrCreate?: Prisma.EnseignantCreateOrConnectWithoutUtilisateurInput
   upsert?: Prisma.EnseignantUpsertWithoutUtilisateurInput
@@ -502,9 +475,6 @@ export type EnseignantUpdateOneRequiredWithoutPaieNestedInput = {
 }
 
 export type EnseignantCreateWithoutUtilisateurInput = {
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt?: Date | string
@@ -515,9 +485,6 @@ export type EnseignantCreateWithoutUtilisateurInput = {
 
 export type EnseignantUncheckedCreateWithoutUtilisateurInput = {
   id?: number
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt?: Date | string
@@ -543,9 +510,6 @@ export type EnseignantUpdateToOneWithWhereWithoutUtilisateurInput = {
 }
 
 export type EnseignantUpdateWithoutUtilisateurInput = {
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -556,9 +520,6 @@ export type EnseignantUpdateWithoutUtilisateurInput = {
 
 export type EnseignantUncheckedUpdateWithoutUtilisateurInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -568,27 +529,21 @@ export type EnseignantUncheckedUpdateWithoutUtilisateurInput = {
 }
 
 export type EnseignantCreateWithoutFeuilleDeTempsInput = {
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  utilisateur?: Prisma.UtilisateurCreateNestedOneWithoutEnseignantInput
+  utilisateur: Prisma.UtilisateurCreateNestedOneWithoutEnseignantInput
   paie?: Prisma.PaieCreateNestedManyWithoutEnseignantInput
 }
 
 export type EnseignantUncheckedCreateWithoutFeuilleDeTempsInput = {
   id?: number
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  utilisateur?: Prisma.UtilisateurUncheckedCreateNestedOneWithoutEnseignantInput
+  id_utilisateur: number
   paie?: Prisma.PaieUncheckedCreateNestedManyWithoutEnseignantInput
 }
 
@@ -609,52 +564,40 @@ export type EnseignantUpdateToOneWithWhereWithoutFeuilleDeTempsInput = {
 }
 
 export type EnseignantUpdateWithoutFeuilleDeTempsInput = {
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  utilisateur?: Prisma.UtilisateurUpdateOneWithoutEnseignantNestedInput
+  utilisateur?: Prisma.UtilisateurUpdateOneRequiredWithoutEnseignantNestedInput
   paie?: Prisma.PaieUpdateManyWithoutEnseignantNestedInput
 }
 
 export type EnseignantUncheckedUpdateWithoutFeuilleDeTempsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  utilisateur?: Prisma.UtilisateurUncheckedUpdateOneWithoutEnseignantNestedInput
+  id_utilisateur?: Prisma.IntFieldUpdateOperationsInput | number
   paie?: Prisma.PaieUncheckedUpdateManyWithoutEnseignantNestedInput
 }
 
 export type EnseignantCreateWithoutPaieInput = {
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  utilisateur?: Prisma.UtilisateurCreateNestedOneWithoutEnseignantInput
+  utilisateur: Prisma.UtilisateurCreateNestedOneWithoutEnseignantInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsCreateNestedManyWithoutEnseignantInput
 }
 
 export type EnseignantUncheckedCreateWithoutPaieInput = {
   id?: number
-  nom: string
-  prenom: string
-  email: string
   tauxHoraireBase: number
   statut: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  utilisateur?: Prisma.UtilisateurUncheckedCreateNestedOneWithoutEnseignantInput
+  id_utilisateur: number
   feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedCreateNestedManyWithoutEnseignantInput
 }
 
@@ -675,27 +618,21 @@ export type EnseignantUpdateToOneWithWhereWithoutPaieInput = {
 }
 
 export type EnseignantUpdateWithoutPaieInput = {
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  utilisateur?: Prisma.UtilisateurUpdateOneWithoutEnseignantNestedInput
+  utilisateur?: Prisma.UtilisateurUpdateOneRequiredWithoutEnseignantNestedInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsUpdateManyWithoutEnseignantNestedInput
 }
 
 export type EnseignantUncheckedUpdateWithoutPaieInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  nom?: Prisma.StringFieldUpdateOperationsInput | string
-  prenom?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   tauxHoraireBase?: Prisma.FloatFieldUpdateOperationsInput | number
   statut?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  utilisateur?: Prisma.UtilisateurUncheckedUpdateOneWithoutEnseignantNestedInput
+  id_utilisateur?: Prisma.IntFieldUpdateOperationsInput | number
   feuilleDeTemps?: Prisma.FeuilleDeTempsUncheckedUpdateManyWithoutEnseignantNestedInput
 }
 
@@ -741,14 +678,12 @@ export type EnseignantCountOutputTypeCountPaieArgs<ExtArgs extends runtime.Types
 
 export type EnseignantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  nom?: boolean
-  prenom?: boolean
-  email?: boolean
   tauxHoraireBase?: boolean
   statut?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  utilisateur?: boolean | Prisma.Enseignant$utilisateurArgs<ExtArgs>
+  id_utilisateur?: boolean
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
   feuilleDeTemps?: boolean | Prisma.Enseignant$feuilleDeTempsArgs<ExtArgs>
   paie?: boolean | Prisma.Enseignant$paieArgs<ExtArgs>
   _count?: boolean | Prisma.EnseignantCountOutputTypeDefaultArgs<ExtArgs>
@@ -756,63 +691,61 @@ export type EnseignantSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type EnseignantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  nom?: boolean
-  prenom?: boolean
-  email?: boolean
   tauxHoraireBase?: boolean
   statut?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  id_utilisateur?: boolean
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["enseignant"]>
 
 export type EnseignantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  nom?: boolean
-  prenom?: boolean
-  email?: boolean
   tauxHoraireBase?: boolean
   statut?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  id_utilisateur?: boolean
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["enseignant"]>
 
 export type EnseignantSelectScalar = {
   id?: boolean
-  nom?: boolean
-  prenom?: boolean
-  email?: boolean
   tauxHoraireBase?: boolean
   statut?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  id_utilisateur?: boolean
 }
 
-export type EnseignantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nom" | "prenom" | "email" | "tauxHoraireBase" | "statut" | "createdAt" | "updatedAt", ExtArgs["result"]["enseignant"]>
+export type EnseignantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tauxHoraireBase" | "statut" | "createdAt" | "updatedAt" | "id_utilisateur", ExtArgs["result"]["enseignant"]>
 export type EnseignantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  utilisateur?: boolean | Prisma.Enseignant$utilisateurArgs<ExtArgs>
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
   feuilleDeTemps?: boolean | Prisma.Enseignant$feuilleDeTempsArgs<ExtArgs>
   paie?: boolean | Prisma.Enseignant$paieArgs<ExtArgs>
   _count?: boolean | Prisma.EnseignantCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type EnseignantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type EnseignantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type EnseignantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
+}
+export type EnseignantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
+}
 
 export type $EnseignantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Enseignant"
   objects: {
-    utilisateur: Prisma.$UtilisateurPayload<ExtArgs> | null
+    utilisateur: Prisma.$UtilisateurPayload<ExtArgs>
     feuilleDeTemps: Prisma.$FeuilleDeTempsPayload<ExtArgs>[]
     paie: Prisma.$PaiePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    nom: string
-    prenom: string
-    email: string
     tauxHoraireBase: number
     statut: string
     createdAt: Date
     updatedAt: Date
+    id_utilisateur: number
   }, ExtArgs["result"]["enseignant"]>
   composites: {}
 }
@@ -1207,7 +1140,7 @@ readonly fields: EnseignantFieldRefs;
  */
 export interface Prisma__EnseignantClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  utilisateur<T extends Prisma.Enseignant$utilisateurArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enseignant$utilisateurArgs<ExtArgs>>): Prisma.Prisma__UtilisateurClient<runtime.Types.Result.GetResult<Prisma.$UtilisateurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  utilisateur<T extends Prisma.UtilisateurDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UtilisateurDefaultArgs<ExtArgs>>): Prisma.Prisma__UtilisateurClient<runtime.Types.Result.GetResult<Prisma.$UtilisateurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   feuilleDeTemps<T extends Prisma.Enseignant$feuilleDeTempsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enseignant$feuilleDeTempsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeuilleDeTempsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   paie<T extends Prisma.Enseignant$paieArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enseignant$paieArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaiePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1240,13 +1173,11 @@ export interface Prisma__EnseignantClient<T, Null = never, ExtArgs extends runti
  */
 export interface EnseignantFieldRefs {
   readonly id: Prisma.FieldRef<"Enseignant", 'Int'>
-  readonly nom: Prisma.FieldRef<"Enseignant", 'String'>
-  readonly prenom: Prisma.FieldRef<"Enseignant", 'String'>
-  readonly email: Prisma.FieldRef<"Enseignant", 'String'>
   readonly tauxHoraireBase: Prisma.FieldRef<"Enseignant", 'Float'>
   readonly statut: Prisma.FieldRef<"Enseignant", 'String'>
   readonly createdAt: Prisma.FieldRef<"Enseignant", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Enseignant", 'DateTime'>
+  readonly id_utilisateur: Prisma.FieldRef<"Enseignant", 'Int'>
 }
     
 
@@ -1501,6 +1432,10 @@ export type EnseignantCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    */
   data: Prisma.EnseignantCreateManyInput | Prisma.EnseignantCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EnseignantIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1571,6 +1506,10 @@ export type EnseignantUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    * Limit how many Enseignants to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EnseignantIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1637,25 +1576,6 @@ export type EnseignantDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Enseignants to delete.
    */
   limit?: number
-}
-
-/**
- * Enseignant.utilisateur
- */
-export type Enseignant$utilisateurArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Utilisateur
-   */
-  select?: Prisma.UtilisateurSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Utilisateur
-   */
-  omit?: Prisma.UtilisateurOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UtilisateurInclude<ExtArgs> | null
-  where?: Prisma.UtilisateurWhereInput
 }
 
 /**

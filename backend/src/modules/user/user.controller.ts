@@ -9,11 +9,14 @@ export class UserController {
     constructor(private readonly userService: UserService) {
 
     }
-    @Post("register")
+    @Post('register')
+    @ApiOperation({ summary: 'Inscription d\'un nouvel utilisateur' })
+    @ApiResponse({ status: 201, description: 'Utilisateur créé avec succès.' })
+    @ApiResponse({ status: 409, description: 'Email déjà utilisé.' })
     register(@Body() createUserDto: CreateUserDto) {
-        return this.userService.createUser(createUserDto)
+        return this.userService.createUser(createUserDto);
     }
-    @HttpCode(HttpStatus.OK) 
+    @HttpCode(HttpStatus.OK)
     @Post('login')
     @ApiOperation({ summary: 'Connexion utilisateur' })
     @ApiResponse({ status: 200, description: 'Connexion réussie, retourne le JWT.' })
