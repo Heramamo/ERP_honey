@@ -79,17 +79,6 @@ export default function LoginPage(): React.ReactElement {
 
         </div>
       </div>
-
-      {/* Footer */}
-      <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-[11px] font-mono text-slate-500 pt-6 gap-2">
-        <div className="flex items-center gap-2 tracking-widest uppercase">
-          <ShieldCheck size={14} className="text-slate-500" />
-          <span>SECURE CONNECTION</span>
-        </div>
-        <div>
-          © 2026 Honey Group. All rights reserved.
-        </div>
-      </div>
     </div>
   );
 }
