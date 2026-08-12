@@ -1,19 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Building2 } from 'lucide-react';
-import { RegisterForm, type RegisterFormValues } from '../components/auth/RegisterForm';
+import { RegisterForm } from '../components/auth/RegisterForm';
+import type { RegisterFormValues } from '../components/auth/RegisterForm';
 
 export default function RegisterPage(): React.ReactElement {
   const handleRegister = async (values: RegisterFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    alert(`Compte créé avec succès pour ${values.fullName} !`);
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    console.log('Données d\'inscription :', values);
   };
 
   return (
     <div className="w-screen min-h-screen bg-[#0b132b] flex items-center justify-center p-4 md:p-8 m-0 font-sans">
       <div className="w-full max-w-5xl bg-[#0d162d] rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[580px] border border-slate-800">
         
-        {/* Panneau Gauche */}
+        {/* Panneau Gauche - Branding */}
         <div className="lg:col-span-5 relative p-8 md:p-12 flex flex-col items-center justify-center text-center overflow-hidden bg-gradient-to-br from-[#0c1328] via-[#0f1b3d] to-[#070d1e]">
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#d4af37]/15 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10 flex flex-col items-center">
@@ -29,7 +30,7 @@ export default function RegisterPage(): React.ReactElement {
           </div>
         </div>
 
-        {/* Panneau Droit */}
+        {/* Panneau Droit - Formulaire */}
         <div className="lg:col-span-7 bg-white p-8 md:p-12 flex flex-col justify-center">
           <div className="max-w-md mx-auto w-full">
             <div className="mb-8">
@@ -46,7 +47,6 @@ export default function RegisterPage(): React.ReactElement {
 
             <RegisterForm onSubmit={handleRegister} />
 
-            {/* Lien vers la connexion */}
             <div className="mt-8 text-center text-xs font-medium text-slate-500">
               Vous avez déjà un compte ?{' '}
               <Link to="/login" className="text-slate-900 font-bold hover:underline">

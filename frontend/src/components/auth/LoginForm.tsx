@@ -12,16 +12,15 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
-  const [username, setUsername] = useState<string>('');
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [password, setPassword] = useState<string>('');
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
       await onSubmit({ username, password, rememberMe });
     } finally {
@@ -31,48 +30,47 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Champ de Saisie Identifiant / Utilisateur */}
-      <div>
-        <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+      {/* Champ Identifiant */}
+      <div className="space-y-1.5">
+        <label className="block text-xs font-mono text-slate-400 tracking-wide">
           Identifiant / Nom d'utilisateur
         </label>
-        <div className="relative flex items-center">
-          <div className="absolute left-3 text-gray-400">
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
             <User size={18} />
           </div>
           <input
             type="text"
             value={username}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Entrez votre identifiant"
             required
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-slate-900 placeholder-gray-400 focus:outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition-all"
+            className="w-full bg-[#182234] border border-slate-700/60 rounded-lg pl-10 pr-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all"
           />
         </div>
       </div>
 
-      {/* Champ Mot de passe / PIN */}
-      <div>
-        <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+      {/* Champ Mot de passe */}
+      <div className="space-y-1.5">
+        <label className="block text-xs font-mono text-slate-400 tracking-wide">
           Mot de passe / PIN
         </label>
-        <div className="relative flex items-center">
-          <div className="absolute left-3 text-gray-400">
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
             <Lock size={18} />
           </div>
           <input
             type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Entrez votre mot de passe"
             required
-            className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-slate-900 placeholder-gray-400 focus:outline-none focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition-all"
+            className="w-full bg-[#182234] border border-slate-700/60 rounded-lg pl-10 pr-10 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 text-gray-400 hover:text-slate-700 transition-colors cursor-pointer"
-            title={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+            className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
@@ -80,15 +78,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       </div>
 
       {/* Case à cocher */}
-      <div className="flex items-center gap-2 pt-1">
+      <div className="flex items-center pt-1">
         <input
+          id="rememberMe"
           type="checkbox"
-          id="remember"
           checked={rememberMe}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRememberMe(e.target.checked)}
-          className="w-4 h-4 rounded border-gray-300 text-[#d4af37] focus:ring-[#d4af37] cursor-pointer accent-[#d4af37]"
+          onChange={(e) => setRememberMe(e.target.checked)}
+          className="h-4 w-4 rounded border-slate-700 bg-[#182234] text-[#d4af37] focus:ring-[#d4af37] focus:ring-offset-0 cursor-pointer"
         />
-        <label htmlFor="remember" className="text-xs text-gray-500 cursor-pointer select-none">
+        <label htmlFor="rememberMe" className="ml-2.5 text-xs text-slate-400 cursor-pointer select-none">
           Rester connecté sur cette session locale
         </label>
       </div>
@@ -97,7 +95,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full mt-4 py-3 px-4 bg-[#d4af37] hover:bg-[#c29f2e] active:bg-[#b08f25] disabled:opacity-70 text-slate-950 font-bold rounded-xl text-xs transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer"
+        className="w-full mt-2 bg-[#d4af37] hover:bg-[#c29f2e] text-slate-950 font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition duration-200 shadow-md font-mono text-xs cursor-pointer disabled:opacity-70"
       >
         {isLoading ? (
           <>
