@@ -19,6 +19,11 @@ enum Role {
   FINANCE
   ENSEIGNANT
 }
+enum STATUT_FEUILLE { 
+  VALIDE
+  REFUSE
+  EN_ATTENTE
+}
 
 model Utilisateur {
   id_utilisateur  Int      @id @default(autoincrement())
@@ -29,6 +34,7 @@ model Utilisateur {
   role            Role     @default(ENSEIGNANT)
   date_creation   DateTime @default(now())
   enseignant      Enseignant?
+  feuillesValidees FeuilleDeTemps[] @relation("FeuillesValidees")
 }
 
 model Enseignant{
@@ -54,8 +60,10 @@ model FeuilleDeTemps{
   typeActivite String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
+  statut  STATUT_FEUILLE @default(EN_ATTENTE)
   enseignant Enseignant @relation(fields: [enseignantId], references: [id])
+  valideParId      Int?
+  validePar        Utilisateur?  @relation("FeuillesValidees", fields: [valideParId], references: [id_utilisateur])
 }
 
 model Paie{

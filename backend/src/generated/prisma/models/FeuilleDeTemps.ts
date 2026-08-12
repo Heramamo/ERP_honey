@@ -31,6 +31,7 @@ export type FeuilleDeTempsAvgAggregateOutputType = {
   enseignantId: number | null
   heuresEffectuees: number | null
   heuresSupp: number | null
+  valideParId: number | null
 }
 
 export type FeuilleDeTempsSumAggregateOutputType = {
@@ -38,6 +39,7 @@ export type FeuilleDeTempsSumAggregateOutputType = {
   enseignantId: number | null
   heuresEffectuees: number | null
   heuresSupp: number | null
+  valideParId: number | null
 }
 
 export type FeuilleDeTempsMinAggregateOutputType = {
@@ -49,6 +51,8 @@ export type FeuilleDeTempsMinAggregateOutputType = {
   typeActivite: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  statut: $Enums.STATUT_FEUILLE | null
+  valideParId: number | null
 }
 
 export type FeuilleDeTempsMaxAggregateOutputType = {
@@ -60,6 +64,8 @@ export type FeuilleDeTempsMaxAggregateOutputType = {
   typeActivite: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  statut: $Enums.STATUT_FEUILLE | null
+  valideParId: number | null
 }
 
 export type FeuilleDeTempsCountAggregateOutputType = {
@@ -71,6 +77,8 @@ export type FeuilleDeTempsCountAggregateOutputType = {
   typeActivite: number
   createdAt: number
   updatedAt: number
+  statut: number
+  valideParId: number
   _all: number
 }
 
@@ -80,6 +88,7 @@ export type FeuilleDeTempsAvgAggregateInputType = {
   enseignantId?: true
   heuresEffectuees?: true
   heuresSupp?: true
+  valideParId?: true
 }
 
 export type FeuilleDeTempsSumAggregateInputType = {
@@ -87,6 +96,7 @@ export type FeuilleDeTempsSumAggregateInputType = {
   enseignantId?: true
   heuresEffectuees?: true
   heuresSupp?: true
+  valideParId?: true
 }
 
 export type FeuilleDeTempsMinAggregateInputType = {
@@ -98,6 +108,8 @@ export type FeuilleDeTempsMinAggregateInputType = {
   typeActivite?: true
   createdAt?: true
   updatedAt?: true
+  statut?: true
+  valideParId?: true
 }
 
 export type FeuilleDeTempsMaxAggregateInputType = {
@@ -109,6 +121,8 @@ export type FeuilleDeTempsMaxAggregateInputType = {
   typeActivite?: true
   createdAt?: true
   updatedAt?: true
+  statut?: true
+  valideParId?: true
 }
 
 export type FeuilleDeTempsCountAggregateInputType = {
@@ -120,6 +134,8 @@ export type FeuilleDeTempsCountAggregateInputType = {
   typeActivite?: true
   createdAt?: true
   updatedAt?: true
+  statut?: true
+  valideParId?: true
   _all?: true
 }
 
@@ -218,6 +234,8 @@ export type FeuilleDeTempsGroupByOutputType = {
   typeActivite: string
   createdAt: Date
   updatedAt: Date
+  statut: $Enums.STATUT_FEUILLE
+  valideParId: number | null
   _count: FeuilleDeTempsCountAggregateOutputType | null
   _avg: FeuilleDeTempsAvgAggregateOutputType | null
   _sum: FeuilleDeTempsSumAggregateOutputType | null
@@ -252,7 +270,10 @@ export type FeuilleDeTempsWhereInput = {
   typeActivite?: Prisma.StringFilter<"FeuilleDeTemps"> | string
   createdAt?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFilter<"FeuilleDeTemps"> | $Enums.STATUT_FEUILLE
+  valideParId?: Prisma.IntNullableFilter<"FeuilleDeTemps"> | number | null
   enseignant?: Prisma.XOR<Prisma.EnseignantScalarRelationFilter, Prisma.EnseignantWhereInput>
+  validePar?: Prisma.XOR<Prisma.UtilisateurNullableScalarRelationFilter, Prisma.UtilisateurWhereInput> | null
 }
 
 export type FeuilleDeTempsOrderByWithRelationInput = {
@@ -264,7 +285,10 @@ export type FeuilleDeTempsOrderByWithRelationInput = {
   typeActivite?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  statut?: Prisma.SortOrder
+  valideParId?: Prisma.SortOrderInput | Prisma.SortOrder
   enseignant?: Prisma.EnseignantOrderByWithRelationInput
+  validePar?: Prisma.UtilisateurOrderByWithRelationInput
 }
 
 export type FeuilleDeTempsWhereUniqueInput = Prisma.AtLeast<{
@@ -279,7 +303,10 @@ export type FeuilleDeTempsWhereUniqueInput = Prisma.AtLeast<{
   typeActivite?: Prisma.StringFilter<"FeuilleDeTemps"> | string
   createdAt?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFilter<"FeuilleDeTemps"> | $Enums.STATUT_FEUILLE
+  valideParId?: Prisma.IntNullableFilter<"FeuilleDeTemps"> | number | null
   enseignant?: Prisma.XOR<Prisma.EnseignantScalarRelationFilter, Prisma.EnseignantWhereInput>
+  validePar?: Prisma.XOR<Prisma.UtilisateurNullableScalarRelationFilter, Prisma.UtilisateurWhereInput> | null
 }, "id">
 
 export type FeuilleDeTempsOrderByWithAggregationInput = {
@@ -291,6 +318,8 @@ export type FeuilleDeTempsOrderByWithAggregationInput = {
   typeActivite?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  statut?: Prisma.SortOrder
+  valideParId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.FeuilleDeTempsCountOrderByAggregateInput
   _avg?: Prisma.FeuilleDeTempsAvgOrderByAggregateInput
   _max?: Prisma.FeuilleDeTempsMaxOrderByAggregateInput
@@ -310,6 +339,8 @@ export type FeuilleDeTempsScalarWhereWithAggregatesInput = {
   typeActivite?: Prisma.StringWithAggregatesFilter<"FeuilleDeTemps"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FeuilleDeTemps"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"FeuilleDeTemps"> | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEWithAggregatesFilter<"FeuilleDeTemps"> | $Enums.STATUT_FEUILLE
+  valideParId?: Prisma.IntNullableWithAggregatesFilter<"FeuilleDeTemps"> | number | null
 }
 
 export type FeuilleDeTempsCreateInput = {
@@ -319,7 +350,9 @@ export type FeuilleDeTempsCreateInput = {
   typeActivite: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  statut?: $Enums.STATUT_FEUILLE
   enseignant: Prisma.EnseignantCreateNestedOneWithoutFeuilleDeTempsInput
+  validePar?: Prisma.UtilisateurCreateNestedOneWithoutFeuillesValideesInput
 }
 
 export type FeuilleDeTempsUncheckedCreateInput = {
@@ -331,6 +364,8 @@ export type FeuilleDeTempsUncheckedCreateInput = {
   typeActivite: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  statut?: $Enums.STATUT_FEUILLE
+  valideParId?: number | null
 }
 
 export type FeuilleDeTempsUpdateInput = {
@@ -340,7 +375,9 @@ export type FeuilleDeTempsUpdateInput = {
   typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
   enseignant?: Prisma.EnseignantUpdateOneRequiredWithoutFeuilleDeTempsNestedInput
+  validePar?: Prisma.UtilisateurUpdateOneWithoutFeuillesValideesNestedInput
 }
 
 export type FeuilleDeTempsUncheckedUpdateInput = {
@@ -352,6 +389,8 @@ export type FeuilleDeTempsUncheckedUpdateInput = {
   typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
+  valideParId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FeuilleDeTempsCreateManyInput = {
@@ -363,6 +402,8 @@ export type FeuilleDeTempsCreateManyInput = {
   typeActivite: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  statut?: $Enums.STATUT_FEUILLE
+  valideParId?: number | null
 }
 
 export type FeuilleDeTempsUpdateManyMutationInput = {
@@ -372,6 +413,7 @@ export type FeuilleDeTempsUpdateManyMutationInput = {
   typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
 }
 
 export type FeuilleDeTempsUncheckedUpdateManyInput = {
@@ -383,6 +425,8 @@ export type FeuilleDeTempsUncheckedUpdateManyInput = {
   typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
+  valideParId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FeuilleDeTempsListRelationFilter = {
@@ -404,6 +448,8 @@ export type FeuilleDeTempsCountOrderByAggregateInput = {
   typeActivite?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  statut?: Prisma.SortOrder
+  valideParId?: Prisma.SortOrder
 }
 
 export type FeuilleDeTempsAvgOrderByAggregateInput = {
@@ -411,6 +457,7 @@ export type FeuilleDeTempsAvgOrderByAggregateInput = {
   enseignantId?: Prisma.SortOrder
   heuresEffectuees?: Prisma.SortOrder
   heuresSupp?: Prisma.SortOrder
+  valideParId?: Prisma.SortOrder
 }
 
 export type FeuilleDeTempsMaxOrderByAggregateInput = {
@@ -422,6 +469,8 @@ export type FeuilleDeTempsMaxOrderByAggregateInput = {
   typeActivite?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  statut?: Prisma.SortOrder
+  valideParId?: Prisma.SortOrder
 }
 
 export type FeuilleDeTempsMinOrderByAggregateInput = {
@@ -433,6 +482,8 @@ export type FeuilleDeTempsMinOrderByAggregateInput = {
   typeActivite?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  statut?: Prisma.SortOrder
+  valideParId?: Prisma.SortOrder
 }
 
 export type FeuilleDeTempsSumOrderByAggregateInput = {
@@ -440,6 +491,49 @@ export type FeuilleDeTempsSumOrderByAggregateInput = {
   enseignantId?: Prisma.SortOrder
   heuresEffectuees?: Prisma.SortOrder
   heuresSupp?: Prisma.SortOrder
+  valideParId?: Prisma.SortOrder
+}
+
+export type FeuilleDeTempsCreateNestedManyWithoutValideParInput = {
+  create?: Prisma.XOR<Prisma.FeuilleDeTempsCreateWithoutValideParInput, Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput> | Prisma.FeuilleDeTempsCreateWithoutValideParInput[] | Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput[]
+  connectOrCreate?: Prisma.FeuilleDeTempsCreateOrConnectWithoutValideParInput | Prisma.FeuilleDeTempsCreateOrConnectWithoutValideParInput[]
+  createMany?: Prisma.FeuilleDeTempsCreateManyValideParInputEnvelope
+  connect?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+}
+
+export type FeuilleDeTempsUncheckedCreateNestedManyWithoutValideParInput = {
+  create?: Prisma.XOR<Prisma.FeuilleDeTempsCreateWithoutValideParInput, Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput> | Prisma.FeuilleDeTempsCreateWithoutValideParInput[] | Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput[]
+  connectOrCreate?: Prisma.FeuilleDeTempsCreateOrConnectWithoutValideParInput | Prisma.FeuilleDeTempsCreateOrConnectWithoutValideParInput[]
+  createMany?: Prisma.FeuilleDeTempsCreateManyValideParInputEnvelope
+  connect?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+}
+
+export type FeuilleDeTempsUpdateManyWithoutValideParNestedInput = {
+  create?: Prisma.XOR<Prisma.FeuilleDeTempsCreateWithoutValideParInput, Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput> | Prisma.FeuilleDeTempsCreateWithoutValideParInput[] | Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput[]
+  connectOrCreate?: Prisma.FeuilleDeTempsCreateOrConnectWithoutValideParInput | Prisma.FeuilleDeTempsCreateOrConnectWithoutValideParInput[]
+  upsert?: Prisma.FeuilleDeTempsUpsertWithWhereUniqueWithoutValideParInput | Prisma.FeuilleDeTempsUpsertWithWhereUniqueWithoutValideParInput[]
+  createMany?: Prisma.FeuilleDeTempsCreateManyValideParInputEnvelope
+  set?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+  disconnect?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+  delete?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+  connect?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+  update?: Prisma.FeuilleDeTempsUpdateWithWhereUniqueWithoutValideParInput | Prisma.FeuilleDeTempsUpdateWithWhereUniqueWithoutValideParInput[]
+  updateMany?: Prisma.FeuilleDeTempsUpdateManyWithWhereWithoutValideParInput | Prisma.FeuilleDeTempsUpdateManyWithWhereWithoutValideParInput[]
+  deleteMany?: Prisma.FeuilleDeTempsScalarWhereInput | Prisma.FeuilleDeTempsScalarWhereInput[]
+}
+
+export type FeuilleDeTempsUncheckedUpdateManyWithoutValideParNestedInput = {
+  create?: Prisma.XOR<Prisma.FeuilleDeTempsCreateWithoutValideParInput, Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput> | Prisma.FeuilleDeTempsCreateWithoutValideParInput[] | Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput[]
+  connectOrCreate?: Prisma.FeuilleDeTempsCreateOrConnectWithoutValideParInput | Prisma.FeuilleDeTempsCreateOrConnectWithoutValideParInput[]
+  upsert?: Prisma.FeuilleDeTempsUpsertWithWhereUniqueWithoutValideParInput | Prisma.FeuilleDeTempsUpsertWithWhereUniqueWithoutValideParInput[]
+  createMany?: Prisma.FeuilleDeTempsCreateManyValideParInputEnvelope
+  set?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+  disconnect?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+  delete?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+  connect?: Prisma.FeuilleDeTempsWhereUniqueInput | Prisma.FeuilleDeTempsWhereUniqueInput[]
+  update?: Prisma.FeuilleDeTempsUpdateWithWhereUniqueWithoutValideParInput | Prisma.FeuilleDeTempsUpdateWithWhereUniqueWithoutValideParInput[]
+  updateMany?: Prisma.FeuilleDeTempsUpdateManyWithWhereWithoutValideParInput | Prisma.FeuilleDeTempsUpdateManyWithWhereWithoutValideParInput[]
+  deleteMany?: Prisma.FeuilleDeTempsScalarWhereInput | Prisma.FeuilleDeTempsScalarWhereInput[]
 }
 
 export type FeuilleDeTempsCreateNestedManyWithoutEnseignantInput = {
@@ -484,6 +578,83 @@ export type FeuilleDeTempsUncheckedUpdateManyWithoutEnseignantNestedInput = {
   deleteMany?: Prisma.FeuilleDeTempsScalarWhereInput | Prisma.FeuilleDeTempsScalarWhereInput[]
 }
 
+export type EnumSTATUT_FEUILLEFieldUpdateOperationsInput = {
+  set?: $Enums.STATUT_FEUILLE
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type FeuilleDeTempsCreateWithoutValideParInput = {
+  date: Date | string
+  heuresEffectuees: number
+  heuresSupp: number
+  typeActivite: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  statut?: $Enums.STATUT_FEUILLE
+  enseignant: Prisma.EnseignantCreateNestedOneWithoutFeuilleDeTempsInput
+}
+
+export type FeuilleDeTempsUncheckedCreateWithoutValideParInput = {
+  id?: number
+  enseignantId: number
+  date: Date | string
+  heuresEffectuees: number
+  heuresSupp: number
+  typeActivite: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  statut?: $Enums.STATUT_FEUILLE
+}
+
+export type FeuilleDeTempsCreateOrConnectWithoutValideParInput = {
+  where: Prisma.FeuilleDeTempsWhereUniqueInput
+  create: Prisma.XOR<Prisma.FeuilleDeTempsCreateWithoutValideParInput, Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput>
+}
+
+export type FeuilleDeTempsCreateManyValideParInputEnvelope = {
+  data: Prisma.FeuilleDeTempsCreateManyValideParInput | Prisma.FeuilleDeTempsCreateManyValideParInput[]
+  skipDuplicates?: boolean
+}
+
+export type FeuilleDeTempsUpsertWithWhereUniqueWithoutValideParInput = {
+  where: Prisma.FeuilleDeTempsWhereUniqueInput
+  update: Prisma.XOR<Prisma.FeuilleDeTempsUpdateWithoutValideParInput, Prisma.FeuilleDeTempsUncheckedUpdateWithoutValideParInput>
+  create: Prisma.XOR<Prisma.FeuilleDeTempsCreateWithoutValideParInput, Prisma.FeuilleDeTempsUncheckedCreateWithoutValideParInput>
+}
+
+export type FeuilleDeTempsUpdateWithWhereUniqueWithoutValideParInput = {
+  where: Prisma.FeuilleDeTempsWhereUniqueInput
+  data: Prisma.XOR<Prisma.FeuilleDeTempsUpdateWithoutValideParInput, Prisma.FeuilleDeTempsUncheckedUpdateWithoutValideParInput>
+}
+
+export type FeuilleDeTempsUpdateManyWithWhereWithoutValideParInput = {
+  where: Prisma.FeuilleDeTempsScalarWhereInput
+  data: Prisma.XOR<Prisma.FeuilleDeTempsUpdateManyMutationInput, Prisma.FeuilleDeTempsUncheckedUpdateManyWithoutValideParInput>
+}
+
+export type FeuilleDeTempsScalarWhereInput = {
+  AND?: Prisma.FeuilleDeTempsScalarWhereInput | Prisma.FeuilleDeTempsScalarWhereInput[]
+  OR?: Prisma.FeuilleDeTempsScalarWhereInput[]
+  NOT?: Prisma.FeuilleDeTempsScalarWhereInput | Prisma.FeuilleDeTempsScalarWhereInput[]
+  id?: Prisma.IntFilter<"FeuilleDeTemps"> | number
+  enseignantId?: Prisma.IntFilter<"FeuilleDeTemps"> | number
+  date?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
+  heuresEffectuees?: Prisma.FloatFilter<"FeuilleDeTemps"> | number
+  heuresSupp?: Prisma.FloatFilter<"FeuilleDeTemps"> | number
+  typeActivite?: Prisma.StringFilter<"FeuilleDeTemps"> | string
+  createdAt?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFilter<"FeuilleDeTemps"> | $Enums.STATUT_FEUILLE
+  valideParId?: Prisma.IntNullableFilter<"FeuilleDeTemps"> | number | null
+}
+
 export type FeuilleDeTempsCreateWithoutEnseignantInput = {
   date: Date | string
   heuresEffectuees: number
@@ -491,6 +662,8 @@ export type FeuilleDeTempsCreateWithoutEnseignantInput = {
   typeActivite: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  statut?: $Enums.STATUT_FEUILLE
+  validePar?: Prisma.UtilisateurCreateNestedOneWithoutFeuillesValideesInput
 }
 
 export type FeuilleDeTempsUncheckedCreateWithoutEnseignantInput = {
@@ -501,6 +674,8 @@ export type FeuilleDeTempsUncheckedCreateWithoutEnseignantInput = {
   typeActivite: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  statut?: $Enums.STATUT_FEUILLE
+  valideParId?: number | null
 }
 
 export type FeuilleDeTempsCreateOrConnectWithoutEnseignantInput = {
@@ -529,18 +704,51 @@ export type FeuilleDeTempsUpdateManyWithWhereWithoutEnseignantInput = {
   data: Prisma.XOR<Prisma.FeuilleDeTempsUpdateManyMutationInput, Prisma.FeuilleDeTempsUncheckedUpdateManyWithoutEnseignantInput>
 }
 
-export type FeuilleDeTempsScalarWhereInput = {
-  AND?: Prisma.FeuilleDeTempsScalarWhereInput | Prisma.FeuilleDeTempsScalarWhereInput[]
-  OR?: Prisma.FeuilleDeTempsScalarWhereInput[]
-  NOT?: Prisma.FeuilleDeTempsScalarWhereInput | Prisma.FeuilleDeTempsScalarWhereInput[]
-  id?: Prisma.IntFilter<"FeuilleDeTemps"> | number
-  enseignantId?: Prisma.IntFilter<"FeuilleDeTemps"> | number
-  date?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
-  heuresEffectuees?: Prisma.FloatFilter<"FeuilleDeTemps"> | number
-  heuresSupp?: Prisma.FloatFilter<"FeuilleDeTemps"> | number
-  typeActivite?: Prisma.StringFilter<"FeuilleDeTemps"> | string
-  createdAt?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"FeuilleDeTemps"> | Date | string
+export type FeuilleDeTempsCreateManyValideParInput = {
+  id?: number
+  enseignantId: number
+  date: Date | string
+  heuresEffectuees: number
+  heuresSupp: number
+  typeActivite: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  statut?: $Enums.STATUT_FEUILLE
+}
+
+export type FeuilleDeTempsUpdateWithoutValideParInput = {
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  heuresEffectuees?: Prisma.FloatFieldUpdateOperationsInput | number
+  heuresSupp?: Prisma.FloatFieldUpdateOperationsInput | number
+  typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
+  enseignant?: Prisma.EnseignantUpdateOneRequiredWithoutFeuilleDeTempsNestedInput
+}
+
+export type FeuilleDeTempsUncheckedUpdateWithoutValideParInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  enseignantId?: Prisma.IntFieldUpdateOperationsInput | number
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  heuresEffectuees?: Prisma.FloatFieldUpdateOperationsInput | number
+  heuresSupp?: Prisma.FloatFieldUpdateOperationsInput | number
+  typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
+}
+
+export type FeuilleDeTempsUncheckedUpdateManyWithoutValideParInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  enseignantId?: Prisma.IntFieldUpdateOperationsInput | number
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  heuresEffectuees?: Prisma.FloatFieldUpdateOperationsInput | number
+  heuresSupp?: Prisma.FloatFieldUpdateOperationsInput | number
+  typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
 }
 
 export type FeuilleDeTempsCreateManyEnseignantInput = {
@@ -551,6 +759,8 @@ export type FeuilleDeTempsCreateManyEnseignantInput = {
   typeActivite: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  statut?: $Enums.STATUT_FEUILLE
+  valideParId?: number | null
 }
 
 export type FeuilleDeTempsUpdateWithoutEnseignantInput = {
@@ -560,6 +770,8 @@ export type FeuilleDeTempsUpdateWithoutEnseignantInput = {
   typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
+  validePar?: Prisma.UtilisateurUpdateOneWithoutFeuillesValideesNestedInput
 }
 
 export type FeuilleDeTempsUncheckedUpdateWithoutEnseignantInput = {
@@ -570,6 +782,8 @@ export type FeuilleDeTempsUncheckedUpdateWithoutEnseignantInput = {
   typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
+  valideParId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FeuilleDeTempsUncheckedUpdateManyWithoutEnseignantInput = {
@@ -580,6 +794,8 @@ export type FeuilleDeTempsUncheckedUpdateManyWithoutEnseignantInput = {
   typeActivite?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statut?: Prisma.EnumSTATUT_FEUILLEFieldUpdateOperationsInput | $Enums.STATUT_FEUILLE
+  valideParId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -593,7 +809,10 @@ export type FeuilleDeTempsSelect<ExtArgs extends runtime.Types.Extensions.Intern
   typeActivite?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  statut?: boolean
+  valideParId?: boolean
   enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
+  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
 }, ExtArgs["result"]["feuilleDeTemps"]>
 
 export type FeuilleDeTempsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -605,7 +824,10 @@ export type FeuilleDeTempsSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   typeActivite?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  statut?: boolean
+  valideParId?: boolean
   enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
+  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
 }, ExtArgs["result"]["feuilleDeTemps"]>
 
 export type FeuilleDeTempsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -617,7 +839,10 @@ export type FeuilleDeTempsSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   typeActivite?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  statut?: boolean
+  valideParId?: boolean
   enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
+  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
 }, ExtArgs["result"]["feuilleDeTemps"]>
 
 export type FeuilleDeTempsSelectScalar = {
@@ -629,23 +854,29 @@ export type FeuilleDeTempsSelectScalar = {
   typeActivite?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  statut?: boolean
+  valideParId?: boolean
 }
 
-export type FeuilleDeTempsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "enseignantId" | "date" | "heuresEffectuees" | "heuresSupp" | "typeActivite" | "createdAt" | "updatedAt", ExtArgs["result"]["feuilleDeTemps"]>
+export type FeuilleDeTempsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "enseignantId" | "date" | "heuresEffectuees" | "heuresSupp" | "typeActivite" | "createdAt" | "updatedAt" | "statut" | "valideParId", ExtArgs["result"]["feuilleDeTemps"]>
 export type FeuilleDeTempsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
+  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
 }
 export type FeuilleDeTempsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
+  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
 }
 export type FeuilleDeTempsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
+  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
 }
 
 export type $FeuilleDeTempsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "FeuilleDeTemps"
   objects: {
     enseignant: Prisma.$EnseignantPayload<ExtArgs>
+    validePar: Prisma.$UtilisateurPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -656,6 +887,8 @@ export type $FeuilleDeTempsPayload<ExtArgs extends runtime.Types.Extensions.Inte
     typeActivite: string
     createdAt: Date
     updatedAt: Date
+    statut: $Enums.STATUT_FEUILLE
+    valideParId: number | null
   }, ExtArgs["result"]["feuilleDeTemps"]>
   composites: {}
 }
@@ -1051,6 +1284,7 @@ readonly fields: FeuilleDeTempsFieldRefs;
 export interface Prisma__FeuilleDeTempsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   enseignant<T extends Prisma.EnseignantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EnseignantDefaultArgs<ExtArgs>>): Prisma.Prisma__EnseignantClient<runtime.Types.Result.GetResult<Prisma.$EnseignantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  validePar<T extends Prisma.FeuilleDeTemps$valideParArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>>): Prisma.Prisma__UtilisateurClient<runtime.Types.Result.GetResult<Prisma.$UtilisateurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1088,6 +1322,8 @@ export interface FeuilleDeTempsFieldRefs {
   readonly typeActivite: Prisma.FieldRef<"FeuilleDeTemps", 'String'>
   readonly createdAt: Prisma.FieldRef<"FeuilleDeTemps", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"FeuilleDeTemps", 'DateTime'>
+  readonly statut: Prisma.FieldRef<"FeuilleDeTemps", 'STATUT_FEUILLE'>
+  readonly valideParId: Prisma.FieldRef<"FeuilleDeTemps", 'Int'>
 }
     
 
@@ -1486,6 +1722,25 @@ export type FeuilleDeTempsDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many FeuilleDeTemps to delete.
    */
   limit?: number
+}
+
+/**
+ * FeuilleDeTemps.validePar
+ */
+export type FeuilleDeTemps$valideParArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Utilisateur
+   */
+  select?: Prisma.UtilisateurSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Utilisateur
+   */
+  omit?: Prisma.UtilisateurOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UtilisateurInclude<ExtArgs> | null
+  where?: Prisma.UtilisateurWhereInput
 }
 
 /**

@@ -109,7 +109,9 @@ export const FeuilleDeTempsScalarFieldEnum = {
   heuresSupp: 'heuresSupp',
   typeActivite: 'typeActivite',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  statut: 'statut',
+  valideParId: 'valideParId'
 } as const
 
 export type FeuilleDeTempsScalarFieldEnum = (typeof FeuilleDeTempsScalarFieldEnum)[keyof typeof FeuilleDeTempsScalarFieldEnum]
@@ -182,4 +184,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

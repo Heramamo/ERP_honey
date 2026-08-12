@@ -233,6 +233,7 @@ export type UtilisateurWhereInput = {
   role?: Prisma.EnumRoleFilter<"Utilisateur"> | $Enums.Role
   date_creation?: Prisma.DateTimeFilter<"Utilisateur"> | Date | string
   enseignant?: Prisma.XOR<Prisma.EnseignantNullableScalarRelationFilter, Prisma.EnseignantWhereInput> | null
+  feuillesValidees?: Prisma.FeuilleDeTempsListRelationFilter
 }
 
 export type UtilisateurOrderByWithRelationInput = {
@@ -244,6 +245,7 @@ export type UtilisateurOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   date_creation?: Prisma.SortOrder
   enseignant?: Prisma.EnseignantOrderByWithRelationInput
+  feuillesValidees?: Prisma.FeuilleDeTempsOrderByRelationAggregateInput
 }
 
 export type UtilisateurWhereUniqueInput = Prisma.AtLeast<{
@@ -258,6 +260,7 @@ export type UtilisateurWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumRoleFilter<"Utilisateur"> | $Enums.Role
   date_creation?: Prisma.DateTimeFilter<"Utilisateur"> | Date | string
   enseignant?: Prisma.XOR<Prisma.EnseignantNullableScalarRelationFilter, Prisma.EnseignantWhereInput> | null
+  feuillesValidees?: Prisma.FeuilleDeTempsListRelationFilter
 }, "id_utilisateur" | "email">
 
 export type UtilisateurOrderByWithAggregationInput = {
@@ -296,6 +299,7 @@ export type UtilisateurCreateInput = {
   role?: $Enums.Role
   date_creation?: Date | string
   enseignant?: Prisma.EnseignantCreateNestedOneWithoutUtilisateurInput
+  feuillesValidees?: Prisma.FeuilleDeTempsCreateNestedManyWithoutValideParInput
 }
 
 export type UtilisateurUncheckedCreateInput = {
@@ -307,6 +311,7 @@ export type UtilisateurUncheckedCreateInput = {
   role?: $Enums.Role
   date_creation?: Date | string
   enseignant?: Prisma.EnseignantUncheckedCreateNestedOneWithoutUtilisateurInput
+  feuillesValidees?: Prisma.FeuilleDeTempsUncheckedCreateNestedManyWithoutValideParInput
 }
 
 export type UtilisateurUpdateInput = {
@@ -317,6 +322,7 @@ export type UtilisateurUpdateInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   date_creation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   enseignant?: Prisma.EnseignantUpdateOneWithoutUtilisateurNestedInput
+  feuillesValidees?: Prisma.FeuilleDeTempsUpdateManyWithoutValideParNestedInput
 }
 
 export type UtilisateurUncheckedUpdateInput = {
@@ -328,6 +334,7 @@ export type UtilisateurUncheckedUpdateInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   date_creation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   enseignant?: Prisma.EnseignantUncheckedUpdateOneWithoutUtilisateurNestedInput
+  feuillesValidees?: Prisma.FeuilleDeTempsUncheckedUpdateManyWithoutValideParNestedInput
 }
 
 export type UtilisateurCreateManyInput = {
@@ -402,6 +409,11 @@ export type UtilisateurScalarRelationFilter = {
   isNot?: Prisma.UtilisateurWhereInput
 }
 
+export type UtilisateurNullableScalarRelationFilter = {
+  is?: Prisma.UtilisateurWhereInput | null
+  isNot?: Prisma.UtilisateurWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -436,6 +448,22 @@ export type UtilisateurUpdateOneRequiredWithoutEnseignantNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UtilisateurUpdateToOneWithWhereWithoutEnseignantInput, Prisma.UtilisateurUpdateWithoutEnseignantInput>, Prisma.UtilisateurUncheckedUpdateWithoutEnseignantInput>
 }
 
+export type UtilisateurCreateNestedOneWithoutFeuillesValideesInput = {
+  create?: Prisma.XOR<Prisma.UtilisateurCreateWithoutFeuillesValideesInput, Prisma.UtilisateurUncheckedCreateWithoutFeuillesValideesInput>
+  connectOrCreate?: Prisma.UtilisateurCreateOrConnectWithoutFeuillesValideesInput
+  connect?: Prisma.UtilisateurWhereUniqueInput
+}
+
+export type UtilisateurUpdateOneWithoutFeuillesValideesNestedInput = {
+  create?: Prisma.XOR<Prisma.UtilisateurCreateWithoutFeuillesValideesInput, Prisma.UtilisateurUncheckedCreateWithoutFeuillesValideesInput>
+  connectOrCreate?: Prisma.UtilisateurCreateOrConnectWithoutFeuillesValideesInput
+  upsert?: Prisma.UtilisateurUpsertWithoutFeuillesValideesInput
+  disconnect?: Prisma.UtilisateurWhereInput | boolean
+  delete?: Prisma.UtilisateurWhereInput | boolean
+  connect?: Prisma.UtilisateurWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UtilisateurUpdateToOneWithWhereWithoutFeuillesValideesInput, Prisma.UtilisateurUpdateWithoutFeuillesValideesInput>, Prisma.UtilisateurUncheckedUpdateWithoutFeuillesValideesInput>
+}
+
 export type UtilisateurCreateWithoutEnseignantInput = {
   email: string
   mot_de_passe: string
@@ -443,6 +471,7 @@ export type UtilisateurCreateWithoutEnseignantInput = {
   prenom: string
   role?: $Enums.Role
   date_creation?: Date | string
+  feuillesValidees?: Prisma.FeuilleDeTempsCreateNestedManyWithoutValideParInput
 }
 
 export type UtilisateurUncheckedCreateWithoutEnseignantInput = {
@@ -453,6 +482,7 @@ export type UtilisateurUncheckedCreateWithoutEnseignantInput = {
   prenom: string
   role?: $Enums.Role
   date_creation?: Date | string
+  feuillesValidees?: Prisma.FeuilleDeTempsUncheckedCreateNestedManyWithoutValideParInput
 }
 
 export type UtilisateurCreateOrConnectWithoutEnseignantInput = {
@@ -478,6 +508,7 @@ export type UtilisateurUpdateWithoutEnseignantInput = {
   prenom?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   date_creation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  feuillesValidees?: Prisma.FeuilleDeTempsUpdateManyWithoutValideParNestedInput
 }
 
 export type UtilisateurUncheckedUpdateWithoutEnseignantInput = {
@@ -488,8 +519,96 @@ export type UtilisateurUncheckedUpdateWithoutEnseignantInput = {
   prenom?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   date_creation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  feuillesValidees?: Prisma.FeuilleDeTempsUncheckedUpdateManyWithoutValideParNestedInput
 }
 
+export type UtilisateurCreateWithoutFeuillesValideesInput = {
+  email: string
+  mot_de_passe: string
+  nom: string
+  prenom: string
+  role?: $Enums.Role
+  date_creation?: Date | string
+  enseignant?: Prisma.EnseignantCreateNestedOneWithoutUtilisateurInput
+}
+
+export type UtilisateurUncheckedCreateWithoutFeuillesValideesInput = {
+  id_utilisateur?: number
+  email: string
+  mot_de_passe: string
+  nom: string
+  prenom: string
+  role?: $Enums.Role
+  date_creation?: Date | string
+  enseignant?: Prisma.EnseignantUncheckedCreateNestedOneWithoutUtilisateurInput
+}
+
+export type UtilisateurCreateOrConnectWithoutFeuillesValideesInput = {
+  where: Prisma.UtilisateurWhereUniqueInput
+  create: Prisma.XOR<Prisma.UtilisateurCreateWithoutFeuillesValideesInput, Prisma.UtilisateurUncheckedCreateWithoutFeuillesValideesInput>
+}
+
+export type UtilisateurUpsertWithoutFeuillesValideesInput = {
+  update: Prisma.XOR<Prisma.UtilisateurUpdateWithoutFeuillesValideesInput, Prisma.UtilisateurUncheckedUpdateWithoutFeuillesValideesInput>
+  create: Prisma.XOR<Prisma.UtilisateurCreateWithoutFeuillesValideesInput, Prisma.UtilisateurUncheckedCreateWithoutFeuillesValideesInput>
+  where?: Prisma.UtilisateurWhereInput
+}
+
+export type UtilisateurUpdateToOneWithWhereWithoutFeuillesValideesInput = {
+  where?: Prisma.UtilisateurWhereInput
+  data: Prisma.XOR<Prisma.UtilisateurUpdateWithoutFeuillesValideesInput, Prisma.UtilisateurUncheckedUpdateWithoutFeuillesValideesInput>
+}
+
+export type UtilisateurUpdateWithoutFeuillesValideesInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  mot_de_passe?: Prisma.StringFieldUpdateOperationsInput | string
+  nom?: Prisma.StringFieldUpdateOperationsInput | string
+  prenom?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  date_creation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  enseignant?: Prisma.EnseignantUpdateOneWithoutUtilisateurNestedInput
+}
+
+export type UtilisateurUncheckedUpdateWithoutFeuillesValideesInput = {
+  id_utilisateur?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  mot_de_passe?: Prisma.StringFieldUpdateOperationsInput | string
+  nom?: Prisma.StringFieldUpdateOperationsInput | string
+  prenom?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  date_creation?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  enseignant?: Prisma.EnseignantUncheckedUpdateOneWithoutUtilisateurNestedInput
+}
+
+
+/**
+ * Count Type UtilisateurCountOutputType
+ */
+
+export type UtilisateurCountOutputType = {
+  feuillesValidees: number
+}
+
+export type UtilisateurCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  feuillesValidees?: boolean | UtilisateurCountOutputTypeCountFeuillesValideesArgs
+}
+
+/**
+ * UtilisateurCountOutputType without action
+ */
+export type UtilisateurCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UtilisateurCountOutputType
+   */
+  select?: Prisma.UtilisateurCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UtilisateurCountOutputType without action
+ */
+export type UtilisateurCountOutputTypeCountFeuillesValideesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FeuilleDeTempsWhereInput
+}
 
 
 export type UtilisateurSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -501,6 +620,8 @@ export type UtilisateurSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   role?: boolean
   date_creation?: boolean
   enseignant?: boolean | Prisma.Utilisateur$enseignantArgs<ExtArgs>
+  feuillesValidees?: boolean | Prisma.Utilisateur$feuillesValideesArgs<ExtArgs>
+  _count?: boolean | Prisma.UtilisateurCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["utilisateur"]>
 
 export type UtilisateurSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -536,6 +657,8 @@ export type UtilisateurSelectScalar = {
 export type UtilisateurOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_utilisateur" | "email" | "mot_de_passe" | "nom" | "prenom" | "role" | "date_creation", ExtArgs["result"]["utilisateur"]>
 export type UtilisateurInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   enseignant?: boolean | Prisma.Utilisateur$enseignantArgs<ExtArgs>
+  feuillesValidees?: boolean | Prisma.Utilisateur$feuillesValideesArgs<ExtArgs>
+  _count?: boolean | Prisma.UtilisateurCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UtilisateurIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type UtilisateurIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -544,6 +667,7 @@ export type $UtilisateurPayload<ExtArgs extends runtime.Types.Extensions.Interna
   name: "Utilisateur"
   objects: {
     enseignant: Prisma.$EnseignantPayload<ExtArgs> | null
+    feuillesValidees: Prisma.$FeuilleDeTempsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_utilisateur: number
@@ -948,6 +1072,7 @@ readonly fields: UtilisateurFieldRefs;
 export interface Prisma__UtilisateurClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   enseignant<T extends Prisma.Utilisateur$enseignantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Utilisateur$enseignantArgs<ExtArgs>>): Prisma.Prisma__EnseignantClient<runtime.Types.Result.GetResult<Prisma.$EnseignantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  feuillesValidees<T extends Prisma.Utilisateur$feuillesValideesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Utilisateur$feuillesValideesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeuilleDeTempsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1393,6 +1518,30 @@ export type Utilisateur$enseignantArgs<ExtArgs extends runtime.Types.Extensions.
    */
   include?: Prisma.EnseignantInclude<ExtArgs> | null
   where?: Prisma.EnseignantWhereInput
+}
+
+/**
+ * Utilisateur.feuillesValidees
+ */
+export type Utilisateur$feuillesValideesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FeuilleDeTemps
+   */
+  select?: Prisma.FeuilleDeTempsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FeuilleDeTemps
+   */
+  omit?: Prisma.FeuilleDeTempsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeuilleDeTempsInclude<ExtArgs> | null
+  where?: Prisma.FeuilleDeTempsWhereInput
+  orderBy?: Prisma.FeuilleDeTempsOrderByWithRelationInput | Prisma.FeuilleDeTempsOrderByWithRelationInput[]
+  cursor?: Prisma.FeuilleDeTempsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FeuilleDeTempsScalarFieldEnum | Prisma.FeuilleDeTempsScalarFieldEnum[]
 }
 
 /**

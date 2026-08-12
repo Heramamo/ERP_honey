@@ -17,7 +17,8 @@ async function bootstrap() {
   .setDescription('API complète pour ERD HONEY GROUP')
     .setVersion('2.0')
     .addBearerAuth()
-    .build();
+    .build()
+    ;
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
   await app.listen(process.env.PORT ?? 3000);

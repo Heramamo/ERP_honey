@@ -37,7 +37,7 @@ export class UserService {
                     role: true,
 
                     date_creation: true,
-                    id_enseignant: true,
+                    
                 },
             })
             const payload = { sub: newUser.id_utilisateur, email: newUser.email, role: newUser.role };

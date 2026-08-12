@@ -1013,7 +1013,9 @@ export const FeuilleDeTempsScalarFieldEnum = {
   heuresSupp: 'heuresSupp',
   typeActivite: 'typeActivite',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  statut: 'statut',
+  valideParId: 'valideParId'
 } as const
 
 export type FeuilleDeTempsScalarFieldEnum = (typeof FeuilleDeTempsScalarFieldEnum)[keyof typeof FeuilleDeTempsScalarFieldEnum]
@@ -1086,6 +1088,14 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -1161,6 +1171,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'STATUT_FEUILLE'
+ */
+export type EnumSTATUT_FEUILLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'STATUT_FEUILLE'>
+    
+
+
+/**
+ * Reference to a field of type 'STATUT_FEUILLE[]'
+ */
+export type ListEnumSTATUT_FEUILLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'STATUT_FEUILLE[]'>
     
 
 /**
