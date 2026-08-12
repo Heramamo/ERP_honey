@@ -1,1 +1,30 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 1. Force le curseur standard sur tout le document */
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0b132b;
+  cursor: default;
+}
+
+/* 2. Empêche la sélection de texte accidentelle sur le conteneur principal */
+body {
+  user-select: none;
+}
+
+/* 3. Affiche explicitement le pointeur de texte UNIQUEMENT dans les champs de saisie */
+input, textarea, [contenteditable="true"] {
+  cursor: text;
+  user-select: text; /* Permet la sélection de texte normale à l'intérieur des champs */
+}
+
+/* 4. Pointeur de main pour les éléments cliquables */
+button, a, label, input[type="checkbox"], input[type="radio"] {
+  cursor: pointer;
+}
