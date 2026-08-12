@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ShieldCheck, Building2 } from 'lucide-react';
 import { AuthHeader } from '../components/ui/AuthHeader';
 import { LoginForm } from '../components/auth/LoginForm';
 import type { LoginFormValues } from '../components/auth/LoginForm';
 
 export default function LoginPage(): React.ReactElement {
   const handleLogin = async (data: LoginFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    alert(`Bienvenue ${data.username} !`);
+    // Simulation purement front-end
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    console.log('Données saisies :', data);
   };
 
   const handleHelpClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -16,35 +18,65 @@ export default function LoginPage(): React.ReactElement {
   };
 
   return (
-    <div className="w-screen min-h-screen bg-[#0b132b] flex items-center justify-center p-4 m-0 font-sans">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden border-t-4 border-[#d4af37]">
-        <div className="p-8">
-          <AuthHeader 
-            appName="HONEY GROUP"
-            appSub="ERP INTERNE"
-            title="Authentification Session Desktop"
-            subtitle="Accès sécurisé au réseau d'entreprise"
-          />
+    <div className="min-h-screen w-full bg-[#080d1a] text-slate-200 flex flex-col justify-between p-6 md:p-12 relative overflow-hidden font-sans">
+      {/* Halo lumineux d'arrière-plan */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[#d4af37]/5 rounded-full blur-3xl pointer-events-none" />
 
-          <LoginForm onSubmit={handleLogin} />
+      {/* Conteneur principal split screen */}
+      <div className="flex-1 flex items-center justify-center w-full max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center w-full">
+          
+          {/* CÔTÉ GAUCHE : Branding */}
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
+            <div className="w-16 h-16 bg-[#d4af37] rounded-2xl shadow-lg shadow-[#d4af37]/10 flex items-center justify-center">
+              <Building2 size={36} className="text-slate-950" />
+            </div>
 
-          <div className="mt-6 flex flex-col items-center gap-3 text-center">
-            <a 
-              href="#" 
-              onClick={handleHelpClick}
-              className="text-xs text-gray-500 hover:text-slate-900 transition-colors cursor-pointer"
-            >
-              Problème de connexion ?
-            </a>
-
-            {/* Lien vers l'inscription */}
-            <p className="text-xs text-slate-500 pt-2 border-t border-gray-100 w-full">
-              Vous n'avez pas encore de compte ?{' '}
-              <Link to="/register" className="text-slate-900 font-bold hover:underline">
-                Créer un compte
-              </Link>
-            </p>
+            <div className="space-y-4 max-w-lg">
+              <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+                Bienvenue dans votre espace ERP
+              </h1>
+              <p className="text-slate-400 text-base md:text-lg leading-relaxed font-medium">
+                Accédez à vos outils de gestion intégrés avec un niveau de sécurité optimal pour votre environnement de travail.
+              </p>
+            </div>
           </div>
+
+          {/* CÔTÉ DROIT : Formulaire */}
+          <div className="w-full max-w-md mx-auto">
+            <div className="bg-[#101827]/90 border border-slate-800 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
+              
+              <AuthHeader 
+                appName="HONEY GROUP"
+                appSub="ERP INTERNE"
+                title="Authentification Session Desktop"
+                subtitle="Accès sécurisé au réseau d'entreprise"
+              />
+
+              <LoginForm onSubmit={handleLogin} />
+
+              <div className="mt-5 flex flex-col items-center gap-3 text-center">
+                <a 
+                  href="#" 
+                  onClick={handleHelpClick}
+                  className="text-xs text-slate-400 hover:text-slate-200 transition-colors"
+                >
+                  Problème de connexion ?
+                </a>
+
+                <div className="h-[1px] bg-slate-800 w-full my-1" />
+
+                <p className="text-xs text-slate-400">
+                  Vous n'avez pas encore de compte ?{' '}
+                  <Link to="/register" className="text-[#d4af37] font-bold hover:underline">
+                    Créer un compte
+                  </Link>
+                </p>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

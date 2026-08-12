@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
 export interface RegisterFormValues {
-  fullName: string;
+  lastName: string;
+  firstName: string;
   email: string;
   role: string;
   password: string;
-  confirmPassword: string;
 }
 
 interface RegisterFormProps {
@@ -20,35 +20,25 @@ const ROLES = [
 ];
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
-  const [fullName, setFullName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [selectedRole, setSelectedRole] = useState<string>('admin');
   const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
-
-    if (password !== confirmPassword) {
-      setError('Les mots de passe ne correspondent pas.');
-      return;
-    }
-
     setIsLoading(true);
     try {
       await onSubmit({
-        fullName,
+        lastName,
+        firstName,
         email,
         role: selectedRole,
         password,
-        confirmPassword,
       });
-    } catch (err) {
-      setError('Une erreur est survenue lors de la création du compte.');
     } finally {
       setIsLoading(false);
     }
@@ -56,23 +46,17 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      {error && (
-        <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl text-xs font-medium">
-          {error}
-        </div>
-      )}
-
-      {/* Ligne 1: Nom & Prénom + Email */}
+      {/* Ligne 1 : Nom + Prénom */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-            Nom & Prénom
+            Nom
           </label>
           <input
             type="text"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            placeholder="ex: Henitsoa ANDRIAMIHAJA"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="ex: ANDRIAMIHAJA"
             required
             className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition-all"
           />
@@ -80,20 +64,20 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
         <div>
           <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-            Email Professionnel
+            Prénom
           </label>
           <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="ex: contact@honeygroup.mg"
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="ex: Henitsoa"
             required
             className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition-all"
           />
         </div>
       </div>
 
-      {/* Ligne 2: Choix du Rôle */}
+      {/* Ligne 2 : Choix du Rôle */}
       <div>
         <label className="block text-xs font-semibold text-gray-700 mb-1.5">
           Choix du Rôle
@@ -116,8 +100,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         </div>
       </div>
 
-      {/* Ligne 3: Mot de Passe + Confirmation */}
+      {/* Ligne 3 : Email + Mot de Passe (sans confirmation) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+            Email
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="ex: contact@honeygroup.mg"
+            required
+            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition-all"
+          />
+        </div>
+
         <div>
           <label className="block text-xs font-semibold text-gray-700 mb-1.5">
             Mot de Passe
@@ -127,30 +125,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Entrez votre mot de passe"
               required
               className="w-full pl-4 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition-all"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 text-slate-400 hover:text-slate-600 transition-colors"
+              className="absolute right-3 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
             >
               {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </div>
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold text-gray-700 mb-1.5">
-            Confirmation du Mot de Passe
-          </label>
-          <input
-            type={showPassword ? 'text' : 'password'}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 transition-all"
-          />
         </div>
       </div>
 
