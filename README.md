@@ -1,6 +1,6 @@
 # ERP Honey
 
-Enterprise resource planning (ERP) system focused on **project management**, built on a modern **fullstack** architecture:
+Enterprise resource planning (ERP) system for the **management of human resources & payroll of teaching staff**, built on a modern **fullstack** architecture:
 
 - **Backend**: [NestJS](https://nestjs.com) (Node.js / TypeScript) with Prisma ORM
 - **Frontend**: [React](https://react.dev) 19 + [Vite](https://vitejs.dev)
@@ -11,14 +11,16 @@ Enterprise resource planning (ERP) system focused on **project management**, bui
 
 An **ERP (Enterprise Resource Planning)** is software that centralizes and automates the management of a company's resources and processes (HR, projects, production, finance, ...).
 
-"ERP Honey" applies this logic by offering a **project management module**:
+"ERP Honey" applies this logic to the **educational sector** by offering modules dedicated to the management of teaching staff and their activity:
 
-- **User management**: accounts secured with JWT + bcrypt authentication.
-- **Project management**: creation, status (`Pending`, `IN_PROGRESS`, `COMPLETED`, `CANCELED`), owner and members.
-- **Task management**: titles, descriptions, due dates, status, priority (`LOW`, `MEDIUM`, `HIGH`) and user assignments.
-- **Collaboration**: member ↔ project association via `ProjectMember`, and assignee ↔ task via `TaskAssignment`.
+- **Authentication & roles**: accounts secured with JWT + bcrypt, and a role system (`ADMIN`, `RH`, `FINANCE`, `ENSEIGNANT`) that controls access to protected endpoints.
+- **Teacher management (`Enseignant`)**: each user with the `ENSEIGNANT` role completes a professional profile (base hourly rate, employment status) via `POST /teachers/profile`.
+- **Time-sheet entry (`FeuilleDeTemps`)**: teachers declare their activity (date, normal hours, overtime hours, activity type) via `POST /saisie-feuille`.
+- **Validation workflow**: `RH` / `ADMIN` validate or reject the time sheets (`VALIDE`, `REFUSE`, `EN_ATTENTE`), with the validator recorded on each sheet — all tracked on the backend.
+- **Time-sheet queries**: listing of all sheets (RH / ADMIN), the connected teacher's own sheets (`/saisie-feuille/me`), and sheets awaiting validation (`/saisie-feuille/pending`).
+- **Extensible financial foundation (data model)**: payroll slips (`Paie`), financial poles (`Pôle`), charges (`Charge`) and revenues (`Revenu`) — ready to be wired up in future modules.
 
-The architecture is designed to be extensible: the backend, split into modules, can be extended with new ERP modules (inventory, invoicing, HR, ...) without starting from scratch.
+The architecture is designed to be extensible: split into modules, the backend can be extended with new ERP modules (payroll processing, accounting, finance, ...) without starting from scratch.
 
 ---
 
@@ -132,11 +134,12 @@ npm run lint           # ESLint
 
 ## 📁 Data model (excerpt)
 
-- **User** — identity, unique email, hashed password
-- **Project** — name, description, status, owner
-- **Task** — title, due date, status, priority, linked project
-- **ProjectMember** — project ↔ user association (with role)
-- **TaskAssignment** — task ↔ user association
+- **Utilisateur** — identity, unique email, hashed password, role (`ADMIN`, `RH`, `FINANCE`, `ENSEIGNANT`)
+- **Enseignant** — base hourly rate + employment status (linked 1:1 to a `Utilisateur`)
+- **FeuilleDeTemps** — date, hours worked, overtime, activity type, status, validator
+- **Paie** — total salary, payment status, month (linked to an `Enseignant`)
+- **Pôle** — financial pole (name, description)
+- **Charge / Revenu** — charge / revenue entries attached to a `Pôle`
 
 ---
 
