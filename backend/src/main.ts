@@ -12,6 +12,11 @@ async function bootstrap() {
       transformOptions:{enableImplicitConversion:true}
     })
   )
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
+  });
   const config = new DocumentBuilder()
   .setTitle("ERP HONEY")
   .setDescription('API complète pour ERD HONEY GROUP')

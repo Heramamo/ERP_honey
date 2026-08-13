@@ -14,9 +14,9 @@ interface RegisterFormProps {
 }
 
 const ROLES = [
-  { id: 'admin', label: 'Admin' },
-  { id: 'rh', label: 'Ressources Humaines' },
-  { id: 'enseignant', label: 'Enseignant' },
+  { id: 'ADMIN', label: 'Admin' },
+  { id: 'RH', label: 'Ressources Humaines' },
+  { id: 'ENSEIGNANT', label: 'Enseignant' },
 ];
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {

@@ -1,14 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Building2 } from 'lucide-react';
+import {  Building2 } from 'lucide-react';
 import { AuthHeader } from '../components/ui/AuthHeader';
 import { LoginForm } from '../components/auth/LoginForm';
 import type { LoginFormValues } from '../components/auth/LoginForm';
+import { Urls } from '../const/url';
+import axios from 'axios';
 
 export default function LoginPage(): React.ReactElement {
   const handleLogin = async (data: LoginFormValues) => {
-    // Simulation purement front-end
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    try {
+      const res = await axios.post(`${Urls.baseUrl}/user/login`, {email: data.username, mot_de_passe:data.password})
+      console.log(res)
+    } catch (error) {
+      console.log(error.response.data?.message || error.message);
+    }
     console.log('Données saisies :', data);
   };
 

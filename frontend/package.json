@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nestjs/axios": "^4.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-table": "^9.1.2",
+    "axios": "^1.19.0",
     "clsx": "^2.1.1",
     "lucide-react": "^1.31.0",
     "react": "^19.2.7",
