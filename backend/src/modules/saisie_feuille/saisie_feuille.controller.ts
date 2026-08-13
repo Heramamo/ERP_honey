@@ -1,4 +1,4 @@
-import { Body, Controller, ForbiddenException, Param, ParseIntPipe, Patch, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Param, ParseIntPipe, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { SaisieFeuilleService } from './saisie_feuille.service';
 import { CreateSaisieFeuilleDto } from './dto/create-saisie-feuille.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -23,5 +23,25 @@ export class SaisieFeuilleController {
     if (!['ADMIN', 'RH'].includes(req.user.role))
       throw new ForbiddenException('Acces reserve pour admin, RH');
     return this.saisieFeuilleService.validate(id, req.user.sub, dto)
+  }
+
+  @Get()
+  @ApiOperation({summary:"Recuperer tous les saisie"})
+  async getAll(@Request() req){
+     if (!['ADMIN', 'RH'].includes(req.user.role))
+      throw new ForbiddenException('Acces reserve pour admin, RH');
+    return this.saisieFeuilleService.getAllSaisie()
+  }
+
+  @Get('me')
+  @ApiOperation({summary:"Recuperation des saisie de l'enseignant"})
+  async getMySaisie(@Request() req){
+    return this.saisieFeuilleService.getMySaisie(req.user.sub)
+  }
+
+  @Get('pending')
+  @ApiOperation({summary:"Recuperer les saisie en attente de validation"})
+  async getPendingSaisie(){
+    return this.saisieFeuilleService.getPendingSaisie()
   }
 }

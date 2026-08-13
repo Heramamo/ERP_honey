@@ -35,4 +35,13 @@ export class SaisieFeuilleService {
             }
         })
     }
+    async   getAllSaisie(){
+        return await this.prisma.feuilleDeTemps.findMany()
+    }
+    async   getMySaisie(userId:number){
+        return await this.prisma.feuilleDeTemps.findMany({where:{enseignantId:userId}})
+    }
+    async   getPendingSaisie(){
+        return await this.prisma.feuilleDeTemps.findMany({where:{statut:"EN_ATTENTE"}})
+    }
 }
