@@ -3,10 +3,23 @@ import { Link } from 'react-router-dom';
 import { Building2 } from 'lucide-react';
 import { RegisterForm } from '../components/auth/RegisterForm';
 import type { RegisterFormValues } from '../components/auth/RegisterForm';
+import axios from 'axios';
+import { Urls } from '../const/url';
 
 export default function RegisterPage(): React.ReactElement {
   const handleRegister = async (values: RegisterFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    try {
+        const res = await axios.post(`${Urls.baseUrl}/user/register`, {
+            nom: values.lastName,
+            prenom: values.firstName,
+            email: values.email,
+            role: values.role,
+            mot_de_passe: values.password
+        });
+        console.log(res);
+    } catch (error) {
+        console.error('Erreur lors de l\'inscription :', error);
+    }
     console.log('Données d\'inscription :', values);
   };
 
