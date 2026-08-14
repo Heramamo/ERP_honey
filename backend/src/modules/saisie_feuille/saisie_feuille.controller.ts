@@ -1,7 +1,7 @@
 import { Body, Controller, ForbiddenException, Get, Param, ParseIntPipe, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { SaisieFeuilleService } from './saisie_feuille.service';
 import { CreateSaisieFeuilleDto } from './dto/create-saisie-feuille.dto';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ValidateSaisieFeuilleDto } from './dto/validate-saisie-feuille.dto';
 
@@ -43,5 +43,10 @@ export class SaisieFeuilleController {
   @ApiOperation({summary:"Recuperer les saisie en attente de validation"})
   async getPendingSaisie(){
     return this.saisieFeuilleService.getPendingSaisie()
+  }
+  @Get(':id/month')
+  @ApiResponse({summary:"Liste des feuille du mois"})
+  async getMonthSaisie(@Param('id', ParseIntPipe) id:number){
+    return this.saisieFeuilleService.calculMonthSalary(id)
   }
 }
