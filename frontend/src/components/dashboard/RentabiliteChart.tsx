@@ -1,0 +1,88 @@
+import React from 'react';
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer 
+} from 'recharts';
+
+const rentabiliteData = [
+  { pole: 'IT', revenus: 16000000, charges: 6500000 },
+  { pole: 'Format.', revenus: 14000000, charges: 7800000 },
+  { pole: 'Événem.', revenus: 7200000, charges: 8300000 },
+  { pole: 'Touris.', revenus: 8800000, charges: 3500000 },
+];
+
+// Helper pour formater proprement les montants dans le survol (ex: 16 000 000 AR)
+const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat('fr-FR').format(value) + ' AR';
+};
+
+export const RentabiliteChart: React.FC = () => {
+  return (
+    <div className="bg-[#101625] border border-slate-800/80 rounded-2xl p-6">
+      {/* En-tête de la carte */}
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-sm font-bold text-white">Rentabilité par pôle d'activité</h3>
+        <div className="flex items-center gap-4 text-[11px] text-slate-400 font-medium">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded bg-[#3b82f6] inline-block" />
+            Revenus
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded bg-[#f59e0b] inline-block" />
+            Charges
+          </span>
+        </div>
+      </div>
+
+      {/* Conteneur du graphique */}
+      <div className="h-60 w-full min-h-[240px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={rentabiliteData} barGap={8}>
+            {/* Lignes de repère horizontales subtiles */}
+            <CartesianGrid strokeDasharray="3 3" stroke="#1a2234" vertical={false} />
+
+            {/* Axe X (Pôles d'activité) */}
+            <XAxis 
+              dataKey="pole" 
+              stroke="#64748b" 
+              fontSize={11} 
+              tickLine={false} 
+              axisLine={false} 
+            />
+
+            {/* Axe Y (Repères de chiffres en Millions) */}
+            <YAxis
+              stroke="#64748b"
+              fontSize={10}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(val) => `${val / 1000000}M`}
+            />
+
+            {/* Infobulle (Tooltip) avec formatage monétaire */}
+            <Tooltip
+              contentStyle={{ 
+                backgroundColor: '#1e293b', 
+                borderColor: '#334155', 
+                borderRadius: '8px', 
+                fontSize: '12px', 
+                color: '#fff' 
+              }}
+              cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }}
+              formatter={(value: number) => [formatCurrency(value), '']}
+            />
+
+            {/* Barres du graphique */}
+            <Bar dataKey="revenus" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={20} />
+            <Bar dataKey="charges" fill="#f59e0b" radius={[4, 4, 0, 0]} barSize={20} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+};
