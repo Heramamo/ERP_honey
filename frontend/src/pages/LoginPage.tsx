@@ -1,17 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {  Building2 } from 'lucide-react';
 import { AuthHeader } from '../components/ui/AuthHeader';
 import { LoginForm } from '../components/auth/LoginForm';
 import type { LoginFormValues } from '../components/auth/LoginForm';
-import { Urls } from '../const/url';
-import axios from 'axios';
+
+import { api } from '../service/api';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../store/slices/authSlice';
 
 export default function LoginPage(): React.ReactElement {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const handleLogin = async (data: LoginFormValues) => {
     try {
-      const res = await axios.post(`${Urls.baseUrl}/user/login`, {email: data.username, mot_de_passe:data.password})
+      const res = await api.post(`/user/login`, {email: data.username, mot_de_passe:data.password})
+      const token = res.data.access_token
+      console.log(token)
+      dispatch(setCredentials({token}))
       console.log(res)
+     navigate('/dashboard')
     } catch (error) {
       console.log(error.response.data?.message || error.message);
     }
