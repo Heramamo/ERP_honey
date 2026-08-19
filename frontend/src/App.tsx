@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { DashboardLayout } from './components/layout/DashboardLayout';
-import { AdminDashboard } from './pages/AdminDashboard';  
+import { AdminDashboard } from './pages/AdminDashboard';   
 import { TeacherDashboard } from './pages/TeacherDashboard';   
+import HrPayrollPage from './pages/HrPayrollPage';
 
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import CompleteProfilePage from './pages/CompleteProfilePage';
 
 export const App: React.FC = () => {
-  // 💡 Changez 'admin' par 'enseignant' pour afficher directement la vue enseignant
   const [userRole, setUserRole] = useState<'admin' | 'rh' | 'enseignant'>('admin');
   const [userName] = useState<string>('Henitsoa ANDRIAMIHAJA');
 
   return (
     <BrowserRouter>
-      {/* Sélecteur rapide de rôle & accès de test pour le dev */}
+      {/* Sélecteur de rôle pour le développement */}
       <div className="fixed bottom-4 right-4 z-50 bg-slate-900 border border-slate-700 p-2 rounded-xl flex gap-2 text-xs font-bold text-white shadow-2xl">
         <span className="text-slate-400 self-center px-1 text-[10px] uppercase tracking-wider">Test Rôle:</span>
         <button
@@ -43,11 +43,9 @@ export const App: React.FC = () => {
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/login" element={<LoginPage onLogin={() => {}} />} />
         <Route path="/register" element={<RegisterPage onRegisterSuccess={() => {}} />} />
-
-        {/* Route de finalisation de profil (1ère connexion enseignant) */}
         <Route path="/complete-profile" element={<CompleteProfilePage />} />
 
-        {/* Dashboard principal adaptatif */}
+        {/* Route Parent /dashboard englobant le DashboardLayout */}
         <Route
           path="/dashboard"
           element={
@@ -58,11 +56,14 @@ export const App: React.FC = () => {
             />
           }
         >
-          {/* Affiche AdminDashboard ou TeacherDashboard selon le rôle */}
+          {/* /dashboard -> Affiche le dashboard principal (Admin ou Enseignant) */}
           <Route 
             index 
             element={userRole === 'enseignant' ? <TeacherDashboard /> : <AdminDashboard />} 
           />
+
+          {/* /dashboard/rh-paie -> Affiche la page RH & Paie (Personnel & Enseignants par défaut) */}
+          <Route path="rh-paie" element={<HrPayrollPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
