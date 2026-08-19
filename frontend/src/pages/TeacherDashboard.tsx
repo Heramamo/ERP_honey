@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Clock, Clock3, Banknote, CalendarCheck, Sparkles } from 'lucide-react';
 
 // Composants globaux
@@ -10,8 +10,18 @@ import { LastEntryCard } from '../components/dashboard/teacher/LastEntryCard';
 import { TimeDistributionChart } from '../components/dashboard/teacher/TimeDistributionChart';
 import { RecentTimesheetsTable } from '../components/dashboard/teacher/RecentTimesheetsTable';
 import { PayrollHistoryTable } from '../components/dashboard/teacher/PayrollHistoryTable';
+import { useAppDispatch } from '../store/hooks';
+import { fetchMySaisie } from '../store/slices/saisieSlice';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
 
 export const TeacherDashboard: React.FC = () => {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(fetchMySaisie());
+  }, [dispatch]);
+  const saisies = useSelector((state:RootState)=>state.saisies.saisies)
+  console.log(saisies)
   return (
     <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans text-slate-100">
       
