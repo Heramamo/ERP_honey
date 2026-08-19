@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Building2 } from 'lucide-react';
 import { RegisterForm } from '../components/auth/RegisterForm';
 import type { RegisterFormValues } from '../components/auth/RegisterForm';
-import axios from 'axios';
-import { Urls } from '../const/url';
 import { api } from '../service/api';
 import { setCredentials } from '../store/slices/authSlice';
 import { useDispatch } from 'react-redux';

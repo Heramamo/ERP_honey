@@ -1,4 +1,8 @@
 import React from 'react';
+import { StatusBadge } from '../../common/StatusBadge';
+import { Card } from '../../ui/Card';
+import { DataTable } from '../../ui/DataTable';
+import type { DataColumn } from '../../ui/DataTable';
 
 interface TimesheetItem {
   id: string;
@@ -15,9 +19,39 @@ const mockTimesheets: TimesheetItem[] = [
   { id: '3', date: '08/08', type: 'Cours', heuresBase: '2h', heuresSupp: '2h', statut: 'En révision' },
 ];
 
+const columns: DataColumn<TimesheetItem>[] = [
+  {
+    header: 'DATE',
+    render: (row) => <span className="font-semibold text-slate-300">{row.date}</span>,
+  },
+  {
+    header: "TYPE D'ACTIVITÉ",
+    render: (row) => (
+      <span className={`font-bold ${row.type === 'Cours' ? 'text-blue-400' : 'text-slate-300'}`}>
+        {row.type}
+      </span>
+    ),
+  },
+  {
+    header: 'HEURES DE BASE',
+    align: 'center',
+    render: (row) => <span className="text-slate-200 font-medium">{row.heuresBase}</span>,
+  },
+  {
+    header: 'HEURES SUPP.',
+    align: 'center',
+    render: (row) => <span className="text-amber-400 font-bold">{row.heuresSupp}</span>,
+  },
+  {
+    header: 'STATUT',
+    align: 'right',
+    render: (row) => <StatusBadge status={row.statut} />,
+  },
+];
+
 export const RecentTimesheetsTable: React.FC = () => {
   return (
-    <div className="bg-[#111726] border border-slate-800/90 rounded-2xl p-6">
+    <Card>
       <div className="flex justify-between items-center mb-5">
         <h3 className="text-sm font-bold text-white">Dernières Feuilles de Temps</h3>
         <button className="text-xs text-amber-500 hover:text-amber-400 transition font-semibold cursor-pointer">
@@ -25,40 +59,7 @@ export const RecentTimesheetsTable: React.FC = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs">
-          <thead>
-            <tr className="text-slate-400 font-bold uppercase text-[10px] tracking-wider border-b border-slate-800/80">
-              <th className="pb-3 px-2">DATE</th>
-              <th className="pb-3 px-2">TYPE D'ACTIVITÉ</th>
-              <th className="pb-3 px-2 text-center">HEURES DE BASE</th>
-              <th className="pb-3 px-2 text-center">HEURES SUPP.</th>
-              <th className="pb-3 px-2 text-right">STATUT</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-800/50">
-            {mockTimesheets.map((row) => (
-              <tr key={row.id} className="hover:bg-slate-800/30 transition">
-                <td className="py-3.5 px-2 font-semibold text-slate-300">{row.date}</td>
-                <td className={`py-3.5 px-2 font-bold ${row.type === 'Cours' ? 'text-blue-400' : 'text-slate-300'}`}>
-                  {row.type}
-                </td>
-                <td className="py-3.5 px-2 text-center text-slate-200 font-medium">{row.heuresBase}</td>
-                <td className="py-3.5 px-2 text-center text-amber-400 font-bold">{row.heuresSupp}</td>
-                <td className="py-3.5 px-2 text-right">
-                  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md inline-block border ${
-                    row.statut === 'Validé'
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                      : 'bg-amber-500/10 text-amber-500 border-amber-500/20'
-                  }`}>
-                    {row.statut}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <DataTable columns={columns} data={mockTimesheets} rowKey={(row) => row.id} />
+    </Card>
   );
 };

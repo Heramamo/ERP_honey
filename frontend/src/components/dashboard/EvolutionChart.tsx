@@ -1,5 +1,7 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { Card } from '../ui/Card';
+import { chartAxisTight, chartTooltipStyle } from './chartTheme';
 
 const evolutionData = [
   { mois: 'Mar', revenus: 8000000, charges: 3000000 },
@@ -12,7 +14,7 @@ const evolutionData = [
 
 export const EvolutionChart: React.FC = () => {
   return (
-    <div className="bg-[#101625] border border-slate-800/80 rounded-2xl p-6">
+    <Card tone="subtle">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-sm font-bold text-white">Évolution du résultat</h3>
         <span className="text-[11px] text-slate-500 font-medium">6 derniers mois</span>
@@ -21,22 +23,17 @@ export const EvolutionChart: React.FC = () => {
       <div className="h-60 w-full min-h-60">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={evolutionData}>
-            <XAxis dataKey="mois" stroke="#64748b" fontSize={11} tickLine={false} axisLine={false} />
+            <XAxis dataKey="mois" {...chartAxisTight} />
             <YAxis
-              stroke="#64748b"
-              fontSize={10}
-              tickLine={false}
-              axisLine={false}
+              {...chartAxisTight}
               tickFormatter={(val) => `${val / 1000000}M`}
             />
-            <Tooltip
-              contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', fontSize: '12px', color: '#fff' }}
-            />
+            <Tooltip contentStyle={chartTooltipStyle} />
             <Line type="monotone" dataKey="revenus" stroke="#3b82f6" strokeWidth={3} dot={false} />
             <Line type="monotone" dataKey="charges" stroke="#f59e0b" strokeWidth={3} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </Card>
   );
 };

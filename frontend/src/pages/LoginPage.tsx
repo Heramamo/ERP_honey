@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {  Building2 } from 'lucide-react';
+import type { AxiosError } from 'axios';
 import { AuthHeader } from '../components/ui/AuthHeader';
 import { LoginForm } from '../components/auth/LoginForm';
 import type { LoginFormValues } from '../components/auth/LoginForm';
@@ -21,7 +22,8 @@ export default function LoginPage(): React.ReactElement {
       console.log(res)
      navigate('/dashboard')
     } catch (error) {
-      console.log(error.response.data?.message || error.message);
+      const axiosError = error as AxiosError<{ message?: string }>;
+      console.log(axiosError.response?.data?.message ?? axiosError.message);
     }
     console.log('Données saisies :', data);
   };
@@ -61,8 +63,7 @@ export default function LoginPage(): React.ReactElement {
             <div className="bg-[#101827]/90 border border-slate-800 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
               
               <AuthHeader 
-                appName="HONEY GROUP"
-                appSub="ERP INTERNE"
+                tag="HONEY GROUP • ERP INTERNE"
                 title="Authentification Session Desktop"
                 subtitle="Accès sécurisé au réseau d'entreprise"
               />

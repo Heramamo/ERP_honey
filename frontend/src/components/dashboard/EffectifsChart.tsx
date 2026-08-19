@@ -1,5 +1,6 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { Card } from '../ui/Card';
 
 const effectifsData = [
   { name: 'IT', value: 45, color: '#3b82f6' },
@@ -9,7 +10,7 @@ const effectifsData = [
 
 export const EffectifsChart: React.FC = () => {
   return (
-    <div className="bg-[#101625] border border-slate-800/80 rounded-2xl p-6 flex flex-col justify-between">
+    <Card tone="subtle" className="justify-between">
       <h3 className="text-sm font-bold text-white mb-2">Effectifs par Pôle</h3>
 
       <div className="h-44 w-full relative flex items-center justify-center min-h-[175px]">
@@ -46,6 +47,6 @@ export const EffectifsChart: React.FC = () => {
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   );
 };

@@ -14,7 +14,7 @@ if (initialToken) {
             initialUser = decoded
         else
             localStorage.removeItem('access_token')
-    } catch (error) {
+    } catch {
         localStorage.removeItem('access_token')
     }
 
@@ -44,7 +44,7 @@ const authSlice = createSlice({
                     state.isAuthenticated = true
                 }
             }
-            catch (error) {
+            catch {
                 state.user = null;
                 state.isAuthenticated = false;
             }

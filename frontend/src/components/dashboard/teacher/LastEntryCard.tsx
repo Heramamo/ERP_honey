@@ -1,9 +1,10 @@
 import React from 'react';
 import { Activity, Code2, RotateCw } from 'lucide-react';
+import { Card } from '../../ui/Card';
 
 export const LastEntryCard: React.FC = () => {
   return (
-    <div className="bg-[#111726] border border-slate-800/90 rounded-2xl p-6 flex flex-col justify-between">
+    <Card className="justify-between">
       <div>
         <div className="flex items-center gap-2 text-amber-500 mb-6">
           <Activity size={18} />
@@ -33,6 +34,6 @@ export const LastEntryCard: React.FC = () => {
         <RotateCw size={12} className="text-slate-500" />
         <span>Dernière mise à jour transmise aux RH</span>
       </div>
-    </div>
+    </Card>
   );
 };

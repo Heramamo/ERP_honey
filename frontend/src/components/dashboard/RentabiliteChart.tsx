@@ -8,6 +8,8 @@ import {
   Tooltip, 
   ResponsiveContainer 
 } from 'recharts';
+import { Card } from '../ui/Card';
+import { chartAxis, chartGridStroke, chartTooltipStyle } from './chartTheme';
 
 const rentabiliteData = [
   { pole: 'IT', revenus: 16000000, charges: 6500000 },
@@ -23,7 +25,7 @@ const formatCurrency = (value: number) => {
 
 export const RentabiliteChart: React.FC = () => {
   return (
-    <div className="bg-[#101625] border border-slate-800/80 rounded-2xl p-6">
+    <Card tone="subtle">
       {/* En-tête de la carte */}
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-sm font-bold text-white">Rentabilité par pôle d'activité</h3>
@@ -44,37 +46,22 @@ export const RentabiliteChart: React.FC = () => {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={rentabiliteData} barGap={8}>
             {/* Lignes de repère horizontales subtiles */}
-            <CartesianGrid strokeDasharray="3 3" stroke="#1a2234" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} vertical={false} />
 
             {/* Axe X (Pôles d'activité) */}
-            <XAxis 
-              dataKey="pole" 
-              stroke="#64748b" 
-              fontSize={11} 
-              tickLine={false} 
-              axisLine={false} 
-            />
+            <XAxis dataKey="pole" {...chartAxis} />
 
             {/* Axe Y (Repères de chiffres en Millions) */}
             <YAxis
-              stroke="#64748b"
-              fontSize={10}
-              tickLine={false}
-              axisLine={false}
+              {...chartAxis}
               tickFormatter={(val) => `${val / 1000000}M`}
             />
 
             {/* Infobulle (Tooltip) avec formatage monétaire */}
             <Tooltip
-              contentStyle={{ 
-                backgroundColor: '#1e293b', 
-                borderColor: '#334155', 
-                borderRadius: '8px', 
-                fontSize: '12px', 
-                color: '#fff' 
-              }}
+              contentStyle={chartTooltipStyle}
               cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }}
-              formatter={(value: number) => [formatCurrency(value), '']}
+              formatter={(value) => [formatCurrency(Number(value)), '']}
             />
 
             {/* Barres du graphique */}
@@ -83,6 +70,6 @@ export const RentabiliteChart: React.FC = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </Card>
   );
 };

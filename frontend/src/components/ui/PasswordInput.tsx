@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 
 interface PasswordInputProps {
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
   placeholder?: string;
   label?: string;
 }
@@ -14,7 +14,14 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   placeholder = "Entrez votre mot de passe",
   label = "Mot de passe / PIN"
 }) => {
+  const [internalValue, setInternalValue] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const currentValue = value ?? internalValue;
+
+  const handleChange = (nextValue: string) => {
+    setInternalValue(nextValue);
+    onChange?.(nextValue);
+  };
 
   return (
     <div>
@@ -29,8 +36,8 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         </div>
         <input
           type={showPassword ? 'text' : 'password'}
-          value={value}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+          value={currentValue}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.target.value)}
           placeholder={placeholder}
           className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all"
         />

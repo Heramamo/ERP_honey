@@ -7,9 +7,8 @@ import { Navigate, Outlet } from 'react-router-dom';
 interface ProtectedRouteProps {
   allowedRoles?: Role[];
 }
-type Props = {}
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({allowedRoles}:ProtectedRouteProps) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({allowedRoles}) => {
     const {isAuthenticated, user} = useAppSelector((state:RootState)=>state.auth)
     console.log(isAuthenticated)
     if (!isAuthenticated)

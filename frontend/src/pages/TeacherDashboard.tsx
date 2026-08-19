@@ -13,7 +13,7 @@ import { PayrollHistoryTable } from '../components/dashboard/teacher/PayrollHist
 
 export const TeacherDashboard: React.FC = () => {
   return (
-    <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans bg-[#0a0e1a] min-h-screen text-slate-100">
+    <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans text-slate-100">
       
       {/* ==================== 1. CARTES KPI BRILLANTES & HARMONISÉES ==================== */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">

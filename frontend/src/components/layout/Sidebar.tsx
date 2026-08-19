@@ -1,13 +1,56 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, PieChart, Settings } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import {
+  LayoutDashboard,
+  Users,
+  PieChart,
+  Settings,
+  Clock,
+  FileText,
+  Wallet,
+  LogOut,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { logout } from '../../store/slices/authSlice';
+import { formatDisplayName, getInitials } from '../../utils/user';
+import type { Role } from '../../types/auth';
+
+interface NavItem {
+  label: string;
+  icon: LucideIcon;
+  path: string;
+  end?: boolean;
+}
+
+const MANAGEMENT_ROLES: Role[] = ['ADMIN', 'RH', 'FINANCE'];
+
+const adminNavItems: NavItem[] = [
+  { label: 'Tableau de bord', icon: LayoutDashboard, path: '/dashboard', end: true },
+  { label: 'RH & Paie', icon: Users, path: '/dashboard/rh-paie' },
+  { label: 'Finance', icon: PieChart, path: '/dashboard/finance' },
+];
+
+const teacherNavItems: NavItem[] = [
+  { label: 'Tableau de bord', icon: LayoutDashboard, path: '/dashboard', end: true },
+  { label: 'Mes Heures', icon: Clock, path: '/dashboard/mes-heures' },
+  { label: 'Feuilles de temps', icon: FileText, path: '/dashboard/feuilles-de-temps' },
+  { label: 'Ma Paie', icon: Wallet, path: '/dashboard/paie' },
+];
+
+const getNavItems = (role?: Role): NavItem[] =>
+  role && MANAGEMENT_ROLES.includes(role) ? adminNavItems : teacherNavItems;
 
 export const Sidebar: React.FC = () => {
-  const navItems = [
-    { label: 'Tableau de bord', icon: LayoutDashboard, path: '/dashboard' },
-    { label: 'RH & Paie', icon: Users, path: '/dashboard/rh-paie' },
-    { label: 'Finance', icon: PieChart, path: '/dashboard/finance' },
-  ];
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.auth);
+  const navItems = getNavItems(user?.role);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
 
   return (
     <aside className="w-64 bg-[#0b0e17] text-slate-300 flex flex-col justify-between h-screen sticky top-0 font-sans select-none shrink-0 border-r border-slate-800/60">
@@ -29,7 +72,7 @@ export const Sidebar: React.FC = () => {
             <NavLink
               key={item.path}
               to={item.path}
-              end
+              end={item.end}
               className={({ isActive }) =>
                 `flex items-center gap-3.5 px-4 py-3 rounded-lg text-xs font-bold transition-all ${
                   isActive
@@ -63,11 +106,21 @@ export const Sidebar: React.FC = () => {
 
         <div className="pt-2 flex items-center gap-3 px-2">
           <div className="w-8 h-8 rounded-full bg-[#f59e0b] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
-            H
+            {getInitials(user?.email)}
           </div>
-          <span className="text-xs font-bold text-white truncate">
-            Henitsoa ANDRIAMIHAJA
-          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-bold text-white truncate">{formatDisplayName(user?.email)}</p>
+            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider truncate">
+              {user?.role ?? 'Utilisateur'}
+            </p>
+          </div>
+          <button
+            onClick={handleLogout}
+            title="Déconnexion"
+            className="p-1.5 text-slate-500 hover:text-white hover:bg-[#151c2e] rounded-lg transition cursor-pointer"
+          >
+            <LogOut size={16} />
+          </button>
         </div>
       </div>
     </aside>

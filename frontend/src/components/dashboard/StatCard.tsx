@@ -5,7 +5,7 @@ export type GlowColor = 'blue' | 'amber' | 'emerald' | 'teal' | 'purple';
 interface StatCardProps {
   title: string;
   value: string | React.ReactNode;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   icon?: React.ReactNode;
   iconColor?: string;
   glowColor?: GlowColor;
