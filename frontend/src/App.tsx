@@ -16,6 +16,7 @@ import ProtectedPublicRoute from './components/ProtectedPublicRoute';
 import HrPayrollPage from './pages/HrPayrollPage';
 import TeachersTable from './components/dashboard/hr/TeachersTable';
 import PayrollTable from './components/dashboard/hr/PayrollTable';
+import SaisiesTable from './components/dashboard/teacher/SaisiesTable';
 import RoleGuard from './components/RoleGuard';
 
 export const App: React.FC = () => {
@@ -70,7 +71,7 @@ export const App: React.FC = () => {
                 path="/dashboard/feuilles-de-temps"
                 element={
                   <RoleGuard allowedRoles={['ENSEIGNANT']}>
-                    <PlaceholderPage title="Feuilles de temps" />
+                    <SaisiesTable />
                   </RoleGuard>
                 }
               />
