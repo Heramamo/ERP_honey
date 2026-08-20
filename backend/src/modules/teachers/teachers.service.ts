@@ -32,4 +32,10 @@ export class TeachersService {
             }
         })
     }
+    async getProfile(userId: number) {
+        const enseignant = await this.prisma.enseignant.findUnique({ where: { id_utilisateur: userId } })
+        if (!enseignant)
+            throw new NotFoundException("Aucun profil enseignant trouvé pour cet utilisateur")
+        return enseignant
+    }
 }

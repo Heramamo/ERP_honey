@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Plus, Loader2, Inbox } from 'lucide-react';
 import type { SaisiePayload } from '../../../types/saisieFeuille';
-import { useAppSelector } from '../../../store/hooks';
+import { fetchMySaisie } from '../../../store/slices/saisieSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { CreateSaisieModal } from './CreateSaisieModal';
 
 const PAGE_SIZE = 8;
@@ -38,9 +39,14 @@ const formatDate = (date: Date | string) => {
 };
 
 export const SaisiesTable: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { saisies, loading, error } = useAppSelector((state) => state.saisies);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchMySaisie());
+  }, [dispatch]);
 
   const totalPages = Math.max(1, Math.ceil(saisies.length / PAGE_SIZE));
   const safePage = Math.min(currentPage, totalPages);

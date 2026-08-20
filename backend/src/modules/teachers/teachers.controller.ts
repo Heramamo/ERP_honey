@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { TeachersService } from './teachers.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -20,5 +20,13 @@ export class TeachersController {
   async create(@Request() req, @Body() teacherDto:CreateTeacherDto){
     const userId = req.user.sub;
     return this.teachersService.createProfile(userId, teacherDto)
+  }
+
+  @Get('profile')
+  @ApiOperation({ summary: 'Récupérer le profil enseignant de l\'utilisateur connecté' })
+  @ApiResponse({ status: 200, description: 'Profil enseignant récupéré.' })
+  @ApiResponse({ status: 404, description: 'Aucun profil enseignant trouvé.' })
+  async getProfile(@Request() req){
+    return this.teachersService.getProfile(req.user.sub)
   }
 }

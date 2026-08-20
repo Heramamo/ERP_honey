@@ -1,8 +1,39 @@
 import React from 'react';
-import { Activity, Code2, RotateCw } from 'lucide-react';
+import { Activity, RotateCw } from 'lucide-react';
 import { Card } from '../../ui/Card';
+import type { SaisiePayload } from '../../../types/saisieFeuille';
 
-export const LastEntryCard: React.FC = () => {
+interface LastEntryCardProps {
+  saisie?: SaisiePayload | null;
+}
+
+const formatDate = (date: Date | string) => {
+  const d = new Date(date);
+  return isNaN(d.getTime())
+    ? '-'
+    : d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+};
+
+const getStatutLabel = (statut: SaisiePayload['statut']) => {
+  const value = typeof statut === 'string' ? statut : statut?.statut;
+  switch (value) {
+    case 'VALIDE': return 'Validé';
+    case 'REFUSE': return 'Refusé';
+    case 'EN_ATTENTE': return 'En attente';
+    default: return String(value ?? '-');
+  }
+};
+
+const getStatutClass = (statut: SaisiePayload['statut']) => {
+  const value = typeof statut === 'string' ? statut : statut?.statut;
+  if (value === 'VALIDE') return 'bg-emerald-500/20 text-emerald-400';
+  if (value === 'REFUSE') return 'bg-rose-500/20 text-rose-400';
+  return 'bg-amber-500/20 text-amber-400';
+};
+
+export const LastEntryCard: React.FC<LastEntryCardProps> = ({ saisie }) => {
+  const hasEntry = Boolean(saisie);
+
   return (
     <Card className="justify-between">
       <div>
@@ -11,23 +42,35 @@ export const LastEntryCard: React.FC = () => {
           <h3 className="text-sm font-bold text-white">Dernière Saisie Enregistrée</h3>
         </div>
 
-        <h2 className="text-3xl font-black text-white tracking-tight">12 Août 2026</h2>
+        {hasEntry ? (
+          <>
+            <h2 className="text-3xl font-black text-white tracking-tight">
+              {formatDate(saisie!.date)}
+            </h2>
 
-        {/* Badges de détails */}
-        <div className="flex flex-wrap items-center gap-2 mt-4">
-          <span className="bg-slate-900 border border-slate-700/80 text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-lg">
-            5,5 h total <span className="text-slate-400 text-[11px]">(4h Base + 1,5h Supp)</span>
-          </span>
+            <div className="flex flex-wrap items-center gap-2 mt-4">
+              <span className="bg-slate-900 border border-slate-700/80 text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-lg">
+                {Number(saisie!.heuresEffectuees) + Number(saisie!.heuresSupp)} h total{' '}
+                <span className="text-slate-400 text-[11px]">
+                  ({saisie!.heuresEffectuees}h Base + {saisie!.heuresSupp}h Supp)
+                </span>
+              </span>
 
-          <span className="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
-            <Code2 size={14} />
-            Cours (React JS)
-          </span>
+              <span className="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-1.5 rounded-lg">
+                {saisie!.typeActivite}
+              </span>
 
-          <span className="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1">
-            ● Validé
-          </span>
-        </div>
+              <span className={`text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 ${getStatutClass(saisie!.statut)}`}>
+                ● {getStatutLabel(saisie!.statut)}
+              </span>
+            </div>
+          </>
+        ) : (
+          <div className="py-8 text-center">
+            <p className="text-3xl font-black text-slate-600 tracking-tight">—</p>
+            <p className="text-xs text-slate-500 mt-2">Aucune saisie pour le moment</p>
+          </div>
+        )}
       </div>
 
       <div className="mt-8 pt-4 border-t border-slate-800/60 flex items-center gap-2 text-[11px] text-slate-400 font-medium">
@@ -37,3 +80,5 @@ export const LastEntryCard: React.FC = () => {
     </Card>
   );
 };
+
+export default LastEntryCard;

@@ -9,14 +9,12 @@ interface PayrollItem {
   periode: string;
   totalHeures: string;
   montant: string;
-  statut: 'En attente' | 'Payé';
+  statut: 'En attente' | 'Payé' | 'Validé';
 }
 
-const mockPayrolls: PayrollItem[] = [
-  { id: '1', periode: 'Août 2026', totalHeures: '32h', montant: '450k Ar', statut: 'En attente' },
-  { id: '2', periode: 'Juillet 2026', totalHeures: '36h', montant: '510k Ar', statut: 'Payé' },
-  { id: '3', periode: 'Juin 2026', totalHeures: '32h', montant: '450k Ar', statut: 'Payé' },
-];
+interface PayrollHistoryTableProps {
+  rows?: PayrollItem[];
+}
 
 const columns: DataColumn<PayrollItem>[] = [
   {
@@ -40,7 +38,7 @@ const columns: DataColumn<PayrollItem>[] = [
   },
 ];
 
-export const PayrollHistoryTable: React.FC = () => {
+export const PayrollHistoryTable: React.FC<PayrollHistoryTableProps> = ({ rows = [] }) => {
   return (
     <Card>
       <div className="flex justify-between items-center mb-5">
@@ -50,7 +48,13 @@ export const PayrollHistoryTable: React.FC = () => {
         </button>
       </div>
 
-      <DataTable columns={columns} data={mockPayrolls} rowKey={(row) => row.id} />
+      {rows.length > 0 ? (
+        <DataTable columns={columns} data={rows} rowKey={(row) => row.id} />
+      ) : (
+        <p className="text-xs text-slate-500 py-6 text-center">Aucun bulletin de paie pour le moment</p>
+      )}
     </Card>
   );
 };
+
+export default PayrollHistoryTable;
