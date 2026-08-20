@@ -13,9 +13,10 @@ import UnauthorizedPage from './pages/Unauthorizedpage';
 import DashboardPage from './pages/DashboardPage';
 import PlaceholderPage from './pages/PlaceholderPage';
 import ProtectedPublicRoute from './components/ProtectedPublicRoute';
-import HoursValidationTable from './components/dashboard/hr/HoursValidationTable';
+import HrPayrollPage from './pages/HrPayrollPage';
 import TeachersTable from './components/dashboard/hr/TeachersTable';
 import PayrollTable from './components/dashboard/hr/PayrollTable';
+import RoleGuard from './components/RoleGuard';
 
 export const App: React.FC = () => {
   return (
@@ -33,11 +34,54 @@ export const App: React.FC = () => {
           <Route element={<ProtectedRoute />}>
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/dashboard/rh-paie" element={<HoursValidationTable/>} />
-              <Route path="/dashboard/finance" element={<TeachersTable />} />
-              <Route path="/dashboard/mes-heures" element={<PayrollTable />} />
-              <Route path="/dashboard/feuilles-de-temps" element={<PlaceholderPage title="Feuilles de temps" />} />
-              <Route path="/dashboard/paie" element={<PlaceholderPage title="Ma Paie" />} />
+              <Route
+                path="/dashboard/rh-paie"
+                element={
+                  <RoleGuard allowedRoles={['ADMIN', 'RH']}>
+                    <HrPayrollPage allowedRoles={['ADMIN', 'RH']} />
+                  </RoleGuard>
+                }
+              />
+              <Route
+                path="/dashboard/enseignants"
+                element={
+                  <RoleGuard allowedRoles={['ADMIN', 'RH']}>
+                    <TeachersTable role="admin" allowedRoles={['ADMIN', 'RH']} />
+                  </RoleGuard>
+                }
+              />
+              <Route
+                path="/dashboard/finance"
+                element={
+                  <RoleGuard allowedRoles={['ADMIN', 'RH', 'FINANCE']}>
+                    <PlaceholderPage title="Finance" />
+                  </RoleGuard>
+                }
+              />
+              <Route
+                path="/dashboard/mes-heures"
+                element={
+                  <RoleGuard allowedRoles={['ENSEIGNANT']}>
+                    <PayrollTable allowedRoles={['ENSEIGNANT']} />
+                  </RoleGuard>
+                }
+              />
+              <Route
+                path="/dashboard/feuilles-de-temps"
+                element={
+                  <RoleGuard allowedRoles={['ENSEIGNANT']}>
+                    <PlaceholderPage title="Feuilles de temps" />
+                  </RoleGuard>
+                }
+              />
+              <Route
+                path="/dashboard/paie"
+                element={
+                  <RoleGuard allowedRoles={['ENSEIGNANT']}>
+                    <PlaceholderPage title="Ma Paie" />
+                  </RoleGuard>
+                }
+              />
               <Route path="/dashboard/settings" element={<PlaceholderPage title="Paramètres" />} />
             </Route>
           </Route>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Download, FileText } from 'lucide-react';
 import {StatusBadge} from '../../common/StatusBadge';
+import RoleGuard from '../../RoleGuard';
+import type { Role } from '../../../types/auth';
 
 interface PayrollRecord {
   id: string;
@@ -17,8 +19,12 @@ const MOCK_PAYROLL: PayrollRecord[] = [
   { id: '4', teacherName: 'Rakotoarisoa J.', month: 'Juillet 2026', netAmount: 1500000, status: 'EN ATTENTE' },
 ];
 
-export const PayrollTable: React.FC = () => {
-  return (
+interface PayrollTableProps {
+  allowedRoles?: Role[];
+}
+
+export const PayrollTable: React.FC<PayrollTableProps> = ({ allowedRoles }) => {
+  const content = (
     <div className="bg-[#12161f] border border-slate-800/60 rounded-xl overflow-hidden shadow-2xl">
       <table className="w-full text-left border-collapse">
         <thead>
@@ -52,6 +58,12 @@ export const PayrollTable: React.FC = () => {
         </tbody>
       </table>
     </div>
+  );
+
+  return allowedRoles ? (
+    <RoleGuard allowedRoles={allowedRoles}>{content}</RoleGuard>
+  ) : (
+    content
   );
 };
 

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Plus, MoreVertical, ChevronLeft, ChevronRight } from 'lucide-react';
+import RoleGuard from '../../RoleGuard';
+import type { Role } from '../../../types/auth';
 
 export type TeacherStatus = 'Permanent' | 'Vacataire' | 'Prestataire';
 
@@ -14,6 +16,7 @@ interface Teacher {
 
 interface TeachersTableProps {
   role?: 'admin' | 'rh' | 'enseignant';
+  allowedRoles?: Role[];
 }
 
 const MOCK_TEACHERS: Teacher[] = [
@@ -24,7 +27,7 @@ const MOCK_TEACHERS: Teacher[] = [
   { id: '5', name: 'Müller K.', email: 'k.muller@honey.mg', formation: 'ALLEMAND', tauxHoraire: 32000, statutEnseignant: 'Permanent' },
 ];
 
-export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin' }) => {
+export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', allowedRoles }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFormation, setSelectedFormation] = useState('ALL');
 
@@ -51,7 +54,7 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin' }) 
     }
   };
 
-  return (
+  const content = (
     <>
       {/* Filtres & Recherche */}
       <div className="flex items-center justify-between gap-4 mb-6">
@@ -166,6 +169,12 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin' }) 
         </div>
       </div>
     </>
+  );
+
+  return allowedRoles ? (
+    <RoleGuard allowedRoles={allowedRoles}>{content}</RoleGuard>
+  ) : (
+    content
   );
 };
 

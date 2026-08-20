@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import TeachersTable from '../components/dashboard/hr/TeachersTable';
 import HoursValidationTable from '../components/dashboard/hr/HoursValidationTable';
 import PayrollTable from '../components/dashboard/hr/PayrollTable';
+import RoleGuard from '../components/RoleGuard';
+import type { Role } from '../types/auth';
 
 interface HrPayrollPageProps {
-  role?: 'admin' | 'rh' | 'enseignant';
+  allowedRoles?: Role[];
 }
 
-export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ role = 'admin' }) => {
-  const [activeTab, setActiveTab] = useState<'enseignants' | 'validation' | 'bulletins'>('enseignants');
+export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) => {
+  const [activeTab, setActiveTab] = useState<'validation' | 'bulletins'>('validation');
 
   // Mappage des titres principaux selon la sous-section active
   const pageTitles = {
-    enseignants: 'Enseignants',
     validation: 'Validation des Heures',
     bulletins: 'Bulletins de Paie',
   };
 
-  return (
+  const content = (
     <div className="w-full text-slate-100 font-sans p-6">
       {/* Titre dynamique */}
       <h1 className="text-3xl font-extrabold tracking-tight mb-6 text-white transition-all">
@@ -26,18 +26,6 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ role = 'admin' }) 
 
       {/* Navigation par sous-sections / Onglets */}
       <div className="flex items-center gap-8 border-b border-slate-800/80 mb-6 text-sm font-semibold">
-        <button
-          onClick={() => setActiveTab('enseignants')}
-          className={`pb-3 relative transition-colors ${
-            activeTab === 'enseignants' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
-          }`}
-        >
-          Enseignants
-          {activeTab === 'enseignants' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />
-          )}
-        </button>
-
         <button
           onClick={() => setActiveTab('validation')}
           className={`pb-3 relative transition-colors flex items-center gap-2 ${
@@ -67,10 +55,15 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ role = 'admin' }) 
       </div>
 
       {/* Affichage du contenu dynamique */}
-      {activeTab === 'enseignants' && <TeachersTable role={role} />}
-      {activeTab === 'validation' && <HoursValidationTable />}
-      {activeTab === 'bulletins' && <PayrollTable />}
+      {activeTab === 'validation' && <HoursValidationTable allowedRoles={allowedRoles} />}
+      {activeTab === 'bulletins' && <PayrollTable allowedRoles={allowedRoles} />}
     </div>
+  );
+
+  return allowedRoles ? (
+    <RoleGuard allowedRoles={allowedRoles}>{content}</RoleGuard>
+  ) : (
+    content
   );
 };
 

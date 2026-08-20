@@ -1,5 +1,7 @@
 import React from 'react';
 import { Check, X, Eye } from 'lucide-react';
+import RoleGuard from '../../RoleGuard';
+import type { Role } from '../../../types/auth';
 
 interface HoursSubmission {
   id: string;
@@ -17,14 +19,18 @@ const MOCK_HOURS: HoursSubmission[] = [
   { id: '4', teacherName: 'Rasoanaivo T.', period: '01 - 15 Août 2026', hoursCount: 18, estimatedTotal: 396000, status: 'EN ATTENTE' },
 ];
 
-export const HoursValidationTable: React.FC = () => {
-  return (
+interface HoursValidationTableProps {
+  allowedRoles?: Role[];
+}
+
+export const HoursValidationTable: React.FC<HoursValidationTableProps> = ({ allowedRoles }) => {
+  const content = (
     <div className="bg-[#12161f] border border-slate-800/60 rounded-xl overflow-hidden shadow-2xl">
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-b border-slate-800/80 text-[11px] font-bold text-slate-400 tracking-wider uppercase bg-[#0e1118]">
             <th className="py-4 px-6">ENSEIGNANT</th>
-            <th className="py-4 px-6">PÉRIODE</th>
+            <th className="py-4 px-6">DATE</th>
             <th className="py-4 px-6">HEURES DÉCLARÉES</th>
             <th className="py-4 px-6">MONTANT ESTIMÉ</th>
             <th className="py-4 px-6 text-right">DECISION</th>
@@ -57,6 +63,12 @@ export const HoursValidationTable: React.FC = () => {
         </tbody>
       </table>
     </div>
+  );
+
+  return allowedRoles ? (
+    <RoleGuard allowedRoles={allowedRoles}>{content}</RoleGuard>
+  ) : (
+    content
   );
 };
 
