@@ -3,24 +3,37 @@ import TeachersTable from '../components/dashboard/hr/TeachersTable';
 import HoursValidationTable from '../components/dashboard/hr/HoursValidationTable';
 import PayrollTable from '../components/dashboard/hr/PayrollTable';
 
-export const HrPayrollPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'personnel' | 'validation' | 'bulletins'>('personnel');
+interface HrPayrollPageProps {
+  role?: 'admin' | 'rh' | 'enseignant';
+}
+
+export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ role = 'admin' }) => {
+  const [activeTab, setActiveTab] = useState<'enseignants' | 'validation' | 'bulletins'>('enseignants');
+
+  // Mappage des titres principaux selon la sous-section active
+  const pageTitles = {
+    enseignants: 'Enseignants',
+    validation: 'Validation des Heures',
+    bulletins: 'Bulletins de Paie',
+  };
 
   return (
     <div className="w-full text-slate-100 font-sans p-6">
-      <h1 className="text-3xl font-extrabold tracking-tight mb-6 text-white">
-        Personnel & Enseignants
+      {/* Titre dynamique */}
+      <h1 className="text-3xl font-extrabold tracking-tight mb-6 text-white transition-all">
+        {pageTitles[activeTab]}
       </h1>
 
+      {/* Navigation par sous-sections / Onglets */}
       <div className="flex items-center gap-8 border-b border-slate-800/80 mb-6 text-sm font-semibold">
         <button
-          onClick={() => setActiveTab('personnel')}
+          onClick={() => setActiveTab('enseignants')}
           className={`pb-3 relative transition-colors ${
-            activeTab === 'personnel' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
+            activeTab === 'enseignants' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
-          Personnel & Enseignants
-          {activeTab === 'personnel' && (
+          Enseignants
+          {activeTab === 'enseignants' && (
             <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />
           )}
         </button>
@@ -53,7 +66,8 @@ export const HrPayrollPage: React.FC = () => {
         </button>
       </div>
 
-      {activeTab === 'personnel' && <TeachersTable />}
+      {/* Affichage du contenu dynamique */}
+      {activeTab === 'enseignants' && <TeachersTable role={role} />}
       {activeTab === 'validation' && <HoursValidationTable />}
       {activeTab === 'bulletins' && <PayrollTable />}
     </div>
