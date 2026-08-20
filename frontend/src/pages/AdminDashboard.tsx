@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -32,6 +32,10 @@ import { Card } from '../components/ui/Card';
 import { DataTable } from '../components/ui/DataTable';
 import type { DataColumn } from '../components/ui/DataTable';
 import { chartAxis, chartGridStroke, chartTooltipStyle } from '../components/dashboard/chartTheme';
+import { useAppDispatch } from '../store/hooks';
+import { fetchAllTeachers } from '../store/slices/teacherSlice';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
 
 // 1. Données Évolution Temporelle (Revenus vs Dépenses)
 const progressionData = [
@@ -114,6 +118,12 @@ const RevenueExpenseLegend: React.FC = () => (
 );
 
 export const AdminDashboard: React.FC = () => {
+  const dispatch = useAppDispatch()
+  useEffect(()=>{
+    dispatch(fetchAllTeachers())
+  },[dispatch])
+  const teachers = useSelector((state:RootState)=>state.teachers.enseignants)
+  console.log(teachers)
   return (
     <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans text-slate-100">
       

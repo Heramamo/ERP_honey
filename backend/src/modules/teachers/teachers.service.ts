@@ -38,4 +38,19 @@ export class TeachersService {
             throw new NotFoundException("Aucun profil enseignant trouvé pour cet utilisateur")
         return enseignant
     }
+    async getAll() {
+        return this.prisma.enseignant.findMany({
+            include: {
+                utilisateur: {
+                    select: {
+                        id_utilisateur: true,
+                        nom: true,
+                        prenom: true,
+                        email: true,
+                        role: true,
+                    }
+                }
+            }
+        })
+    }
 }
