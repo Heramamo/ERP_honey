@@ -45,6 +45,13 @@ export class SaisieFeuilleService {
     async   getPendingSaisie(){
         return await this.prisma.feuilleDeTemps.findMany({where:{statut:"EN_ATTENTE"}})
     }
+    async   getMyPendingSaisie(userId:number)
+    {
+        return  await this.prisma.feuilleDeTemps.findMany({where:{
+            enseignantId:userId,
+            statut:"EN_ATTENTE"
+        }})
+    }
     async   calculMonthSalary(userId:number){
         const curr_month = new Date().getMonth() + 1;
         const enseignant = await this.prisma.enseignant.findUnique({where:{id:userId}})
