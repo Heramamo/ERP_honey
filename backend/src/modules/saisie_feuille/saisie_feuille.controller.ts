@@ -44,6 +44,10 @@ export class SaisieFeuilleController {
   async getPendingSaisie(){
     return this.saisieFeuilleService.getPendingSaisie()
   }
+  @Get('pending/me')
+  async getMyPendingSaisie(@Request() req){
+    return  this.saisieFeuilleService.getMyPendingSaisie(req.user.sub as number);
+  }
   @Get(':id/month')
   @ApiResponse({summary:"Liste des feuille du mois"})
   async getMonthSaisie(@Param('id', ParseIntPipe) id:number){
