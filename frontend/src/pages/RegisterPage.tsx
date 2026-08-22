@@ -1,32 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Building2 } from 'lucide-react';
 import { RegisterForm } from '../components/auth/RegisterForm';
 import type { RegisterFormValues } from '../components/auth/RegisterForm';
 import { api } from '../service/api';
-import { setCredentials } from '../store/slices/authSlice';
-import { useDispatch } from 'react-redux';
+import { getApiErrorMessage } from '../service/error';
 
 export default function RegisterPage(): React.ReactElement {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [error, setError] = useState<string | null>(null)
   const handleRegister = async (values: RegisterFormValues) => {
+    setError(null)
     try {
-        const res = await api.post(`/user/register`, {
+        await api.post(`/user/register`, {
             nom: values.lastName,
             prenom: values.firstName,
             email: values.email,
             role: values.role,
             mot_de_passe: values.password
         });
-        const token = res.data.access_token
-        dispatch(setCredentials({token}))
-        navigate('/dashboard')
-        console.log(res);
-    } catch (error) {
-        console.error('Erreur lors de l\'inscription :', error);
+        navigate('/login')
+    } catch (err) {
+        setError(getApiErrorMessage(err, "Erreur lors de l'inscription"));
     }
-    console.log('Données d\'inscription :', values);
   };
 
   return (
@@ -64,7 +60,7 @@ export default function RegisterPage(): React.ReactElement {
               </p>
             </div>
 
-            <RegisterForm onSubmit={handleRegister} />
+            <RegisterForm onSubmit={handleRegister} error={error} />
 
             <div className="mt-8 text-center text-xs font-medium text-slate-500">
               Vous avez déjà un compte ?{' '}

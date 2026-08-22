@@ -40,14 +40,9 @@ export class UserService {
                     
                 },
             })
-            const payload = { sub: newUser.id_utilisateur, email: newUser.email, role: newUser.role };
-            const token = await this.jwtService.signAsync(payload);
-
             return {
                 message: 'Compte créé avec succès',
-                access_token: token,
                 user: newUser,
-                requiresTeacherProfile: newUser.role === 'ENSEIGNANT', 
             }   
         }
         catch {

@@ -18,9 +18,10 @@ api.interceptors.request.use((config)=>{
 })
 
 api.interceptors.response.use((response)=>response,(error)=>{
-    if (error.response && error.response.status == 401){
+    const url: string = error.config?.url ?? ''
+    const isAuthRoute = url.includes('/user/login') || url.includes('/user/register')
+    if (error.response && error.response.status == 401 && !isAuthRoute){
         localStorage.removeItem('access_token')
-        localStorage.removeItem('user')
         window.location.href = '/login?expired=true';
     }
     return Promise.reject(error)

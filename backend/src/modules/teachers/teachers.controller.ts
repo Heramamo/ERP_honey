@@ -1,6 +1,7 @@
 import { Body, Controller, ForbiddenException, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { TeachersService } from './teachers.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
+import { CreateFullTeacherDto } from './dto/create-full-teacher.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
@@ -10,6 +11,19 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @Controller('teachers')
 export class TeachersController {
   constructor(private readonly teachersService: TeachersService) {}
+
+  @ApiBearerAuth()
+  @Post()
+  @ApiOperation({ summary: 'Créer un enseignant complet (ADMIN / RH uniquement)' })
+  @ApiResponse({ status: 201, description: 'Enseignant créé avec succès.' })
+  @ApiResponse({ status: 403, description: 'Accès réservé pour admin, RH.' })
+  @ApiResponse({ status: 409, description: 'Email déjà utilisé.' })
+  async createByAdmin(@Request() req, @Body() dto: CreateFullTeacherDto) {
+    if (!['ADMIN', 'RH'].includes(req.user.role))
+      throw new ForbiddenException('Acces reserve pour admin, RH');
+    return this.teachersService.createWithProfile(dto);
+  }
+
   //@UseGuards(JwtAuthGuar)
   @ApiBearerAuth()
   @Post('profile')
