@@ -7,11 +7,12 @@ import { UserService } from './modules/user/user.service';
 import { TeachersModule } from './modules/teachers/teachers.module';
 import { ConfigModule } from '@nestjs/config';
 import { SaisieFeuilleModule } from './modules/saisie_feuille/saisie_feuille.module';
+import { PaieModule } from './modules/paie/paie.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
       isGlobal: true, 
-    }),UserModule, TeachersModule, SaisieFeuilleModule],
+    }),UserModule, TeachersModule, SaisieFeuilleModule, PaieModule],
   controllers: [AppController],
   providers: [AppService],
 })

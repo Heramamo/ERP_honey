@@ -14,7 +14,7 @@ export class SaisieFeuilleService {
             throw new NotFoundException("Auccun enseignant avec cet ID")
         return this.prisma.feuilleDeTemps.create({
             data:{
-                enseignantId:userId,
+                enseignantId:enseignant.id,
                 date,
                 heuresEffectuees,
                 heuresSupp,
@@ -52,15 +52,36 @@ export class SaisieFeuilleService {
             statut:"EN_ATTENTE"
         }})
     }
-    async   calculMonthSalary(userId:number){
-        const curr_month = new Date().getMonth() + 1;
-        const enseignant = await this.prisma.enseignant.findUnique({where:{id:userId}})
-        if (!enseignant)
-            throw new NotFoundException("Auccun enseignant avec cet ID")
-        const calcul = await this.prisma.feuilleDeTemps.findMany({where:{enseignantId:userId}})
-        const monthFuille = calcul.filter(e=> {return(DateUtils.getMonth(e.date) == curr_month)})
-        const totalHeure = monthFuille.reduce((acc, curr)=> acc + curr.heuresEffectuees, 0)
-        const totalHeureSupp = monthFuille.reduce((acc, curr)=>acc + curr.heuresSupp,0)
-        return ((totalHeure * enseignant.tauxHoraireBase + (totalHeureSupp * enseignant.tauxHoraireBase)))
+    async calculMonthSalary(userId: number, month?: number, year?: number) {
+        const enseignant = await this.prisma.enseignant.findUnique({
+            where: { id_utilisateur: userId }
+        });
+        if (!enseignant) throw new NotFoundException("Aucun enseignant trouvé pour cet utilisateur");
+
+        const targetMonth = month ?? new Date().getMonth() + 1;
+        const targetYear = year ?? new Date().getFullYear();
+
+        const startOfMonth = new Date(targetYear, targetMonth - 1, 1);
+        const endOfMonth = new Date(targetYear, targetMonth, 0, 23, 59, 59);
+
+        const feuillesValidees = await this.prisma.feuilleDeTemps.findMany({
+            where: {
+                enseignantId: enseignant.id,
+                statut: "VALIDE",
+                date: {
+                    gte: startOfMonth,
+                    lte: endOfMonth
+                }
+            }
+        });
+
+        const totalHeures = feuillesValidees.reduce((acc, curr) => acc + curr.heuresEffectuees, 0);
+        const totalHeuresSupp = feuillesValidees.reduce((acc, curr) => acc + curr.heuresSupp, 0);
+
+        const COEFF_HEURES_SUPP = 1.25;
+        const salaireHeuresNormales = totalHeures * enseignant.tauxHoraireBase;
+        const salaireHeuresSupp = totalHeuresSupp * enseignant.tauxHoraireBase * COEFF_HEURES_SUPP;
+
+        return salaireHeuresNormales + salaireHeuresSupp;
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, ForbiddenException, Get, Param, ParseIntPipe, Patch, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Param, ParseIntPipe, Patch, Post, Query, Request, UseGuards } from '@nestjs/common';
 import { SaisieFeuilleService } from './saisie_feuille.service';
 import { CreateSaisieFeuilleDto } from './dto/create-saisie-feuille.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -53,4 +53,19 @@ export class SaisieFeuilleController {
   async getMonthSaisie(@Param('id', ParseIntPipe) id:number){
     return this.saisieFeuilleService.calculMonthSalary(id)
   }
+  @Get('salaire/:userId')
+    async getCalculatedSalary(
+        @Param('userId', ParseIntPipe) userId: number,
+        @Query('month', new ParseIntPipe({ optional: true })) month?: number,
+        @Query('year', new ParseIntPipe({ optional: true })) year?: number,
+    ) {
+        const salaireTotal = await this.saisieFeuilleService.calculMonthSalary(userId, month, year);
+
+        return {
+            userId,
+            mois: month ?? new Date().getMonth() + 1,
+            annee: year ?? new Date().getFullYear(),
+            salaireEstime: salaireTotal,
+        };
+    }
 }
