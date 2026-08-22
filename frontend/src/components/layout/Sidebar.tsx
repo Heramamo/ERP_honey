@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
-  Users,
   GraduationCap,
   PieChart,
   Settings,
@@ -29,7 +28,7 @@ const MANAGEMENT_ROLES: Role[] = ['ADMIN', 'RH', 'FINANCE'];
 const adminNavItems: NavItem[] = [
   { label: 'Tableau de bord', icon: LayoutDashboard, path: '/dashboard', end: true },
   { label: 'Enseignants', icon: GraduationCap, path: '/dashboard/enseignants' },
-  { label: 'RH & Paie', icon: Users, path: '/dashboard/rh-paie' },
+  { label: 'Feuilles de Saisie', icon: FileText, path: '/dashboard/feuilles-de-saisie' },
   { label: 'Finance', icon: PieChart, path: '/dashboard/finance' },
 ];
 

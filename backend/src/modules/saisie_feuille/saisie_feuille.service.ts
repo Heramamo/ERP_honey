@@ -7,6 +7,17 @@ import { DateUtils } from 'src/shared/data-utils';
 @Injectable()
 export class SaisieFeuilleService {
     constructor(private prisma:PrismaService){}
+    private enseignantInclude() {
+        return {
+            enseignant: {
+                include: {
+                    utilisateur: {
+                        select: { id_utilisateur: true, nom: true, prenom: true, email: true }
+                    }
+                }
+            }
+        }
+    }
     async   create(userId:number,createSaisieDto:CreateSaisieFeuilleDto){
         const {date,heuresEffectuees,heuresSupp,typeActivite} = createSaisieDto
         const enseignant = await this.prisma.enseignant.findUnique({where:{id_utilisateur:userId}})
@@ -37,13 +48,20 @@ export class SaisieFeuilleService {
         })
     }
     async   getAllSaisie(){
-        return await this.prisma.feuilleDeTemps.findMany()
+        return await this.prisma.feuilleDeTemps.findMany({
+            include: this.enseignantInclude(),
+            orderBy: { date: 'desc' }
+        })
     }
     async   getMySaisie(userId:number){
         return await this.prisma.feuilleDeTemps.findMany({where:{enseignantId:userId}})
     }
     async   getPendingSaisie(){
-        return await this.prisma.feuilleDeTemps.findMany({where:{statut:"EN_ATTENTE"}})
+        return await this.prisma.feuilleDeTemps.findMany({
+            where:{statut:"EN_ATTENTE"},
+            include: this.enseignantInclude(),
+            orderBy: { date: 'desc' }
+        })
     }
     async   getMyPendingSaisie(userId:number)
     {

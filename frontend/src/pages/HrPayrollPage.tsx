@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HoursValidationTable from '../components/dashboard/hr/HoursValidationTable';
-import PayrollTable from '../components/dashboard/hr/PayrollTable';
+import AllSaisiesTable from '../components/dashboard/hr/AllSaisiesTable';
 import RoleGuard from '../components/RoleGuard';
+import { fetchPendingSaisies } from '../store/slices/saisieSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import type { Role } from '../types/auth';
 
 interface HrPayrollPageProps {
@@ -9,12 +11,18 @@ interface HrPayrollPageProps {
 }
 
 export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) => {
-  const [activeTab, setActiveTab] = useState<'validation' | 'bulletins'>('validation');
+  const dispatch = useAppDispatch();
+  const pendingCount = useAppSelector((state) => state.saisies.pending.length);
+  const [activeTab, setActiveTab] = useState<'validation' | 'toutes'>('validation');
+
+  useEffect(() => {
+    dispatch(fetchPendingSaisies());
+  }, [dispatch]);
 
   // Mappage des titres principaux selon la sous-section active
   const pageTitles = {
-    validation: 'Validation des Heures',
-    bulletins: 'Bulletins de Paie',
+    validation: 'Feuilles en Attente de Validation',
+    toutes: 'Toutes les Feuilles de Saisie',
   };
 
   const content = (
@@ -32,9 +40,9 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
             activeTab === 'validation' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
-          Validation des Heures
+          En Attente de Validation
           <span className="bg-slate-800 text-slate-300 text-xs px-2 py-0.5 rounded-full font-bold">
-            4
+            {pendingCount}
           </span>
           {activeTab === 'validation' && (
             <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />
@@ -42,13 +50,13 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
         </button>
 
         <button
-          onClick={() => setActiveTab('bulletins')}
+          onClick={() => setActiveTab('toutes')}
           className={`pb-3 relative transition-colors ${
-            activeTab === 'bulletins' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
+            activeTab === 'toutes' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
-          Bulletins de Paie
-          {activeTab === 'bulletins' && (
+          Toutes les Feuilles
+          {activeTab === 'toutes' && (
             <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />
           )}
         </button>
@@ -56,7 +64,7 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
 
       {/* Affichage du contenu dynamique */}
       {activeTab === 'validation' && <HoursValidationTable allowedRoles={allowedRoles} />}
-      {activeTab === 'bulletins' && <PayrollTable allowedRoles={allowedRoles} />}
+      {activeTab === 'toutes' && <AllSaisiesTable allowedRoles={allowedRoles} />}
     </div>
   );
 

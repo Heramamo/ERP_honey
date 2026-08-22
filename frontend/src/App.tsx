@@ -36,7 +36,7 @@ export const App: React.FC = () => {
             <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route
-                path="/dashboard/rh-paie"
+                path="/dashboard/feuilles-de-saisie"
                 element={
                   <RoleGuard allowedRoles={['ADMIN', 'RH']}>
                     <HrPayrollPage allowedRoles={['ADMIN', 'RH']} />

@@ -1,67 +1,114 @@
-import React from 'react';
-import { Check, X, Eye } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Check, X, Loader2, Inbox } from 'lucide-react';
 import RoleGuard from '../../RoleGuard';
 import type { Role } from '../../../types/auth';
-
-interface HoursSubmission {
-  id: string;
-  teacherName: string;
-  period: string;
-  hoursCount: number;
-  estimatedTotal: number;
-  status: 'EN ATTENTE' | 'VALIDÉ' | 'REFUSÉ';
-}
-
-const MOCK_HOURS: HoursSubmission[] = [
-  { id: '1', teacherName: 'Rakotoarisoa J.', period: '01 - 15 Août 2026', hoursCount: 32, estimatedTotal: 800000, status: 'EN ATTENTE' },
-  { id: '2', teacherName: 'Ramanantsoa M.', period: '01 - 15 Août 2026', hoursCount: 40, estimatedTotal: 1200000, status: 'EN ATTENTE' },
-  { id: '3', teacherName: 'Andriamihaja H.', period: '01 - 15 Août 2026', hoursCount: 25, estimatedTotal: 700000, status: 'EN ATTENTE' },
-  { id: '4', teacherName: 'Rasoanaivo T.', period: '01 - 15 Août 2026', hoursCount: 18, estimatedTotal: 396000, status: 'EN ATTENTE' },
-];
+import type { SaisiePayload } from '../../../types/saisieFeuille';
+import {
+  fetchPendingSaisies,
+  validateSaisie,
+  clearError,
+} from '../../../store/slices/saisieSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 interface HoursValidationTableProps {
   allowedRoles?: Role[];
 }
 
+const formatDate = (date: Date | string) => {
+  const d = new Date(date);
+  return isNaN(d.getTime()) ? '-' : d.toLocaleDateString('fr-FR');
+};
+
 export const HoursValidationTable: React.FC<HoursValidationTableProps> = ({ allowedRoles }) => {
+  const dispatch = useAppDispatch();
+  const { pending, loading, error } = useAppSelector((state) => state.saisies);
+
+  useEffect(() => {
+    dispatch(fetchPendingSaisies());
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
+
+  const handleValidate = (id: number | undefined, statut: 'VALIDE' | 'REFUSE') => {
+    if (!id) return;
+    dispatch(validateSaisie({ id, statut }));
+  };
+
   const content = (
-    <div className="bg-[#12161f] border border-slate-800/60 rounded-xl overflow-hidden shadow-2xl">
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr className="border-b border-slate-800/80 text-[11px] font-bold text-slate-400 tracking-wider uppercase bg-[#0e1118]">
-            <th className="py-4 px-6">ENSEIGNANT</th>
-            <th className="py-4 px-6">DATE</th>
-            <th className="py-4 px-6">HEURES DÉCLARÉES</th>
-            <th className="py-4 px-6">MONTANT ESTIMÉ</th>
-            <th className="py-4 px-6 text-right">DECISION</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-800/50 text-sm">
-          {MOCK_HOURS.map((item) => (
-            <tr key={item.id} className="hover:bg-slate-800/30 transition-colors">
-              <td className="py-4 px-6 font-bold text-slate-100">{item.teacherName}</td>
-              <td className="py-4 px-6 text-slate-400 text-xs">{item.period}</td>
-              <td className="py-4 px-6 font-mono font-semibold text-amber-400">{item.hoursCount} hrs</td>
-              <td className="py-4 px-6 font-semibold text-slate-200">
-                {item.estimatedTotal.toLocaleString('fr-FR')} Ar
-              </td>
-              <td className="py-4 px-6 text-right">
-                <div className="flex items-center justify-end gap-2">
-                  <button className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Détails">
-                    <Eye className="w-4 h-4" />
-                  </button>
-                  <button className="p-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/60 hover:bg-emerald-900 text-emerald-400 transition-colors" title="Valider">
-                    <Check className="w-4 h-4" />
-                  </button>
-                  <button className="p-1.5 rounded-lg bg-rose-950/60 border border-rose-800/60 hover:bg-rose-900 text-rose-400 transition-colors" title="Refuser">
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="space-y-4">
+      {error && (
+        <div className="px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm">
+          {error}
+        </div>
+      )}
+
+      <div className="bg-[#12161f] border border-slate-800/60 rounded-xl overflow-hidden shadow-2xl">
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+            <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
+            <span className="text-sm">Chargement des feuilles en attente...</span>
+          </div>
+        ) : pending.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+            <Inbox className="w-8 h-8 text-slate-600" />
+            <span className="text-sm">Aucune feuille en attente de validation.</span>
+          </div>
+        ) : (
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-slate-800/80 text-[11px] font-bold text-slate-400 tracking-wider uppercase bg-[#0e1118]">
+                <th className="py-4 px-6">ENSEIGNANT</th>
+                <th className="py-4 px-6">DATE</th>
+                <th className="py-4 px-6">TYPE D'ACTIVITÉ</th>
+                <th className="py-4 px-6">HEURES DE BASE</th>
+                <th className="py-4 px-6">HEURES SUPP.</th>
+                <th className="py-4 px-6 text-right">DECISION</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/50 text-sm">
+              {pending.map((saisie: SaisiePayload) => (
+                <tr key={saisie.id ?? `${saisie.enseignantId}-${saisie.date}`} className="hover:bg-slate-800/30 transition-colors">
+                  <td className="py-4 px-6 font-bold text-slate-100">
+                    {saisie.enseignant
+                      ? `${saisie.enseignant.utilisateur.nom} ${saisie.enseignant.utilisateur.prenom}`
+                      : `Enseignant #${saisie.enseignantId}`}
+                    {saisie.enseignant && (
+                      <span className="block text-xs font-normal text-slate-500">{saisie.enseignant.utilisateur.email}</span>
+                    )}
+                  </td>
+                  <td className="py-4 px-6 text-slate-400 text-xs">{formatDate(saisie.date)}</td>
+                  <td className="py-4 px-6">
+                    <span className="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider border bg-blue-950/60 text-blue-400 border-blue-800/50">
+                      {saisie.typeActivite}
+                    </span>
+                  </td>
+                  <td className="py-4 px-6 font-mono font-semibold text-slate-200">{saisie.heuresEffectuees} h</td>
+                  <td className="py-4 px-6 font-mono font-semibold text-amber-400">{saisie.heuresSupp} h</td>
+                  <td className="py-4 px-6 text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      <button
+                        onClick={() => handleValidate(saisie.id, 'VALIDE')}
+                        className="p-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/60 hover:bg-emerald-900 text-emerald-400 transition-colors cursor-pointer"
+                        title="Valider"
+                      >
+                        <Check className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleValidate(saisie.id, 'REFUSE')}
+                        className="p-1.5 rounded-lg bg-rose-950/60 border border-rose-800/60 hover:bg-rose-900 text-rose-400 transition-colors cursor-pointer"
+                        title="Refuser"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 

@@ -24,7 +24,14 @@ export const saisieFeuilleService = {
         const res = await api.get('/saisie-feuille');
         return res.data;
     },
-
+    getPending: async () => {
+        const res = await api.get('/saisie-feuille/pending');
+        return res.data;
+    },
+    validate: async (id: number, statut: ValidateSaisieDto['statut']) => {
+        const res = await api.patch(`/saisie-feuille/${id}/valider`, { statut });
+        return res.data;
+    },
 
     getMonthSaisie: async (id: number) => {
         const res = await api.get(`/saisie-feuille/${id}/month`);
