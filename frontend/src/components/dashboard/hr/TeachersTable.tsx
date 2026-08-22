@@ -5,6 +5,7 @@ import type { Role } from '../../../types/auth';
 import { fetchAllTeachers } from '../../../store/slices/teacherSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { formatDateShort } from '../../../const/date';
+import { CreateTeacherModal } from './CreateTeacherModal';
 
 export type TeacherStatus = 'Permanent' | 'Vacataire' | 'Prestataire';
 
@@ -38,6 +39,7 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
   const { enseignants, loading, error } = useAppSelector((state) => state.teachers);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [createOpen, setCreateOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllTeachers());
@@ -93,7 +95,10 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
         </div>
 
         {isHrOrAdmin && (
-          <button className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 cursor-pointer">
+          <button
+            onClick={() => setCreateOpen(true)}
+            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 cursor-pointer"
+          >
             <Plus className="w-4 h-4 stroke-[3]" />
             Nouvel Enseignant
           </button>
@@ -207,6 +212,8 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
           </div>
         )}
       </div>
+
+      <CreateTeacherModal open={createOpen} onClose={() => setCreateOpen(false)} />
     </>
   );
 

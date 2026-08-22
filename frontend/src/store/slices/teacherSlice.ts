@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { EnseignantListState, EnseignantPayload } from "../../types/enseignant";
-import { teacherService } from "../../service/teacher.service";
+import { teacherService, type CreateTeacherDto } from "../../service/teacher.service";
+import { getApiErrorMessage } from "../../service/error";
 
 const initialState: EnseignantListState = {
     enseignants: [],
@@ -15,8 +16,18 @@ export const fetchAllTeachers = createAsyncThunk(
         try {
             return await teacherService.getAll()
         } catch (error) {
-            const message = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
-            return rejectWithValue(message || "Erreur lors du chargement des enseignants")
+            return rejectWithValue(getApiErrorMessage(error, "Erreur lors du chargement des enseignants"))
+        }
+    }
+)
+
+export const createTeacher = createAsyncThunk(
+    'enseignant/createTeacher',
+    async (dto: CreateTeacherDto, { rejectWithValue }) => {
+        try {
+            return await teacherService.createTeacher(dto)
+        } catch (error) {
+            return rejectWithValue(getApiErrorMessage(error, "Erreur lors de la création de l'enseignant"))
         }
     }
 )
@@ -24,7 +35,11 @@ export const fetchAllTeachers = createAsyncThunk(
 const TeacherSlice = createSlice({
     name: 'teacher',
     initialState,
-    reducers: {},
+    reducers: {
+        clearError: (state) => {
+            state.error = null
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchAllTeachers.pending, (state) => {
@@ -39,7 +54,16 @@ const TeacherSlice = createSlice({
                 state.loading = false
                 state.error = action.payload as string
             })
+            .addCase(createTeacher.fulfilled, (state, action: PayloadAction<EnseignantPayload>) => {
+                state.loading = false
+                state.enseignants.unshift(action.payload)
+            })
+            .addCase(createTeacher.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload as string
+            })
     }
 })
 
+export const { clearError } = TeacherSlice.actions;
 export default TeacherSlice.reducer;

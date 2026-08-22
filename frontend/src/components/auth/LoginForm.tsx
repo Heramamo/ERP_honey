@@ -9,9 +9,10 @@ export interface LoginFormValues {
 
 interface LoginFormProps {
   onSubmit: (values: LoginFormValues) => Promise<void> | void;
+  error?: string | null;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -90,6 +91,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           Rester connecté sur cette session locale
         </label>
       </div>
+
+      {/* Message d'erreur renvoyé par le back */}
+      {error && (
+        <div className="px-4 py-2.5 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs">
+          {error}
+        </div>
+      )}
 
       {/* Bouton de connexion */}
       <button

@@ -1,31 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {  Building2 } from 'lucide-react';
-import type { AxiosError } from 'axios';
 import { AuthHeader } from '../components/ui/AuthHeader';
 import { LoginForm } from '../components/auth/LoginForm';
 import type { LoginFormValues } from '../components/auth/LoginForm';
 
 import { api } from '../service/api';
+import { getApiErrorMessage } from '../service/error';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../store/slices/authSlice';
 
 export default function LoginPage(): React.ReactElement {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [error, setError] = useState<string | null>(null)
   const handleLogin = async (data: LoginFormValues) => {
+    setError(null)
     try {
       const res = await api.post(`/user/login`, {email: data.username, mot_de_passe:data.password})
       const token = res.data.access_token
-      console.log(token)
       dispatch(setCredentials({token}))
-      console.log(res)
-     navigate('/dashboard')
-    } catch (error) {
-      const axiosError = error as AxiosError<{ message?: string }>;
-      console.log(axiosError.response?.data?.message ?? axiosError.message);
+      navigate('/dashboard')
+    } catch (err) {
+      setError(getApiErrorMessage(err, 'Échec de la connexion'));
     }
-    console.log('Données saisies :', data);
   };
 
   const handleHelpClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -68,7 +66,7 @@ export default function LoginPage(): React.ReactElement {
                 subtitle="Accès sécurisé au réseau d'entreprise"
               />
 
-              <LoginForm onSubmit={handleLogin} />
+              <LoginForm onSubmit={handleLogin} error={error} />
 
               <div className="mt-5 flex flex-col items-center gap-3 text-center">
                 <a 
