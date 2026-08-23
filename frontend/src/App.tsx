@@ -14,6 +14,8 @@ import DashboardPage from './pages/DashboardPage';
 import PlaceholderPage from './pages/PlaceholderPage';
 import ProtectedPublicRoute from './components/ProtectedPublicRoute';
 import HrPayrollPage from './pages/HrPayrollPage';
+import HrPaiePage from './pages/HrPaiePage';
+import MyPaiesTable from './pages/MyPaiesTable';
 import TeachersTable from './components/dashboard/hr/TeachersTable';
 import PayrollTable from './components/dashboard/hr/PayrollTable';
 import SaisiesTable from './components/dashboard/teacher/SaisiesTable';
@@ -76,10 +78,18 @@ export const App: React.FC = () => {
                 }
               />
               <Route
+                path="/dashboard/gestion-paie"
+                element={
+                  <RoleGuard allowedRoles={['ADMIN', 'RH']}>
+                    <HrPaiePage allowedRoles={['ADMIN', 'RH']} />
+                  </RoleGuard>
+                }
+              />
+              <Route
                 path="/dashboard/paie"
                 element={
                   <RoleGuard allowedRoles={['ENSEIGNANT']}>
-                    <PlaceholderPage title="Ma Paie" />
+                    <MyPaiesTable />
                   </RoleGuard>
                 }
               />

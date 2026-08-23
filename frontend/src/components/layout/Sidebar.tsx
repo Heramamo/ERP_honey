@@ -29,6 +29,7 @@ const adminNavItems: NavItem[] = [
   { label: 'Tableau de bord', icon: LayoutDashboard, path: '/dashboard', end: true },
   { label: 'Enseignants', icon: GraduationCap, path: '/dashboard/enseignants' },
   { label: 'Feuilles de Saisie', icon: FileText, path: '/dashboard/feuilles-de-saisie' },
+  { label: 'Gestion de Paie', icon: Wallet, path: '/dashboard/gestion-paie' },
   { label: 'Finance', icon: PieChart, path: '/dashboard/finance' },
 ];
 

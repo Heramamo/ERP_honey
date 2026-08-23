@@ -8,6 +8,7 @@ import { getInitials } from '../../utils/user';
 const PAGE_TITLES: Record<string, string> = {
   '/dashboard': 'Tableau de bord',
   '/dashboard/feuilles-de-saisie': 'Feuilles de Saisie',
+  '/dashboard/gestion-paie': 'Gestion de Paie',
   '/dashboard/enseignants': 'Enseignants',
   '/dashboard/finance': 'Finance',
   '/dashboard/mes-heures': 'Mes Heures',

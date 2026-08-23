@@ -13,6 +13,10 @@ export class PaieController {
   async generate(@Body() dto: GeneratePaieDto) {
     return this.paieService.generateMonthlyPayroll(dto);
   }
+  @Get('me')
+  async getMyPayrolls(@Request() req) {
+    return await this.paieService.getMyPayrolls(req.user.sub);
+  }
   @Get('all')
   async getAllPayrolls(@Request() req, @Query('mois') mois?: string) {
     if (!['RH', 'ADMIN'].includes(req.user.role))
