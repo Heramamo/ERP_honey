@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight, Plus, Loader2, Inbox } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Loader2, Inbox, Info } from 'lucide-react';
 import type { SaisiePayload } from '../../../types/saisieFeuille';
 import { fetchMySaisie } from '../../../store/slices/saisieSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { CreateSaisieModal } from './CreateSaisieModal';
+import { SaisieDetailsModal } from './SaisieDetailsModal';
 
 const PAGE_SIZE = 8;
 
@@ -43,6 +44,7 @@ export const SaisiesTable: React.FC = () => {
   const { saisies, loading, error } = useAppSelector((state) => state.saisies);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSaisie, setSelectedSaisie] = useState<SaisiePayload | null>(null);
 
   useEffect(() => {
     dispatch(fetchMySaisie());
@@ -96,6 +98,7 @@ export const SaisiesTable: React.FC = () => {
                 <th className="py-4 px-6">HEURES DE BASE</th>
                 <th className="py-4 px-6">HEURES SUPP.</th>
                 <th className="py-4 px-6">STATUT</th>
+                <th className="py-4 px-6 text-right">DÉTAILS</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/50 text-sm">
@@ -117,6 +120,15 @@ export const SaisiesTable: React.FC = () => {
                     <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border ${getStatutStyle(saisie.statut)}`}>
                       {getStatutLabel(saisie.statut)}
                     </span>
+                  </td>
+                  <td className="py-4 px-6 text-right">
+                    <button
+                      onClick={() => setSelectedSaisie(saisie)}
+                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
+                      title="Plus d'informations"
+                    >
+                      <Info className="w-4 h-4" />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -158,6 +170,12 @@ export const SaisiesTable: React.FC = () => {
       <CreateSaisieModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+      />
+
+      <SaisieDetailsModal
+        open={selectedSaisie !== null}
+        saisie={selectedSaisie}
+        onClose={() => setSelectedSaisie(null)}
       />
     </div>
   );

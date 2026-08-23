@@ -15,6 +15,9 @@ export class SaisieFeuilleService {
                         select: { id_utilisateur: true, nom: true, prenom: true, email: true }
                     }
                 }
+            },
+            validePar: {
+                select: { id_utilisateur: true, nom: true, prenom: true, email: true, role: true }
             }
         }
     }
@@ -54,7 +57,11 @@ export class SaisieFeuilleService {
         })
     }
     async   getMySaisie(userId:number){
-        return await this.prisma.feuilleDeTemps.findMany({where:{enseignantId:userId}})
+        return await this.prisma.feuilleDeTemps.findMany({
+            where:{enseignantId:userId},
+            include: { validePar: { select: { id_utilisateur: true, nom: true, prenom: true, email: true, role: true } } },
+            orderBy: { date: 'desc' }
+        })
     }
     async   getPendingSaisie(){
         return await this.prisma.feuilleDeTemps.findMany({

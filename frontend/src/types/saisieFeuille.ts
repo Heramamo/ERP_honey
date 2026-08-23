@@ -12,6 +12,14 @@ export interface SaisieEnseignantInfo {
     };
 }
 
+export interface SaisieValidateurInfo {
+    id_utilisateur: number;
+    nom: string;
+    prenom: string;
+    email: string;
+    role: string;
+}
+
 export interface SaisiePayload
 {
     id?: number,
@@ -25,6 +33,7 @@ export interface SaisiePayload
     statut:string | ValidateSaisieDto["statut"],
     valideParId:number | null,
     enseignant?: SaisieEnseignantInfo,
+    validePar?: SaisieValidateurInfo | null,
 }
 
 export interface UserSaisieState{
