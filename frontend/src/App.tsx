@@ -16,6 +16,7 @@ import ProtectedPublicRoute from './components/ProtectedPublicRoute';
 import HrPayrollPage from './pages/HrPayrollPage';
 import HrPaiePage from './pages/HrPaiePage';
 import MyPaiesTable from './pages/MyPaiesTable';
+import SettingsPage from './pages/SettingsPage';
 import TeachersTable from './components/dashboard/hr/TeachersTable';
 import PayrollTable from './components/dashboard/hr/PayrollTable';
 import SaisiesTable from './components/dashboard/teacher/SaisiesTable';
@@ -93,7 +94,7 @@ export const App: React.FC = () => {
                   </RoleGuard>
                 }
               />
-              <Route path="/dashboard/settings" element={<PlaceholderPage title="Paramètres" />} />
+              <Route path="/dashboard/settings" element={<SettingsPage />} />
             </Route>
           </Route>
 

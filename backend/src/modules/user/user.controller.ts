@@ -1,8 +1,10 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LoginUserDto } from './dto/login-user.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -23,5 +25,15 @@ export class UserController {
     @ApiResponse({ status: 401, description: 'Identifiants invalides.' })
     async login(@Body() loginDto: LoginUserDto) {
         return this.userService.loginUser(loginDto);
+    }
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @HttpCode(HttpStatus.OK)
+    @Post('change-password')
+    @ApiOperation({ summary: "Changer le mot de passe de l'utilisateur connecté" })
+    @ApiResponse({ status: 200, description: 'Mot de passe modifié avec succès.' })
+    @ApiResponse({ status: 401, description: 'Mot de passe actuel incorrect.' })
+    changePassword(@Request() req, @Body() dto: ChangePasswordDto) {
+        return this.userService.changePassword(req.user.sub, dto);
     }
 }

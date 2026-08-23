@@ -5,6 +5,8 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt"
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from "./dto/login-user.dto";
+import { ChangePasswordDto } from "./dto/change-password.dto";
+import { NotFoundException } from "@nestjs/common";
 @Injectable()
 export class UserService {
     constructor(private prisma: PrismaService, private jwtService: JwtService) { }
@@ -69,5 +71,20 @@ export class UserService {
 
             },
         };
+    }
+    async changePassword(userId: number, dto: ChangePasswordDto) {
+        const user = await this.prisma.utilisateur.findUnique({ where: { id_utilisateur: userId } })
+        if (!user)
+            throw new NotFoundException("Utilisateur introuvable")
+        const isCurrentValid = await bcrypt.compare(dto.mot_de_passe_actuel, user.mot_de_passe)
+        if (!isCurrentValid)
+            throw new UnauthorizedException("Le mot de passe actuel est incorrect")
+        const salt = 10
+        const hashedPassword = await bcrypt.hash(dto.nouveau_mot_de_passe, salt)
+        await this.prisma.utilisateur.update({
+            where: { id_utilisateur: userId },
+            data: { mot_de_passe: hashedPassword },
+        })
+        return { message: 'Mot de passe modifié avec succès' }
     }
 }
