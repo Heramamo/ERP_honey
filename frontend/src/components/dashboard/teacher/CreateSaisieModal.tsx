@@ -10,15 +10,21 @@ interface CreateSaisieModalProps {
 
 const ACTIVITE_TYPES = ['Cours', 'Préparation', 'Examen', 'Correction', 'Réunion', 'Encadrement'];
 
+const getTodayLocal = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
+
 export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onClose }) => {
   const dispatch = useAppDispatch();
   const error = useAppSelector((state) => state.saisies.error);
 
-  const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [date, setDate] = useState(getTodayLocal);
   const [typeActivite, setTypeActivite] = useState(ACTIVITE_TYPES[0]);
   const [heuresEffectuees, setHeuresEffectuees] = useState('1');
   const [heuresSupp, setHeuresSupp] = useState('0');
   const [submitting, setSubmitting] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
 
   if (!open) return null;
 
@@ -26,6 +32,12 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
     e.preventDefault();
     if (!date) return;
 
+    if (date > getTodayLocal()) {
+      setLocalError('La date ne peut pas être dans le futur.');
+      return;
+    }
+
+    setLocalError(null);
     setSubmitting(true);
     dispatch(clearError());
     try {
@@ -70,8 +82,12 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
               <input
                 type="date"
                 required
+                max={getTodayLocal()}
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                  setLocalError(null);
+                }}
                 className={`${inputClass} [color-scheme:dark]`}
               />
             </div>
@@ -119,9 +135,9 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
             </div>
           </div>
 
-          {error && (
+          {(localError || error) && (
             <div className="px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs">
-              {error}
+              {localError ?? error}
             </div>
           )}
 
