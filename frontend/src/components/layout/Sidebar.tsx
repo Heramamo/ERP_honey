@@ -88,14 +88,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="flex-1 min-h-0 overflow-y-auto scroll-thin">
           {/* Logo HONEY GROUP */}
           <div
-            className={`p-5 flex items-center gap-3 border-b border-[var(--border-subtle)] ${
-              collapsed ? 'lg:justify-center lg:px-0' : ''
+            className={`p-5 flex items-center border-b border-[var(--border-subtle)] ${
+              collapsed ? 'lg:justify-center' : ''
             }`}
           >
             <div className="w-9 h-9 rounded-lg bg-[#f59e0b] flex items-center justify-center text-slate-950 font-black text-lg shadow-md shrink-0">
               H
             </div>
-            <div className={collapsed ? 'lg:hidden' : ''}>
+            <div
+              className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
+                collapsed
+                  ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-3'
+                  : 'max-w-[160px] ml-3 opacity-100'
+              }`}
+            >
               <h1 className="font-black text-[var(--t1)] text-sm tracking-wide leading-none uppercase">HONEY GROUP</h1>
               <span className="text-[10px] font-semibold text-[var(--t3)] tracking-wider uppercase block mt-1">ERP INTERNE</span>
             </div>
@@ -103,7 +109,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
           {/* Liens de navigation */}
           <nav className="px-3 space-y-1.5 mt-4">
-            {navItems.map((item) => (
+            {navItems.map((item, index) => (
               <NavLink
                 key={item.path}
                 to={item.path}
@@ -111,7 +117,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onClick={onCloseMobile}
                 title={item.label}
                 className={({ isActive }) =>
-                  `flex items-center gap-3.5 px-4 py-3 rounded-lg text-xs font-bold transition-all ${
+                  `group flex items-center px-4 py-3 rounded-lg text-xs font-bold transition-all duration-300 ${
                     collapsed ? 'lg:justify-center lg:px-0' : ''
                   } ${
                     isActive
@@ -120,8 +126,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }`
                 }
               >
-                <item.icon size={18} className="shrink-0" />
-                <span className={collapsed ? 'lg:hidden' : ''}>{item.label}</span>
+                <item.icon size={18} className="shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                <span
+                  style={{ transitionDelay: collapsed ? '0ms' : `${index * 25}ms` }}
+                  className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
+                    collapsed
+                      ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-3'
+                      : 'max-w-[180px] ml-3.5 opacity-100'
+                  }`}
+                >
+                  {item.label}
+                </span>
               </NavLink>
             ))}
           </nav>
@@ -131,7 +146,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               onClick={onToggleCollapsed}
               title={collapsed ? 'Déplier le menu' : 'Réduire le menu'}
-              className={`p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] transition cursor-pointer ${
+              className={`p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] transition-all duration-300 cursor-pointer ${
                 collapsed ? '' : 'rotate-180'
               }`}
             >
@@ -147,7 +162,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             onClick={onCloseMobile}
             title="Paramètres"
             className={({ isActive }) =>
-              `flex items-center gap-3.5 px-4 py-2.5 rounded-lg text-xs font-semibold transition ${
+              `flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300 ${
                 collapsed ? 'lg:justify-center lg:px-0' : ''
               } ${
                 isActive
@@ -156,19 +171,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
               }`
             }
           >
-            <Settings size={18} />
-            <span className={collapsed ? 'lg:hidden' : ''}>Paramètres</span>
+            <Settings size={18} className="shrink-0" />
+            <span
+              className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
+                collapsed
+                  ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-3'
+                  : 'max-w-[160px] ml-3.5 opacity-100'
+              }`}
+            >
+              Paramètres
+            </span>
           </NavLink>
 
           <div
-            className={`pt-2 items-center gap-3 px-2 ${
-              collapsed ? 'lg:flex-col lg:px-0' : ''
-            } flex`}
+            className={`pt-2 items-center gap-3 px-2 flex ${
+              collapsed ? 'lg:flex-col lg:gap-y-2 lg:px-0' : ''
+            }`}
           >
             <div className="w-8 h-8 rounded-full bg-[#f59e0b] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
               {getInitials(user?.email)}
             </div>
-            <div className={`min-w-0 flex-1 ${collapsed ? 'lg:hidden' : ''}`}>
+            <div
+              className={`min-w-0 overflow-hidden transition-all duration-300 ease-out ${
+                collapsed
+                  ? 'lg:max-h-0 lg:opacity-0 lg:-translate-y-1'
+                  : 'max-h-12 opacity-100 flex-1'
+              }`}
+            >
               <p className="text-xs font-bold text-[var(--t1)] truncate">{formatDisplayName(user?.email)}</p>
               <p className="text-[10px] font-semibold text-[var(--t3)] uppercase tracking-wider truncate">
                 {user?.role ?? 'Utilisateur'}
