@@ -9,8 +9,80 @@ html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #0b132b;
   cursor: default;
+}
+
+/* Zones de scroll internes : barre fine discrète */.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+
+/* Sélecteurs de date/mois : suivent le thème actif */
+html.light input[type="month"],
+html.light input[type="date"] {
+  color-scheme: light;
+}
+
+:root {
+  /* Surfaces */
+  --app-bg: #0a0e1a;
+  --shell-bg: #0b0e17;
+  --panel: #12161f;
+  --panel-deep: #0e1118;
+  --surface-hover: #151c2e;
+  --chip: #232c3f;
+  --chip-hover: #2c3750;
+  --surface-faint: rgba(148, 163, 184, 0.07);
+  --border-subtle: rgba(30, 41, 59, 0.6);
+  /* Encre */
+  --t1: #f1f5f9;
+  --t2: #cbd5e1;
+  --t3: #94a3b8;
+  /* Alias */
+  --text-primary: var(--t1);
+  --text-muted: var(--t3);
+}
+
+html.light {
+  /* Surfaces — papier miel */
+  --app-bg: #f5efe2;
+  --shell-bg: #fdfbf4;
+  --panel: #fffdf7;
+  --panel-deep: #f4edda;
+  --surface-hover: #efe7d2;
+  --chip: #e7ddc4;
+  --chip-hover: #ddd0ae;
+  --surface-faint: rgba(146, 116, 52, 0.08);
+  --border-subtle: rgba(146, 118, 60, 0.32);
+  /* Encre — espresso */
+  --t1: #211a10;
+  --t2: #57492f;
+  --t3: #8a7a5c;
+}
+
+/* Statuts : pastilles sombres -> teintes claires lisibles */
+html.light [class*="bg-emerald-950"] { background-color: #ddf3e6 !important; }
+html.light [class*="border-emerald-800"] { border-color: #a7dcc1 !important; }
+html.light [class*="hover:bg-emerald-900"]:hover { background-color: #bfe8d0 !important; }
+html.light [class*="text-emerald-400"], html.light [class*="text-emerald-300"] { color: #047247 !important; }
+html.light [class*="bg-rose-950"] { background-color: #fce4e6 !important; }
+html.light [class*="border-rose-800"] { border-color: #f2b8bd !important; }
+html.light [class*="text-rose-300"], html.light [class*="text-rose-400"] { color: #b3253a !important; }
+html.light [class*="bg-amber-950"] { background-color: #faedcf !important; }
+html.light [class*="border-amber-800"] { border-color: #e5c77e !important; }
+html.light [class*="text-amber-400"], html.light [class*="text-amber-500"] { color: #96650a !important; }
+html.light [class*="bg-blue-950"] { background-color: #e0eafb !important; }
+html.light [class*="border-blue-800"] { border-color: #adc4ee !important; }
+html.light [class*="text-blue-400"], html.light [class*="text-blue-300"] { color: #2456b8 !important; }
+
+body {
+  background-color: var(--app-bg);
 }
 
 /* 2. Empêche la sélection de texte accidentelle sur le conteneur principal */

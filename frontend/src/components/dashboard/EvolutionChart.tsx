@@ -16,8 +16,8 @@ export const EvolutionChart: React.FC = () => {
   return (
     <Card tone="subtle">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-sm font-bold text-white">Évolution du résultat</h3>
-        <span className="text-[11px] text-slate-500 font-medium">6 derniers mois</span>
+        <h3 className="text-sm font-bold text-[var(--t1)]">Évolution du résultat</h3>
+        <span className="text-[11px] text-[var(--t3)] font-medium">6 derniers mois</span>
       </div>
 
       <div className="h-60 w-full min-h-60">

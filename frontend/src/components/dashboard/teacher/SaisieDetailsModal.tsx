@@ -15,7 +15,7 @@ const STATUT_STYLES: Record<string, string> = {
 };
 
 const getStatutStyle = (statut: SaisiePayload['statut']) =>
-  STATUT_STYLES[String(statut)] ?? 'bg-slate-800 text-slate-300 border-slate-700';
+  STATUT_STYLES[String(statut)] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--border-subtle)]';
 
 const getStatutLabel = (statut: SaisiePayload['statut']) => {
   switch (String(statut)) {
@@ -60,12 +60,12 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative w-full max-w-md bg-[#12161f] border border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800/80 bg-[#0e1118]">
-          <h2 className="text-sm font-bold text-white uppercase tracking-wider">Détails de la Saisie</h2>
+      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-y-auto scroll-thin">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
+          <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Détails de la Saisie</h2>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition cursor-pointer"
+            className="p-1.5 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--chip)] rounded-lg transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -75,25 +75,25 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
           <dl className="space-y-3">
             {rows.map((row) => (
               <div key={row.label} className="flex items-center justify-between gap-4">
-                <dt className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{row.label}</dt>
-                <dd className="text-sm font-semibold text-slate-200 text-right">{row.value}</dd>
+                <dt className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">{row.label}</dt>
+                <dd className="text-sm font-semibold text-[var(--t2)] text-right">{row.value}</dd>
               </div>
             ))}
           </dl>
 
           {/* Validateur */}
-          <div className="pt-4 border-t border-slate-800/80">
-            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3">Validation</p>
+          <div className="pt-4 border-t border-[var(--border-subtle)]">
+            <p className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider mb-3">Validation</p>
             {saisie.validePar ? (
-              <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#0e1118] border border-slate-800">
+              <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[var(--panel-deep)] border border-[var(--border-subtle)]">
                 <div className="w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
                   {(saisie.validePar.prenom[0] ?? '') + (saisie.validePar.nom[0] ?? '')}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-bold text-white truncate">
+                  <p className="text-xs font-bold text-[var(--t1)] truncate">
                     {saisie.validePar.nom} {saisie.validePar.prenom}
                   </p>
-                  <p className="text-[10px] font-semibold text-slate-500 truncate">
+                  <p className="text-[10px] font-semibold text-[var(--t3)] truncate">
                     {saisie.validePar.role} • {saisie.validePar.email}
                   </p>
                 </div>
@@ -104,7 +104,7 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
                 </span>
               </div>
             ) : (
-              <p className="text-xs text-slate-500">Pas encore validée.</p>
+              <p className="text-xs text-[var(--t3)]">Pas encore validée.</p>
             )}
           </div>
 
@@ -112,7 +112,7 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-lg border border-slate-800 text-sm font-semibold text-slate-300 hover:bg-slate-800 transition cursor-pointer"
+              className="px-4 py-2.5 rounded-lg border border-[var(--border-subtle)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
             >
               Fermer
             </button>

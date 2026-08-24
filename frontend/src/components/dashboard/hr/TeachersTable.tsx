@@ -30,7 +30,7 @@ const getStatutBadgeStyle = (statut: TeacherStatus) => {
     case 'Permanent': return 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50';
     case 'Vacataire': return 'bg-blue-950/60 text-blue-400 border-blue-800/50';
     case 'Prestataire': return 'bg-purple-950/60 text-purple-400 border-purple-800/50';
-    default: return 'bg-slate-800 text-slate-300 border-slate-700';
+    default: return 'bg-[var(--chip)] text-[var(--t2)] border-[var(--border-subtle)]';
   }
 };
 
@@ -77,11 +77,11 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
   const pageTeachers = filteredTeachers.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   const content = (
-    <>
+    <div className="w-full h-full p-8 font-sans text-[var(--t1)] flex flex-col min-h-0">
       {/* Filtres & Recherche */}
-      <div className="flex items-center justify-between gap-4 mb-6">
+      <div className="flex items-center justify-between gap-4 mb-6 shrink-0">
         <div className="relative flex-1 max-w-xl">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--t3)]" />
           <input
             type="text"
             placeholder="Rechercher par nom, email ou statut..."
@@ -90,7 +90,7 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
               setSearchTerm(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full bg-[#12161f] border border-slate-800/80 rounded-lg pl-10 pr-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+            className="w-full bg-[var(--panel)] border border-[var(--border-subtle)] rounded-lg pl-10 pr-4 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
           />
         </div>
 
@@ -106,27 +106,28 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
       </div>
 
       {error && !loading && (
-        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm">
+        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm shrink-0">
           {error}
         </div>
       )}
 
       {/* Tableau Répertoire */}
-      <div className="bg-[#12161f] border border-slate-800/60 rounded-xl overflow-hidden shadow-2xl">
+      <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl flex-1 min-h-0 flex flex-col">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
             <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
             <span className="text-sm">Chargement des enseignants...</span>
           </div>
         ) : pageTeachers.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
             <Users className="w-8 h-8 text-slate-600" />
             <span className="text-sm">Aucun enseignant trouvé.</span>
           </div>
         ) : (
+          <div className="flex-1 min-h-0 overflow-auto scroll-thin">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-800/80 text-[11px] font-bold text-slate-400 tracking-wider uppercase bg-[#0e1118]">
+              <tr className="sticky top-0 z-10 border-b border-[var(--border-subtle)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
                 <th className="py-4 px-6">ENSEIGNANT</th>
                 {isHrOrAdmin && <th className="py-4 px-6">STATUT DE L'ENSEIGNANT</th>}
                 <th className="py-4 px-6">TAUX HORAIRE</th>
@@ -134,18 +135,18 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
                 <th className="py-4 px-6 text-right">ACTIONS</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/50 text-sm">
+            <tbody className="divide-y divide-[var(--border-subtle)] text-sm">
               {pageTeachers.map((teacher) => (
-                <tr key={teacher.id} className="hover:bg-slate-800/30 transition-colors">
+                <tr key={teacher.id} className="hover:bg-[var(--chip)] transition-colors">
                   {/* 1. Nom / Email */}
                   <td className="py-4 px-6">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 font-bold text-xs">
+                      <div className="w-8 h-8 rounded-full bg-[var(--chip)] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--t2)] font-bold text-xs">
                         {teacher.name.charAt(0).toUpperCase() || '?'}
                       </div>
                       <div>
-                        <div className="font-bold text-slate-100">{teacher.name}</div>
-                        <div className="text-xs text-slate-400 font-mono">{teacher.email}</div>
+                        <div className="font-bold text-[var(--t1)]">{teacher.name}</div>
+                        <div className="text-xs text-[var(--t3)] font-mono">{teacher.email}</div>
                       </div>
                     </div>
                   </td>
@@ -160,18 +161,18 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
                   )}
 
                   {/* 3. Taux horaire */}
-                  <td className="py-4 px-6 font-semibold text-slate-200">
+                  <td className="py-4 px-6 font-semibold text-[var(--t2)]">
                     {teacher.tauxHoraire.toLocaleString('fr-FR')} Ar/h
                   </td>
 
                   {/* 4. Date d'ajout */}
-                  <td className="py-4 px-6 text-slate-400 text-xs">
+                  <td className="py-4 px-6 text-[var(--t3)] text-xs">
                     {teacher.createdAt}
                   </td>
 
                   {/* 5. Actions */}
                   <td className="py-4 px-6 text-right">
-                    <button className="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer">
+                    <button className="text-[var(--t3)] hover:text-[var(--t2)] p-1.5 rounded-lg hover:bg-[var(--chip)] transition-colors cursor-pointer">
                       <MoreVertical className="w-4 h-4" />
                     </button>
                   </td>
@@ -179,32 +180,33 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
               ))}
             </tbody>
           </table>
+          </div>
         )}
 
         {!loading && filteredTeachers.length > 0 && (
-          <div className="p-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+          <div className="p-4 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs text-[var(--t3)] shrink-0">
             <div>
               Affichage de{' '}
-              <span className="font-bold text-slate-200">{(safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
-              <span className="font-bold text-slate-200">{Math.min(safePage * PAGE_SIZE, filteredTeachers.length)}</span> sur{' '}
-              <span className="font-bold text-slate-200">{filteredTeachers.length}</span> enseignants
+              <span className="font-bold text-[var(--t2)]">{(safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
+              <span className="font-bold text-[var(--t2)]">{Math.min(safePage * PAGE_SIZE, filteredTeachers.length)}</span> sur{' '}
+              <span className="font-bold text-[var(--t2)]">{filteredTeachers.length}</span> enseignants
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={safePage === 1}
-                className="p-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 text-slate-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <span className="text-slate-400">
-                Page <span className="font-bold text-slate-200">{safePage}</span> / {totalPages}
+              <span className="text-[var(--t3)]">
+                Page <span className="font-bold text-[var(--t2)]">{safePage}</span> / {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={safePage === totalPages}
-                className="p-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 text-slate-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -214,7 +216,7 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
       </div>
 
       <CreateTeacherModal open={createOpen} onClose={() => setCreateOpen(false)} />
-    </>
+    </div>
   );
 
   return allowedRoles ? (

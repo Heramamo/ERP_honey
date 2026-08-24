@@ -28,8 +28,8 @@ export const RentabiliteChart: React.FC = () => {
     <Card tone="subtle">
       {/* En-tête de la carte */}
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-sm font-bold text-white">Rentabilité par pôle d'activité</h3>
-        <div className="flex items-center gap-4 text-[11px] text-slate-400 font-medium">
+        <h3 className="text-sm font-bold text-[var(--t1)]">Rentabilité par pôle d'activité</h3>
+        <div className="flex items-center gap-4 text-[11px] text-[var(--t3)] font-medium">
           <span className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded bg-[#3b82f6] inline-block" />
             Revenus

@@ -53,9 +53,9 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
   };
 
   const content = (
-    <div className="w-full text-slate-100 font-sans p-6">
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-extrabold tracking-tight text-white">Gestion de la Paie</h1>
+    <div className="w-full h-full text-[var(--t1)] font-sans p-6 flex flex-col min-h-0">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 shrink-0">
+        <h1 className="text-3xl font-extrabold tracking-tight text-[var(--t1)]">Gestion de la Paie</h1>
 
         <div className="flex items-center gap-3">
           <input
@@ -63,12 +63,12 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
             value={moisFilter}
             onChange={(e) => setMoisFilter(e.target.value)}
             placeholder="Filtrer par mois"
-            className="bg-[#0e1118] border border-slate-800 rounded-lg px-3.5 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500/50 transition-colors [color-scheme:dark]"
+            className="bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] focus:outline-none focus:border-amber-500/50 transition-colors [color-scheme:dark]"
           />
           {moisFilter && (
             <button
               onClick={() => setMoisFilter('')}
-              className="text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="text-xs font-semibold text-[var(--t3)] hover:text-[var(--t1)] transition-colors cursor-pointer"
             >
               Réinitialiser
             </button>
@@ -84,26 +84,27 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm">
+        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm shrink-0">
           {error}
         </div>
       )}
 
-      <div className="bg-[#12161f] border border-slate-800/60 rounded-xl overflow-hidden shadow-2xl">
+      <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl flex-1 min-h-0 flex flex-col">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
             <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
             <span className="text-sm">Chargement des fiches de paie...</span>
           </div>
         ) : paies.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
             <Inbox className="w-8 h-8 text-slate-600" />
             <span className="text-sm">Aucune fiche de paie pour le moment.</span>
           </div>
         ) : (
+          <div className="flex-1 min-h-0 overflow-auto scroll-thin">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-800/80 text-[11px] font-bold text-slate-400 tracking-wider uppercase bg-[#0e1118]">
+              <tr className="sticky top-0 z-10 border-b border-[var(--border-subtle)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
                 <th className="py-4 px-6">ENSEIGNANT</th>
                 <th className="py-4 px-6">PÉRIODE</th>
                 <th className="py-4 px-6">MONTANT TOTAL</th>
@@ -111,23 +112,23 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
                 <th className="py-4 px-6 text-right">ACTION</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/50 text-sm">
+            <tbody className="divide-y divide-[var(--border-subtle)] text-sm">
               {paies.map((paie: PaiePayload) => (
-                <tr key={paie.id} className="hover:bg-slate-800/30 transition-colors">
-                  <td className="py-4 px-6 font-bold text-slate-100">
+                <tr key={paie.id} className="hover:bg-[var(--chip)] transition-colors">
+                  <td className="py-4 px-6 font-bold text-[var(--t1)]">
                     {paie.enseignant
                       ? `${paie.enseignant.utilisateur.nom} ${paie.enseignant.utilisateur.prenom}`
                       : `Enseignant #${paie.enseignantId}`}
                     {paie.enseignant && (
-                      <span className="block text-xs font-normal text-slate-500">{paie.enseignant.utilisateur.email}</span>
+                      <span className="block text-xs font-normal text-[var(--t3)]">{paie.enseignant.utilisateur.email}</span>
                     )}
                   </td>
-                  <td className="py-4 px-6 text-slate-400 text-xs">{formatMois(paie.mois)}</td>
+                  <td className="py-4 px-6 text-[var(--t3)] text-xs">{formatMois(paie.mois)}</td>
                   <td className="py-4 px-6 font-semibold text-emerald-400">
                     {paie.totalSalaire.toLocaleString('fr-FR')} Ar
                   </td>
                   <td className="py-4 px-6">
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border ${STATUT_STYLES[paie.statutpaie] ?? 'bg-slate-800 text-slate-300 border-slate-700'}`}>
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border ${STATUT_STYLES[paie.statutpaie] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--border-subtle)]'}`}>
                       {getStatutLabel(paie.statutpaie)}
                     </span>
                   </td>
@@ -140,13 +141,14 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
                         Marquer payé
                       </button>
                     ) : (
-                      <span className="text-xs text-slate-500">—</span>
+                      <span className="text-xs text-[var(--t3)]">—</span>
                     )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

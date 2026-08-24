@@ -21,7 +21,7 @@ const resolveStatut = (statut: SaisiePayload['statut']): string => {
 
 const getStatutStyle = (statut: SaisiePayload['statut']) => {
   const value = resolveStatut(statut);
-  return STATUT_STYLES[value] ?? 'bg-slate-800 text-slate-300 border-slate-700';
+  return STATUT_STYLES[value] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--border-subtle)]';
 };
 
 const getStatutLabel = (statut: SaisiePayload['statut']) => {
@@ -55,11 +55,11 @@ export const SaisiesTable: React.FC = () => {
   const pageSaisies = saisies.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   return (
-    <div className="p-8 max-w-[1200px] mx-auto w-full font-sans text-slate-100">
-      <div className="flex items-center justify-between gap-4 mb-6">
+    <div className="p-8 max-w-[1200px] mx-auto w-full font-sans text-[var(--t1)] h-full flex flex-col min-h-0">
+      <div className="flex items-center justify-between gap-4 mb-6 shrink-0">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">Mes Feuilles de Temps</h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <h1 className="text-3xl font-extrabold tracking-tight text-[var(--t1)]">Mes Feuilles de Temps</h1>
+          <p className="text-sm text-[var(--t3)] mt-1">
             Déclaration des heures effectuées par activité
           </p>
         </div>
@@ -73,26 +73,27 @@ export const SaisiesTable: React.FC = () => {
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm">
+        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm shrink-0">
           {error}
         </div>
       )}
 
-      <div className="bg-[#12161f] border border-slate-800/60 rounded-xl overflow-hidden shadow-2xl">
+      <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl flex-1 min-h-0 flex flex-col">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
             <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
             <span className="text-sm">Chargement des feuilles de temps...</span>
           </div>
         ) : pageSaisies.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
             <Inbox className="w-8 h-8 text-slate-600" />
             <span className="text-sm">Aucune feuille de temps pour le moment.</span>
           </div>
         ) : (
+          <div className="flex-1 min-h-0 overflow-auto scroll-thin">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-800/80 text-[11px] font-bold text-slate-400 tracking-wider uppercase bg-[#0e1118]">
+              <tr className="sticky top-0 z-10 border-b border-[var(--border-subtle)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
                 <th className="py-4 px-6">DATE</th>
                 <th className="py-4 px-6">TYPE D'ACTIVITÉ</th>
                 <th className="py-4 px-6">HEURES DE BASE</th>
@@ -101,16 +102,16 @@ export const SaisiesTable: React.FC = () => {
                 <th className="py-4 px-6 text-right">DÉTAILS</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/50 text-sm">
+            <tbody className="divide-y divide-[var(--border-subtle)] text-sm">
               {pageSaisies.map((saisie: SaisiePayload, index: number) => (
-                <tr key={`${saisie.date}-${index}`} className="hover:bg-slate-800/30 transition-colors">
-                  <td className="py-4 px-6 font-semibold text-slate-200">{formatDate(saisie.date)}</td>
+                <tr key={`${saisie.date}-${index}`} className="hover:bg-[var(--chip)] transition-colors">
+                  <td className="py-4 px-6 font-semibold text-[var(--t2)]">{formatDate(saisie.date)}</td>
                   <td className="py-4 px-6">
                     <span className="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider border bg-blue-950/60 text-blue-400 border-blue-800/50">
                       {saisie.typeActivite}
                     </span>
                   </td>
-                  <td className="py-4 px-6 font-mono font-semibold text-slate-200">
+                  <td className="py-4 px-6 font-mono font-semibold text-[var(--t2)]">
                     {saisie.heuresEffectuees} h
                   </td>
                   <td className="py-4 px-6 font-mono font-semibold text-amber-400">
@@ -124,7 +125,7 @@ export const SaisiesTable: React.FC = () => {
                   <td className="py-4 px-6 text-right">
                     <button
                       onClick={() => setSelectedSaisie(saisie)}
-                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg bg-[var(--chip)] hover:bg-[var(--chip-hover)] text-[var(--t2)] transition-colors cursor-pointer"
                       title="Plus d'informations"
                     >
                       <Info className="w-4 h-4" />
@@ -134,31 +135,32 @@ export const SaisiesTable: React.FC = () => {
               ))}
             </tbody>
           </table>
+          </div>
         )}
 
         {!loading && saisies.length > 0 && (
-          <div className="p-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+          <div className="p-4 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs text-[var(--t3)] shrink-0">
             <div>
-              Affichage de <span className="font-bold text-slate-200">{saisies.length === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
-              <span className="font-bold text-slate-200">{Math.min(safePage * PAGE_SIZE, saisies.length)}</span> sur{' '}
-              <span className="font-bold text-slate-200">{saisies.length}</span> feuilles
+              Affichage de <span className="font-bold text-[var(--t2)]">{saisies.length === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
+              <span className="font-bold text-[var(--t2)]">{Math.min(safePage * PAGE_SIZE, saisies.length)}</span> sur{' '}
+              <span className="font-bold text-[var(--t2)]">{saisies.length}</span> feuilles
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={safePage === 1}
-                className="p-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 text-slate-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <span className="text-slate-400">
-                Page <span className="font-bold text-slate-200">{safePage}</span> / {totalPages}
+              <span className="text-[var(--t3)]">
+                Page <span className="font-bold text-[var(--t2)]">{safePage}</span> / {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={safePage === totalPages}
-                className="p-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 text-slate-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

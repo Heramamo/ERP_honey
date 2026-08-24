@@ -9,6 +9,7 @@ import {
   FileText,
   Wallet,
   LogOut,
+  ChevronsLeft,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -22,6 +23,13 @@ interface NavItem {
   icon: LucideIcon;
   path: string;
   end?: boolean;
+}
+
+interface SidebarProps {
+  collapsed?: boolean;
+  mobileOpen?: boolean;
+  onCloseMobile?: () => void;
+  onToggleCollapsed?: () => void;
 }
 
 const MANAGEMENT_ROLES: Role[] = ['ADMIN', 'RH', 'FINANCE'];
@@ -44,7 +52,12 @@ const teacherNavItems: NavItem[] = [
 const getNavItems = (role?: Role): NavItem[] =>
   role && MANAGEMENT_ROLES.includes(role) ? adminNavItems : teacherNavItems;
 
-export const Sidebar: React.FC = () => {
+export const Sidebar: React.FC<SidebarProps> = ({
+  collapsed = false,
+  mobileOpen = false,
+  onCloseMobile,
+  onToggleCollapsed,
+}) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
@@ -53,80 +66,127 @@ export const Sidebar: React.FC = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate('/login');
-  };  return (
-    <aside className="w-64 bg-[#0b0e17] text-slate-300 flex flex-col justify-between h-screen sticky top-0 font-sans select-none shrink-0 border-r border-slate-800/60">
-      <div>
-        {/* Logo HONEY GROUP */}
-        <div className="p-5 flex items-center gap-3 border-b border-slate-800/40">
-          <div className="w-9 h-9 rounded-lg bg-[#f59e0b] flex items-center justify-center text-slate-950 font-black text-lg shadow-md">
-            H
-          </div>
-          <div>
-            <h1 className="font-black text-white text-sm tracking-wide leading-none uppercase">HONEY GROUP</h1>
-            <span className="text-[10px] font-semibold text-slate-400 tracking-wider uppercase block mt-1">ERP INTERNE</span>
-          </div>
-        </div>
+  };
 
-        {/* Liens de navigation */}
-        <nav className="px-3 space-y-1.5 mt-4">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              end={item.end}
-              className={({ isActive }) =>
-                `flex items-center gap-3.5 px-4 py-3 rounded-lg text-xs font-bold transition-all ${
-                  isActive
-                    ? 'bg-[#f59e0b] text-slate-950 shadow-lg shadow-[#f59e0b]/20'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-[#151c2e]'
-                }`
-              }
-            >
-              <item.icon size={18} className="shrink-0" />
-              <span>{item.label}</span>
-            </NavLink>
-          ))}
-        </nav>
-      </div>
+  return (
+    <>
+      {/* Backdrop mobile */}
+      <div
+        onClick={onCloseMobile}
+        className={`fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden transition-opacity duration-300 ${
+          mobileOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+      />
 
-      {/* Bas de Sidebar */}
-      <div className="p-3 space-y-3 border-t border-slate-800/40">
-        <NavLink
-          to="/dashboard/settings"
-          className={({ isActive }) =>
-            `flex items-center gap-3.5 px-4 py-2.5 rounded-lg text-xs font-semibold transition ${
-              isActive
-                ? 'text-white bg-[#151c2e]'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#151c2e]'
-            }`
-          }
-        >
-          <Settings size={18} />
-          <span>Paramètres</span>
-        </NavLink>
-
-        <div className="pt-2 flex items-center gap-3 px-2">
-          <div className="w-8 h-8 rounded-full bg-[#f59e0b] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
-            {getInitials(user?.email)}
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold text-white truncate">{formatDisplayName(user?.email)}</p>
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider truncate">
-              {user?.role ?? 'Utilisateur'}
-            </p>
-          </div>
-          <ConfirmButton
-            title="Déconnexion"
-            description="Voulez-vous vraiment vous déconnecter de votre session ?"
-            confirmLabel="Se déconnecter"
-            tone="danger"
-            buttonClassName="p-1.5 text-slate-500 hover:text-white hover:bg-[#151c2e] rounded-lg transition cursor-pointer"
-            onConfirm={handleLogout}
+      <aside
+        className={`bg-[var(--shell-bg)] text-[var(--t2)] flex flex-col justify-between border-r border-[var(--border-subtle)] font-sans select-none shrink-0 overflow-hidden transition-all duration-300
+          fixed inset-y-0 left-0 z-50 w-64 lg:static lg:h-full lg:translate-x-0
+          ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${collapsed ? 'lg:w-[76px]' : 'lg:w-64'}
+        `}
+      >
+        <div className="flex-1 min-h-0 overflow-y-auto scroll-thin">
+          {/* Logo HONEY GROUP */}
+          <div
+            className={`p-5 flex items-center gap-3 border-b border-[var(--border-subtle)] ${
+              collapsed ? 'lg:justify-center lg:px-0' : ''
+            }`}
           >
-            <LogOut size={16} />
-          </ConfirmButton>
+            <div className="w-9 h-9 rounded-lg bg-[#f59e0b] flex items-center justify-center text-slate-950 font-black text-lg shadow-md shrink-0">
+              H
+            </div>
+            <div className={collapsed ? 'lg:hidden' : ''}>
+              <h1 className="font-black text-[var(--t1)] text-sm tracking-wide leading-none uppercase">HONEY GROUP</h1>
+              <span className="text-[10px] font-semibold text-[var(--t3)] tracking-wider uppercase block mt-1">ERP INTERNE</span>
+            </div>
+          </div>
+
+          {/* Liens de navigation */}
+          <nav className="px-3 space-y-1.5 mt-4">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                end={item.end}
+                onClick={onCloseMobile}
+                title={item.label}
+                className={({ isActive }) =>
+                  `flex items-center gap-3.5 px-4 py-3 rounded-lg text-xs font-bold transition-all ${
+                    collapsed ? 'lg:justify-center lg:px-0' : ''
+                  } ${
+                    isActive
+                      ? 'bg-[#f59e0b] text-slate-950 shadow-lg shadow-[#f59e0b]/20'
+                      : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)]'
+                  }`
+                }
+              >
+                <item.icon size={18} className="shrink-0" />
+                <span className={collapsed ? 'lg:hidden' : ''}>{item.label}</span>
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* Bouton réduction (desktop uniquement) */}
+          <div className="hidden lg:flex px-3 mt-4 justify-center">
+            <button
+              onClick={onToggleCollapsed}
+              title={collapsed ? 'Déplier le menu' : 'Réduire le menu'}
+              className={`p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] transition cursor-pointer ${
+                collapsed ? '' : 'rotate-180'
+              }`}
+            >
+              <ChevronsLeft size={16} />
+            </button>
+          </div>
         </div>
-      </div>
-    </aside>
+
+        {/* Bas de Sidebar */}
+        <div className="p-3 space-y-3 border-t border-[var(--border-subtle)]">
+          <NavLink
+            to="/dashboard/settings"
+            onClick={onCloseMobile}
+            title="Paramètres"
+            className={({ isActive }) =>
+              `flex items-center gap-3.5 px-4 py-2.5 rounded-lg text-xs font-semibold transition ${
+                collapsed ? 'lg:justify-center lg:px-0' : ''
+              } ${
+                isActive
+                  ? 'text-[var(--t1)] bg-[var(--surface-hover)]'
+                  : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)]'
+              }`
+            }
+          >
+            <Settings size={18} />
+            <span className={collapsed ? 'lg:hidden' : ''}>Paramètres</span>
+          </NavLink>
+
+          <div
+            className={`pt-2 items-center gap-3 px-2 ${
+              collapsed ? 'lg:flex-col lg:px-0' : ''
+            } flex`}
+          >
+            <div className="w-8 h-8 rounded-full bg-[#f59e0b] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+              {getInitials(user?.email)}
+            </div>
+            <div className={`min-w-0 flex-1 ${collapsed ? 'lg:hidden' : ''}`}>
+              <p className="text-xs font-bold text-[var(--t1)] truncate">{formatDisplayName(user?.email)}</p>
+              <p className="text-[10px] font-semibold text-[var(--t3)] uppercase tracking-wider truncate">
+                {user?.role ?? 'Utilisateur'}
+              </p>
+            </div>
+            <ConfirmButton
+              title="Déconnexion"
+              description="Voulez-vous vraiment vous déconnecter de votre session ?"
+              confirmLabel="Se déconnecter"
+              tone="danger"
+              buttonClassName="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] rounded-lg transition cursor-pointer shrink-0"
+              onConfirm={handleLogout}
+            >
+              <LogOut size={16} />
+            </ConfirmButton>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 };

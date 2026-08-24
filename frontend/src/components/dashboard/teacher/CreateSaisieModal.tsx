@@ -58,18 +58,18 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
   };
 
   const inputClass =
-    'w-full bg-[#0e1118] border border-slate-800 rounded-lg px-3.5 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors';
+    'w-full bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative w-full max-w-md bg-[#12161f] border border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800/80 bg-[#0e1118]">
-          <h2 className="text-sm font-bold text-white uppercase tracking-wider">Nouvelle Saisie</h2>
+      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-y-auto scroll-thin">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
+          <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Nouvelle Saisie</h2>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition cursor-pointer"
+            className="p-1.5 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--chip)] rounded-lg transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -78,7 +78,7 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Date</label>
+              <label className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">Date</label>
               <input
                 type="date"
                 required
@@ -93,7 +93,7 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Type d'activité</label>
+              <label className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">Type d'activité</label>
               <select
                 value={typeActivite}
                 onChange={(e) => setTypeActivite(e.target.value)}
@@ -110,7 +110,7 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Heures de base</label>
+              <label className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">Heures de base</label>
               <input
                 type="number"
                 min="0"
@@ -123,7 +123,7 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Heures supp.</label>
+              <label className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">Heures supp.</label>
               <input
                 type="number"
                 min="0"
@@ -145,7 +145,7 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-lg border border-slate-800 text-sm font-semibold text-slate-300 hover:bg-slate-800 transition cursor-pointer"
+              className="px-4 py-2.5 rounded-lg border border-[var(--border-subtle)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
             >
               Annuler
             </button>

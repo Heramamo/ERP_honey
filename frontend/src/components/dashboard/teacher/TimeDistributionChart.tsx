@@ -26,7 +26,7 @@ export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ da
     <Card className="justify-between">
       <div className="flex items-center gap-2 text-amber-500 mb-2">
         <div className="w-2.5 h-2.5 rounded-full border-2 border-amber-500 inline-block" />
-        <h3 className="text-sm font-bold text-white">Répartition du Temps</h3>
+        <h3 className="text-sm font-bold text-[var(--t1)]">Répartition du Temps</h3>
       </div>
 
       {repartitionData.length > 0 ? (
@@ -51,10 +51,10 @@ export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ da
             </ResponsiveContainer>
 
             <div className="absolute text-center">
-              <span className="text-2xl font-black text-white block leading-none">
+              <span className="text-2xl font-black text-[var(--t1)] block leading-none">
                 {Math.round(displayTotal)} h
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 block mt-1">TOTAL</span>
+              <span className="text-[10px] uppercase font-bold tracking-widest text-[var(--t3)] block mt-1">TOTAL</span>
             </div>
           </div>
 
@@ -64,8 +64,8 @@ export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ da
               return (
                 <div key={item.name} className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ backgroundColor: item.color }} />
-                  <span className="text-slate-300">
-                    {item.name} : <strong className="text-white">{pct}%</strong>
+                  <span className="text-[var(--t2)]">
+                    {item.name} : <strong className="text-[var(--t1)]">{pct}%</strong>
                   </span>
                 </div>
               );
@@ -74,7 +74,7 @@ export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ da
         </>
       ) : (
         <div className="h-44 flex items-center justify-center">
-          <p className="text-xs text-slate-500">Aucune donnée de répartition</p>
+          <p className="text-xs text-[var(--t3)]">Aucune donnée de répartition</p>
         </div>
       )}
     </Card>

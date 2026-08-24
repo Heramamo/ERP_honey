@@ -52,12 +52,12 @@ export const RecentTimesheetsTable: React.FC<RecentTimesheetsTableProps> = ({ sa
   const columns: DataColumn<TimesheetItem>[] = [
     {
       header: 'DATE',
-      render: (row) => <span className="font-semibold text-slate-300">{row.date}</span>,
+      render: (row) => <span className="font-semibold text-[var(--t2)]">{row.date}</span>,
     },
     {
       header: "TYPE D'ACTIVITÉ",
       render: (row) => (
-        <span className={`font-bold ${row.type === 'Cours' ? 'text-blue-400' : 'text-slate-300'}`}>
+        <span className={`font-bold ${row.type === 'Cours' ? 'text-blue-400' : 'text-[var(--t2)]'}`}>
           {row.type}
         </span>
       ),
@@ -65,7 +65,7 @@ export const RecentTimesheetsTable: React.FC<RecentTimesheetsTableProps> = ({ sa
     {
       header: 'HEURES DE BASE',
       align: 'center',
-      render: (row) => <span className="text-slate-200 font-medium">{row.heuresBase}</span>,
+      render: (row) => <span className="text-[var(--t2)] font-medium">{row.heuresBase}</span>,
     },
     {
       header: 'HEURES SUPP.',
@@ -82,7 +82,7 @@ export const RecentTimesheetsTable: React.FC<RecentTimesheetsTableProps> = ({ sa
   return (
     <Card>
       <div className="flex justify-between items-center mb-5">
-        <h3 className="text-sm font-bold text-white">Dernières Feuilles de Temps</h3>
+        <h3 className="text-sm font-bold text-[var(--t1)]">Dernières Feuilles de Temps</h3>
         <button
           onClick={() => navigate('/dashboard/feuilles-de-temps')}
           className="text-xs text-amber-500 hover:text-amber-400 transition font-semibold cursor-pointer"
@@ -94,7 +94,7 @@ export const RecentTimesheetsTable: React.FC<RecentTimesheetsTableProps> = ({ sa
       {rows.length > 0 ? (
         <DataTable columns={columns} data={rows} rowKey={(row) => row.id} />
       ) : (
-        <p className="text-xs text-slate-500 py-6 text-center">Aucune feuille de temps enregistrée</p>
+        <p className="text-xs text-[var(--t3)] py-6 text-center">Aucune feuille de temps enregistrée</p>
       )}
     </Card>
   );

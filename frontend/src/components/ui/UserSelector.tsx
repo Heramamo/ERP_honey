@@ -14,7 +14,7 @@ export const UserSelector: React.FC<UserSelectorProps> = ({ name, role }) => {
       </label>
       <div className="flex items-center justify-between p-2.5 bg-white border border-gray-200 rounded-xl shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">
+          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[var(--t3)]">
             <User size={18} />
           </div>
           <div>

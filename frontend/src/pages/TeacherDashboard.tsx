@@ -88,7 +88,7 @@ export const TeacherDashboard: React.FC = () => {
     : 'Validé';
 
   return (
-    <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans text-slate-100">
+    <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans text-[var(--t1)]">
 
       {/* ==================== 1. CARTES KPI BRILLANTES & HARMONISÉES ==================== */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -121,7 +121,7 @@ export const TeacherDashboard: React.FC = () => {
                 <span className="text-xl font-bold text-emerald-400">Ar</span>
               </div>
             ) : (
-              <span className="text-xl font-bold text-slate-500">N/A</span>
+              <span className="text-xl font-bold text-[var(--t3)]">N/A</span>
             )
           }
           subtitle="Montant brut calculé"
@@ -137,7 +137,7 @@ export const TeacherDashboard: React.FC = () => {
           rightIndicator={<StatusBadge status={payStatus} showDot />}
           value={
             <div className="flex items-center justify-between">
-              <span className="text-2xl font-black text-white tracking-tight">
+              <span className="text-2xl font-black text-[var(--t1)] tracking-tight">
                 {monthName.charAt(0).toUpperCase() + monthName.slice(1)}
               </span>
             </div>

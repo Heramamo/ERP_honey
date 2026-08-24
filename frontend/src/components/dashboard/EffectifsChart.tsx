@@ -11,7 +11,7 @@ const effectifsData = [
 export const EffectifsChart: React.FC = () => {
   return (
     <Card tone="subtle" className="justify-between">
-      <h3 className="text-sm font-bold text-white mb-2">Effectifs par Pôle</h3>
+      <h3 className="text-sm font-bold text-[var(--t1)] mb-2">Effectifs par Pôle</h3>
 
       <div className="h-44 w-full relative flex items-center justify-center min-h-[175px]">
         <ResponsiveContainer width="100%" height="100%">
@@ -31,8 +31,8 @@ export const EffectifsChart: React.FC = () => {
         </ResponsiveContainer>
 
         <div className="absolute text-center">
-          <span className="text-2xl font-black text-white block leading-none">17</span>
-          <span className="text-[9px] uppercase font-bold tracking-wider text-slate-400 block mt-1">INTERVENANTS</span>
+          <span className="text-2xl font-black text-[var(--t1)] block leading-none">17</span>
+          <span className="text-[9px] uppercase font-bold tracking-wider text-[var(--t3)] block mt-1">INTERVENANTS</span>
         </div>
       </div>
 
@@ -41,9 +41,9 @@ export const EffectifsChart: React.FC = () => {
           <div key={item.name} className="flex justify-between items-center text-xs">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: item.color }} />
-              <span className="text-slate-300 font-medium">{item.name}</span>
+              <span className="text-[var(--t2)] font-medium">{item.name}</span>
             </div>
-            <span className="font-bold text-slate-400">{item.value}%</span>
+            <span className="font-bold text-[var(--t3)]">{item.value}%</span>
           </div>
         ))}
       </div>

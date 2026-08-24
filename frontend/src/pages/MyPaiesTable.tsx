@@ -40,53 +40,54 @@ export const MyPaiesTable: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className="p-8 max-w-[1200px] mx-auto w-full font-sans text-slate-100">
-      <div className="mb-6">
-        <h1 className="text-3xl font-extrabold tracking-tight text-white">Ma Paie</h1>
-        <p className="text-sm text-slate-400 mt-1">
+    <div className="p-8 max-w-[1200px] mx-auto w-full font-sans text-[var(--t1)] h-full flex flex-col min-h-0">
+      <div className="mb-6 shrink-0">
+        <h1 className="text-3xl font-extrabold tracking-tight text-[var(--t1)]">Ma Paie</h1>
+        <p className="text-sm text-[var(--t3)] mt-1">
           Historique de vos fiches de paie mensuelles
         </p>
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm">
+        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm shrink-0">
           {error}
         </div>
       )}
 
-      <div className="bg-[#12161f] border border-slate-800/60 rounded-xl overflow-hidden shadow-2xl">
+      <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl flex-1 min-h-0 flex flex-col">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
             <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
             <span className="text-sm">Chargement de vos fiches de paie...</span>
           </div>
         ) : mine.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-slate-400">
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
             <Wallet className="w-8 h-8 text-slate-600" />
             <span className="text-sm">Aucune fiche de paie pour le moment.</span>
           </div>
         ) : (
+          <div className="flex-1 min-h-0 overflow-auto scroll-thin">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-800/80 text-[11px] font-bold text-slate-400 tracking-wider uppercase bg-[#0e1118]">
+              <tr className="sticky top-0 z-10 border-b border-[var(--border-subtle)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
                 <th className="py-4 px-6">PÉRIODE</th>
                 <th className="py-4 px-6">DATE D'ÉMISSION</th>
                 <th className="py-4 px-6">MONTANT TOTAL</th>
                 <th className="py-4 px-6">STATUT</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/50 text-sm">
+            <tbody className="divide-y divide-[var(--border-subtle)] text-sm">
               {mine.map((paie: PaiePayload) => (
-                <tr key={paie.id} className="hover:bg-slate-800/30 transition-colors">
-                  <td className="py-4 px-6 font-bold text-slate-100">{formatMois(paie.mois)}</td>
-                  <td className="py-4 px-6 text-slate-400 text-xs">
+                <tr key={paie.id} className="hover:bg-[var(--chip)] transition-colors">
+                  <td className="py-4 px-6 font-bold text-[var(--t1)]">{formatMois(paie.mois)}</td>
+                  <td className="py-4 px-6 text-[var(--t3)] text-xs">
                     {new Date(paie.date).toLocaleDateString('fr-FR')}
                   </td>
                   <td className="py-4 px-6 font-semibold text-emerald-400">
                     {paie.totalSalaire.toLocaleString('fr-FR')} Ar
                   </td>
                   <td className="py-4 px-6">
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border ${STATUT_STYLES[paie.statutpaie] ?? 'bg-slate-800 text-slate-300 border-slate-700'}`}>
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border ${STATUT_STYLES[paie.statutpaie] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--border-subtle)]'}`}>
                       {getStatutLabel(paie.statutpaie)}
                     </span>
                   </td>
@@ -94,6 +95,7 @@ export const MyPaiesTable: React.FC = () => {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

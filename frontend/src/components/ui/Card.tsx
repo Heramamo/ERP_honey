@@ -9,8 +9,8 @@ interface CardProps {
 }
 
 const toneStyles: Record<CardTone, string> = {
-  default: 'bg-[#111726] border-slate-800/90',
-  subtle: 'bg-[#101625] border-slate-800/80',
+  default: 'bg-[var(--panel)] border-[var(--border-subtle)]',
+  subtle: 'bg-[var(--panel-deep)] border-[var(--border-subtle)]',
 };
 
 export const Card: React.FC<CardProps> = ({ children, tone = 'default', className = '' }) => {

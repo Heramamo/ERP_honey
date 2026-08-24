@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Bell, HelpCircle, Calendar as CalendarIcon, ChevronDown, LogOut, Calendar } from 'lucide-react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { LogOut, Menu, Moon, Sun } from 'lucide-react';
+import { useAppDispatch } from '../../store/hooks';
 import { logout } from '../../store/slices/authSlice';
-import { getInitials } from '../../utils/user';
+import { ConfirmButton } from '../common/ConfirmButton';
+import { getStoredTheme, setTheme } from '../../utils/theme';
+import type { Theme } from '../../utils/theme';
 
 const PAGE_TITLES: Record<string, string> = {
   '/dashboard': 'Tableau de bord',
@@ -17,12 +19,27 @@ const PAGE_TITLES: Record<string, string> = {
   '/dashboard/settings': 'Paramètres',
 };
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  onToggleSidebar?: () => void;
+}
+
+const getPeriodeActuelle = () => {
+  const label = new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+  return label.charAt(0).toUpperCase() + label.slice(1);
+};
+
+export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAppSelector((state) => state.auth);
   const pageTitle = PAGE_TITLES[location.pathname] ?? 'Tableau de bord';
+  const [theme, setThemeState] = useState<Theme>(getStoredTheme);
+
+  const handleToggleTheme = () => {
+    const next: Theme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    setThemeState(next);
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -30,52 +47,52 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="h-16 bg-[#0b0e17] border-b border-slate-800/60 px-6 flex items-center justify-between font-sans shrink-0">
-      {/* Fil d'Ariane Dynamique */}
-      <div className="flex items-center gap-2 text-xs font-semibold">
-        <span className="text-slate-400">Honey ERP</span>
+    <header className="h-16 bg-[var(--shell-bg)] border-b border-[var(--border-subtle)] px-4 md:px-6 flex items-center justify-between font-sans shrink-0">
+      {/* Toggle Sidebar + Fil d'Ariane Dynamique */}
+      <div className="flex items-center gap-3 text-xs font-semibold min-w-0">
+        <button
+          onClick={onToggleSidebar}
+          aria-label="Afficher/Masquer le menu"
+          className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] transition cursor-pointer shrink-0"
+        >
+          <Menu size={18} />
+        </button>
         <span className="text-slate-600">›</span>
-        <span className="text-slate-100 font-semibold">{pageTitle}</span>
+        <span className="font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
+          {pageTitle}
+        </span>
       </div>
 
-      {/* Contrôles & Profil */}
-      <div className="flex items-center gap-4">
-        {/* Sélecteur de Période */}
-        <div className="hidden md:flex items-center gap-2 bg-[#182234] border border-slate-700/60 text-slate-200 text-xs px-3 py-1.5 rounded-lg cursor-pointer hover:border-slate-500 transition">
-          <button className="flex items-center gap-2 bg-[#12161f] border border-slate-800/80 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-200 hover:bg-slate-800/50 transition">
-          <span>Août 2026</span>
-          <ChevronDown size={14} className="text-slate-400" />
+      {/* Période courante */}
+      <div
+        title="Période courante"
+        className="hidden sm:block text-xs font-bold px-3 py-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-hover)]"
+        style={{ color: 'var(--text-muted)' }}
+      >
+        {getPeriodeActuelle()}
+      </div>
+
+      {/* Actions */}
+      <div className="flex items-center gap-1.5">
+        <button
+          onClick={handleToggleTheme}
+          aria-label={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
+          title={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
+          className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] transition cursor-pointer"
+        >
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
         </button>
 
-        {/* Notifications & Actions */}
-        <div className="flex items-center gap-1 text-slate-400">
-          <button className="p-2 hover:bg-slate-800/60 rounded-lg hover:text-slate-200 transition relative">
-            <Bell size={16} />
-            <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-rose-500 rounded-full" />
-          </button>
-          <button className="p-2 hover:bg-slate-800/60 rounded-lg hover:text-slate-200 transition">
-            <HelpCircle size={16} />
-          </button>
-          <button className="p-2 hover:bg-slate-800/60 rounded-lg hover:text-slate-200 transition">
-            <Calendar size={16} />
-          </button>
-          </div>
-          <button
-            onClick={handleLogout}
-            title="Déconnexion"
-            className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition cursor-pointer"
-          >
-            <LogOut size={16} />
-          </button>
-        </div>
-
-        {/* Avatar */}
-        <div
-          title={user?.email ?? 'Utilisateur'}
-          className="w-8 h-8 rounded-full bg-[#e0aa25] text-slate-950 font-bold text-xs flex items-center justify-center cursor-pointer shadow-md"
+        <ConfirmButton
+          title="Déconnexion"
+          description="Voulez-vous vraiment vous déconnecter de votre session ?"
+          confirmLabel="Se déconnecter"
+          tone="danger"
+          buttonClassName="p-2 rounded-lg text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+          onConfirm={handleLogout}
         >
-          {getInitials(user?.email)}
-        </div>
+          <LogOut size={16} />
+        </ConfirmButton>
       </div>
     </header>
   );

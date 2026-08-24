@@ -25,7 +25,7 @@ export const DataTable = <T,>({ columns, data, rowKey }: DataTableProps<T>) => {
     <div className="overflow-x-auto">
       <table className="w-full text-left text-xs">
         <thead>
-          <tr className="text-slate-400 font-bold uppercase text-[10px] tracking-wider border-b border-slate-800/80">
+          <tr className="text-[var(--t3)] font-bold uppercase text-[10px] tracking-wider border-b border-[var(--border-subtle)]">
             {columns.map((column, index) => (
               <th key={index} className={`pb-3 px-2 ${alignClass[column.align ?? 'left']}`}>
                 {column.header}
@@ -33,9 +33,9 @@ export const DataTable = <T,>({ columns, data, rowKey }: DataTableProps<T>) => {
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-800/50">
+        <tbody className="divide-y divide-[var(--border-subtle)]">
           {data.map((row) => (
-            <tr key={rowKey(row)} className="hover:bg-slate-800/30 transition">
+            <tr key={rowKey(row)} className="hover:bg-[var(--chip)] transition">
               {columns.map((column, index) => (
                 <td key={index} className={`py-3.5 px-2 ${alignClass[column.align ?? 'left']}`}>
                   {column.render(row)}

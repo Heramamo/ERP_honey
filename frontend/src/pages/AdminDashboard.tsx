@@ -86,8 +86,8 @@ const requestColumns: DataColumn<RecentRequest>[] = [
     header: 'ENSEIGNANT',
     render: (row) => (
       <>
-        <span className="font-semibold text-white">{row.enseignant}</span>
-        <span className="block text-[10px] text-slate-400 font-normal">{row.detail}</span>
+        <span className="font-semibold text-[var(--t1)]">{row.enseignant}</span>
+        <span className="block text-[10px] text-[var(--t3)] font-normal">{row.detail}</span>
       </>
     ),
   },
@@ -108,11 +108,11 @@ const RevenueExpenseLegend: React.FC = () => (
   <div className="flex items-center gap-4 text-xs font-medium">
     <div className="flex items-center gap-1.5">
       <span className="w-3 h-3 rounded-sm bg-teal-500 inline-block" />
-      <span className="text-slate-300">Revenus</span>
+      <span className="text-[var(--t2)]">Revenus</span>
     </div>
     <div className="flex items-center gap-1.5">
       <span className="w-3 h-3 rounded-sm bg-blue-500 inline-block" />
-      <span className="text-slate-300">Dépenses</span>
+      <span className="text-[var(--t2)]">Dépenses</span>
     </div>
   </div>
 );
@@ -125,7 +125,7 @@ export const AdminDashboard: React.FC = () => {
   const teachers = useSelector((state:RootState)=>state.teachers.enseignants)
   console.log(teachers)
   return (
-    <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans text-slate-100">
+    <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans text-[var(--t1)]">
       
       {/* ==================== 1. CARTES KPI HARMONISÉES ==================== */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -201,11 +201,11 @@ export const AdminDashboard: React.FC = () => {
         <Card className="lg:col-span-2 justify-between">
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
                 <Wallet size={16} className="text-blue-400" />
                 Graphe de Progression Financière
               </h3>
-              <p className="text-xs text-slate-400 mt-0.5">Évolution comparative des revenus et charges (en M Ar)</p>
+              <p className="text-xs text-[var(--t3)] mt-0.5">Évolution comparative des revenus et charges (en M Ar)</p>
             </div>
             <RevenueExpenseLegend />
           </div>
@@ -237,11 +237,11 @@ export const AdminDashboard: React.FC = () => {
         {/* Graphique 2 : Pie Chart Ventilation du Budget */}
         <Card className="justify-between">
           <div className="flex justify-between items-center mb-2">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
               <Building2 size={16} className="text-amber-400" />
               Ventilation Masse Salariale
             </h3>
-            <span className="text-[11px] text-slate-400 font-medium">Par Pôle</span>
+            <span className="text-[11px] text-[var(--t3)] font-medium">Par Pôle</span>
           </div>
 
           <div className="h-44 w-full relative flex items-center justify-center my-2">
@@ -266,15 +266,15 @@ export const AdminDashboard: React.FC = () => {
 
             <div className="absolute text-center">
               <span className="text-xl font-black text-amber-400 block leading-none">100%</span>
-              <span className="text-[9px] uppercase font-bold tracking-widest text-slate-400 block mt-1">VENTILATION</span>
+              <span className="text-[9px] uppercase font-bold tracking-widest text-[var(--t3)] block mt-1">VENTILATION</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-xs font-medium pt-3 border-t border-slate-800/60">
+          <div className="grid grid-cols-2 gap-2 text-xs font-medium pt-3 border-t border-[var(--border-subtle)]">
             {budgetDistributionData.map((item) => (
               <div key={item.name} className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ backgroundColor: item.color }} />
-                <span className="text-slate-300 text-[11px]">{item.name} : <strong className="text-white">{item.value}%</strong></span>
+                <span className="text-[var(--t2)] text-[11px]">{item.name} : <strong className="text-[var(--t1)]">{item.value}%</strong></span>
               </div>
             ))}
           </div>
@@ -289,11 +289,11 @@ export const AdminDashboard: React.FC = () => {
         <Card className="lg:col-span-2 justify-between">
           <div className="flex justify-between items-center mb-5">
             <div>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
                 <BarChart3 size={16} className="text-teal-400" />
                 Revenus vs Charges par Pôle
               </h3>
-              <p className="text-xs text-slate-400 mt-0.5">Comparatif de rentabilité brute par activité (en Millions Ar)</p>
+              <p className="text-xs text-[var(--t3)] mt-0.5">Comparatif de rentabilité brute par activité (en Millions Ar)</p>
             </div>
             <RevenueExpenseLegend />
           </div>
@@ -316,7 +316,7 @@ export const AdminDashboard: React.FC = () => {
         <Card className="justify-between">
           <div>
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
                 <Layers size={16} className="text-amber-400" />
                 Demandes Récentes
               </h3>
@@ -328,8 +328,8 @@ export const AdminDashboard: React.FC = () => {
             <DataTable columns={requestColumns} data={recentRequests} rowKey={(row) => row.id} />
           </div>
 
-          <div className="pt-3 border-t border-slate-800/60 text-center mt-4">
-            <span className="text-[11px] text-slate-400">Total : <strong className="text-blue-400">15.5 heures</strong> en cours de suivi</span>
+          <div className="pt-3 border-t border-[var(--border-subtle)] text-center mt-4">
+            <span className="text-[11px] text-[var(--t3)]">Total : <strong className="text-blue-400">15.5 heures</strong> en cours de suivi</span>
           </div>
         </Card>
 

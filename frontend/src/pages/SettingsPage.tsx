@@ -19,7 +19,7 @@ const PasswordField: React.FC<{
   const [show, setShow] = useState(false);
   return (
     <div className="space-y-1.5">
-      <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{label}</label>
+      <label className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">{label}</label>
       <div className="relative">
         <input
           type={show ? 'text' : 'password'}
@@ -28,12 +28,12 @@ const PasswordField: React.FC<{
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           autoComplete={autoComplete}
-          className="w-full bg-[#0e1118] border border-slate-800 rounded-lg px-3.5 py-2.5 pr-10 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+          className="w-full bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 pr-10 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
         />
         <button
           type="button"
           onClick={() => setShow(!show)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors cursor-pointer"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--t3)] hover:text-[var(--t2)] transition-colors cursor-pointer"
         >
           {show ? <EyeOff size={16} /> : <Eye size={16} />}
         </button>
@@ -78,14 +78,14 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ allowedRoles }) => {
   };
 
   const content = (
-    <div className="p-8 max-w-[720px] mx-auto w-full font-sans text-slate-100">
-      <h1 className="text-3xl font-extrabold tracking-tight text-white">Paramètres</h1>
-      <p className="text-sm text-slate-400 mt-1">Gérez les paramètres de votre compte</p>
+    <div className="p-8 max-w-[720px] mx-auto w-full font-sans text-[var(--t1)]">
+      <h1 className="text-3xl font-extrabold tracking-tight text-[var(--t1)]">Paramètres</h1>
+      <p className="text-sm text-[var(--t3)] mt-1">Gérez les paramètres de votre compte</p>
 
-      <div className="mt-6 bg-[#12161f] border border-slate-800/60 rounded-xl shadow-2xl overflow-hidden">
-        <div className="flex items-center gap-2.5 px-6 py-4 border-b border-slate-800/80 bg-[#0e1118]">
+      <div className="mt-6 bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl shadow-2xl overflow-hidden">
+        <div className="flex items-center gap-2.5 px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
           <KeyRound className="w-4 h-4 text-amber-500" />
-          <h2 className="text-sm font-bold text-white uppercase tracking-wider">Changer le mot de passe</h2>
+          <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Changer le mot de passe</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">

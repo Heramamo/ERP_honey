@@ -26,22 +26,22 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
   };
 
   const content = (
-    <div className="w-full text-slate-100 font-sans p-6">
+    <div className="w-full h-full text-[var(--t1)] font-sans p-6 flex flex-col min-h-0">
       {/* Titre dynamique */}
-      <h1 className="text-3xl font-extrabold tracking-tight mb-6 text-white transition-all">
+      <h1 className="text-3xl font-extrabold tracking-tight mb-6 text-[var(--t1)] transition-all shrink-0">
         {pageTitles[activeTab]}
       </h1>
 
       {/* Navigation par sous-sections / Onglets */}
-      <div className="flex items-center gap-8 border-b border-slate-800/80 mb-6 text-sm font-semibold">
+      <div className="flex items-center gap-8 border-b border-[var(--border-subtle)] mb-6 text-sm font-semibold shrink-0">
         <button
           onClick={() => setActiveTab('validation')}
           className={`pb-3 relative transition-colors flex items-center gap-2 ${
-            activeTab === 'validation' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
+            activeTab === 'validation' ? 'text-[var(--t1)]' : 'text-[var(--t3)] hover:text-[var(--t2)]'
           }`}
         >
           En Attente de Validation
-          <span className="bg-slate-800 text-slate-300 text-xs px-2 py-0.5 rounded-full font-bold">
+          <span className="bg-[var(--chip)] text-[var(--t2)] text-xs px-2 py-0.5 rounded-full font-bold">
             {pendingCount}
           </span>
           {activeTab === 'validation' && (
@@ -52,7 +52,7 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
         <button
           onClick={() => setActiveTab('toutes')}
           className={`pb-3 relative transition-colors ${
-            activeTab === 'toutes' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
+            activeTab === 'toutes' ? 'text-[var(--t1)]' : 'text-[var(--t3)] hover:text-[var(--t2)]'
           }`}
         >
           Toutes les Feuilles
@@ -63,8 +63,10 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
       </div>
 
       {/* Affichage du contenu dynamique */}
-      {activeTab === 'validation' && <HoursValidationTable allowedRoles={allowedRoles} />}
-      {activeTab === 'toutes' && <AllSaisiesTable allowedRoles={allowedRoles} />}
+      <div className="flex-1 min-h-0 flex flex-col">
+        {activeTab === 'validation' && <HoursValidationTable allowedRoles={allowedRoles} />}
+        {activeTab === 'toutes' && <AllSaisiesTable allowedRoles={allowedRoles} />}
+      </div>
     </div>
   );
 

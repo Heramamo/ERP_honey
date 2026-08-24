@@ -55,19 +55,19 @@ export const CreateTeacherModal: React.FC<CreateTeacherModalProps> = ({ open, on
   };
 
   const inputClass =
-    'w-full bg-[#0e1118] border border-slate-800 rounded-lg px-3.5 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors';
-  const labelClass = 'text-[11px] font-bold text-slate-400 uppercase tracking-wider';
+    'w-full bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors';
+  const labelClass = 'text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={handleClose} />
 
-      <div className="relative w-full max-w-md bg-[#12161f] border border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800/80 bg-[#0e1118]">
-          <h2 className="text-sm font-bold text-white uppercase tracking-wider">Nouvel Enseignant</h2>
+      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-y-auto scroll-thin">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
+          <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Nouvel Enseignant</h2>
           <button
             onClick={handleClose}
-            className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition cursor-pointer"
+            className="p-1.5 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--chip)] rounded-lg transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -169,7 +169,7 @@ export const CreateTeacherModal: React.FC<CreateTeacherModalProps> = ({ open, on
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2.5 rounded-lg border border-slate-800 text-sm font-semibold text-slate-300 hover:bg-slate-800 transition cursor-pointer"
+              className="px-4 py-2.5 rounded-lg border border-[var(--border-subtle)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
             >
               Annuler
             </button>
