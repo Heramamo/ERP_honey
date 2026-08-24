@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Check, X, Loader2, Inbox } from 'lucide-react';
 import RoleGuard from '../../RoleGuard';
+import ConfirmButton from '../../common/ConfirmButton';
 import type { Role } from '../../../types/auth';
 import type { SaisiePayload } from '../../../types/saisieFeuille';
 import {
@@ -87,20 +88,28 @@ export const HoursValidationTable: React.FC<HoursValidationTableProps> = ({ allo
                   <td className="py-4 px-6 font-mono font-semibold text-amber-400">{saisie.heuresSupp} h</td>
                   <td className="py-4 px-6 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => handleValidate(saisie.id, 'VALIDE')}
-                        className="p-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/60 hover:bg-emerald-900 text-emerald-400 transition-colors cursor-pointer"
-                        title="Valider"
+                      <ConfirmButton
+                        title="Valider la feuille"
+                        description={`Confirmez-vous la validation de la feuille de saisie du ${formatDate(saisie.date)} (${saisie.typeActivite}) ?`}
+                        confirmLabel="Valider"
+                        cancelLabel="Annuler"
+                        tone="success"
+                        buttonClassName="p-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/60 hover:bg-emerald-900 text-emerald-400 transition-colors cursor-pointer"
+                        onConfirm={() => handleValidate(saisie.id, 'VALIDE')}
                       >
                         <Check className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleValidate(saisie.id, 'REFUSE')}
-                        className="p-1.5 rounded-lg bg-rose-950/60 border border-rose-800/60 hover:bg-rose-900 text-rose-400 transition-colors cursor-pointer"
-                        title="Refuser"
+                      </ConfirmButton>
+                      <ConfirmButton
+                        title="Refuser la feuille"
+                        description={`Confirmez-vous le refus de la feuille de saisie du ${formatDate(saisie.date)} (${saisie.typeActivite}) ?`}
+                        confirmLabel="Refuser"
+                        cancelLabel="Annuler"
+                        tone="danger"
+                        buttonClassName="p-1.5 rounded-lg bg-rose-950/60 border border-rose-800/60 hover:bg-rose-900 text-rose-400 transition-colors cursor-pointer"
+                        onConfirm={() => handleValidate(saisie.id, 'REFUSE')}
                       >
                         <X className="w-4 h-4" />
-                      </button>
+                      </ConfirmButton>
                     </div>
                   </td>
                 </tr>

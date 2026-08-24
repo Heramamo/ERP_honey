@@ -58,7 +58,7 @@ export class SaisieFeuilleService {
     }
     async   getMySaisie(userId:number){
         return await this.prisma.feuilleDeTemps.findMany({
-            where:{enseignantId:userId},
+            where:{ enseignant: { id_utilisateur: userId } },
             include: { validePar: { select: { id_utilisateur: true, nom: true, prenom: true, email: true, role: true } } },
             orderBy: { date: 'desc' }
         })
@@ -73,7 +73,7 @@ export class SaisieFeuilleService {
     async   getMyPendingSaisie(userId:number)
     {
         return  await this.prisma.feuilleDeTemps.findMany({where:{
-            enseignantId:userId,
+            enseignant: { id_utilisateur: userId },
             statut:"EN_ATTENTE"
         }})
     }

@@ -13,6 +13,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout } from '../../store/slices/authSlice';
+import { ConfirmButton } from '../common/ConfirmButton';
 import { formatDisplayName, getInitials } from '../../utils/user';
 import type { Role } from '../../types/auth';
 
@@ -52,9 +53,7 @@ export const Sidebar: React.FC = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate('/login');
-  };
-
-  return (
+  };  return (
     <aside className="w-64 bg-[#0b0e17] text-slate-300 flex flex-col justify-between h-screen sticky top-0 font-sans select-none shrink-0 border-r border-slate-800/60">
       <div>
         {/* Logo HONEY GROUP */}
@@ -116,13 +115,16 @@ export const Sidebar: React.FC = () => {
               {user?.role ?? 'Utilisateur'}
             </p>
           </div>
-          <button
-            onClick={handleLogout}
+          <ConfirmButton
             title="Déconnexion"
-            className="p-1.5 text-slate-500 hover:text-white hover:bg-[#151c2e] rounded-lg transition cursor-pointer"
+            description="Voulez-vous vraiment vous déconnecter de votre session ?"
+            confirmLabel="Se déconnecter"
+            tone="danger"
+            buttonClassName="p-1.5 text-slate-500 hover:text-white hover:bg-[#151c2e] rounded-lg transition cursor-pointer"
+            onConfirm={handleLogout}
           >
             <LogOut size={16} />
-          </button>
+          </ConfirmButton>
         </div>
       </div>
     </aside>
