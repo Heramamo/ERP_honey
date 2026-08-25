@@ -128,7 +128,7 @@ npm run lint
 
 Reinitialise
 ```bash
-# Backend
+
 docker stop $(docker ps -a -q) && docker system prune -a --volumes -f
          
 ```
