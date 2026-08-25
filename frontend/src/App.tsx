@@ -11,9 +11,9 @@ import RegisterPage from './pages/RegisterPage';
 import CompleteProfilePage from './pages/CompleteProfilePage';
 import UnauthorizedPage from './pages/Unauthorizedpage';
 import DashboardPage from './pages/DashboardPage';
-import PlaceholderPage from './pages/PlaceholderPage';
 import ProtectedPublicRoute from './components/ProtectedPublicRoute';
 import HrPayrollPage from './pages/HrPayrollPage';
+import FinancePage  from './pages/FinancePage';
 import HrPaiePage from './pages/HrPaiePage';
 import MyPaiesTable from './pages/MyPaiesTable';
 import SettingsPage from './pages/SettingsPage';
@@ -58,7 +58,7 @@ export const App: React.FC = () => {
                 path="/dashboard/finance"
                 element={
                   <RoleGuard allowedRoles={['ADMIN', 'RH', 'FINANCE']}>
-                    <PlaceholderPage title="Finance" />
+                    <FinancePage />
                   </RoleGuard>
                 }
               />
