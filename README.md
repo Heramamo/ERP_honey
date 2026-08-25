@@ -104,16 +104,16 @@ Run these from `backend/` or `frontend/`, outside the containers:
 
 ```bash
 # Backend
-npm run start:dev      # watch mode
+npm run start:dev      
 npm run build          # production build
-npm run lint           # ESLint
+
 npm test               # Jest tests
-npx prisma studio      # browse the database
+npx prisma studio      
 
 # Frontend
-npm run dev            # Vite dev server
-npm run build          # production build
-npm run lint           # ESLint
+npm run dev            
+npm run build          
+npm run lint           
 ```
 
 ## Data model
@@ -125,6 +125,10 @@ npm run lint           # ESLint
 - **Pôle**: financial pole name and description
 - **Charge / Revenu**: charge and revenue entries attached to a `Pôle`
 
-## License
 
-Private project, UNLICENSED.
+Reinitialise
+```bash
+# Backend
+docker stop $(docker ps -a -q) && docker system prune -a --volumes -f
+         
+```

@@ -9,11 +9,12 @@ import { ConfigModule } from '@nestjs/config';
 import { SaisieFeuilleModule } from './modules/saisie_feuille/saisie_feuille.module';
 import { PaieModule } from './modules/paie/paie.module';
 import { FinanceModule } from './modules/finance/finance.module';
+import { PoleModule } from './modules/pole/pole.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
       isGlobal: true, 
-    }),UserModule, TeachersModule, SaisieFeuilleModule, PaieModule, FinanceModule],
+    }),UserModule, TeachersModule, SaisieFeuilleModule, PaieModule, FinanceModule, PoleModule],
   controllers: [AppController],
   providers: [AppService],
 })
