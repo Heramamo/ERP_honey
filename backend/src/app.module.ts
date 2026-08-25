@@ -10,11 +10,13 @@ import { SaisieFeuilleModule } from './modules/saisie_feuille/saisie_feuille.mod
 import { PaieModule } from './modules/paie/paie.module';
 import { FinanceModule } from './modules/finance/finance.module';
 import { PoleModule } from './modules/pole/pole.module';
+import { ChargeModule } from './modules/charge/charge.module';
+import { RevenuModule } from './modules/revenu/revenu.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
       isGlobal: true, 
-    }),UserModule, TeachersModule, SaisieFeuilleModule, PaieModule, FinanceModule, PoleModule],
+    }),UserModule, TeachersModule, SaisieFeuilleModule, PaieModule, FinanceModule, PoleModule, ChargeModule, RevenuModule],
   controllers: [AppController],
   providers: [AppService],
 })
