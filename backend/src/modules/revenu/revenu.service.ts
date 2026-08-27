@@ -14,4 +14,7 @@ export class RevenuService {
             throw new NotFoundException("Pole qui n existe pas")
         return await this.prisma.revenu.create({data:dto})
     }
+    async findAll(){
+        return await this.prisma.revenu.findMany()
+    } 
 }

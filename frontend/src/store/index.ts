@@ -5,13 +5,21 @@ import saisieReducer from './slices/saisieSlice'
 import enseignantReducer from './slices/enseignantSlice'
 import teacherReducer from './slices/teacherSlice'
 import paieReducer from './slices/paieSlice'
+import poleReducer from './slices/poleSlice'
+import revenuReducer from './slices/revenuSlice'
+import chargeReducer from './slices/chargeSlice'
+import bilanReducer from './slices/bilanSlice'
 export const store = configureStore({
     reducer:{
         auth:authReducer,
         saisies:saisieReducer,
         enseignant:enseignantReducer,
         teachers:teacherReducer,
-        paie:paieReducer
+        paie:paieReducer,
+        poles:poleReducer,
+        revenus:revenuReducer,
+        charges:chargeReducer,
+        bilans:bilanReducer
     }
 })
 export type RootState = ReturnType<typeof store.getState>;

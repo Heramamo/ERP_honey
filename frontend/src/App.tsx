@@ -17,6 +17,7 @@ import FinancePage  from './pages/FinancePage';
 import HrPaiePage from './pages/HrPaiePage';
 import MyPaiesTable from './pages/MyPaiesTable';
 import SettingsPage from './pages/SettingsPage';
+import PolesPage from './pages/PolesPage';
 import TeachersTable from './components/dashboard/hr/TeachersTable';
 import PayrollTable from './components/dashboard/hr/PayrollTable';
 import SaisiesTable from './components/dashboard/teacher/SaisiesTable';
@@ -59,6 +60,14 @@ export const App: React.FC = () => {
                 element={
                   <RoleGuard allowedRoles={['ADMIN', 'RH', 'FINANCE']}>
                     <FinancePage />
+                  </RoleGuard>
+                }
+              />
+              <Route
+                path="/dashboard/poles"
+                element={
+                  <RoleGuard allowedRoles={['ADMIN', 'RH']}>
+                    <PolesPage />
                   </RoleGuard>
                 }
               />

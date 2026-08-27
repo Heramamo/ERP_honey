@@ -10,6 +10,7 @@ import {
   Wallet,
   LogOut,
   ChevronsLeft,
+  Boxes,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -40,6 +41,7 @@ const adminNavItems: NavItem[] = [
   { label: 'Feuilles de Saisie', icon: FileText, path: '/dashboard/feuilles-de-saisie' },
   { label: 'Gestion de Paie', icon: Wallet, path: '/dashboard/gestion-paie' },
   { label: 'Finance', icon: PieChart, path: '/dashboard/finance' },
+  { label: 'Pôles', icon: Boxes, path: '/dashboard/poles' },
 ];
 
 const teacherNavItems: NavItem[] = [

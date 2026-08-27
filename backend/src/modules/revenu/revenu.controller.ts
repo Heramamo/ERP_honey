@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { RevenuService } from './revenu.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -12,5 +12,9 @@ export class RevenuController {
   @Post()
   async create(@Body() dto:CreateRevenuDto) {
     return await this.revenuService.create(dto)
+  }
+  @Get()
+  async findAll() {
+    return await this.revenuService.findAll()
   }
 }

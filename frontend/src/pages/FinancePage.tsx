@@ -3,10 +3,9 @@ import { FinanceOverview } from '../components/dashboard/finance/FinanceOverview
 import { ChargesTable } from '../components/dashboard/finance/ChargesTable';
 import { RevenusTable } from '../components/dashboard/finance/RevenusTable';
 import { PoleReportsTable } from '../components/dashboard/finance/PoleReportsTable';
-import { NewTransactionModal } from '../components/dashboard/finance/NewTransactionModal';
+import { NewTransactionModal, type TransactionType } from '../components/dashboard/finance/NewTransactionModal';
 
 type TabType = 'overview' | 'charges' | 'revenus' | 'reports';
-export type TransactionType = 'DEPENSE' | 'RECETTE';
 
 // Configuration des titres et descriptions dynamiques par sous-section
 const TABS_CONFIG: Record<TabType, { label: string; title: string; description: string }> = {
@@ -36,10 +35,15 @@ export const FinancePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [transactionType, setTransactionType] = useState<TransactionType>('DEPENSE');
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleOpenModal = (type: TransactionType) => {
     setTransactionType(type);
     setIsModalOpen(true);
+  };
+
+  const handleCreated = () => {
+    setRefreshKey((k) => k + 1);
   };
 
   const currentTab = TABS_CONFIG[activeTab];
@@ -76,9 +80,9 @@ export const FinancePage: React.FC = () => {
 
       {/* Contenu de l'onglet actif */}
       <div className="pt-2">
-        {activeTab === 'overview' && <FinanceOverview />}
-        {activeTab === 'charges' && <ChargesTable onOpenModal={() => handleOpenModal('DEPENSE')} />}
-        {activeTab === 'revenus' && <RevenusTable onOpenModal={() => handleOpenModal('RECETTE')} />}
+        {activeTab === 'overview' && <FinanceOverview refreshKey={refreshKey} />}
+        {activeTab === 'charges' && <ChargesTable onOpenModal={() => handleOpenModal('DEPENSE')} refreshKey={refreshKey} />}
+        {activeTab === 'revenus' && <RevenusTable onOpenModal={() => handleOpenModal('RECETTE')} refreshKey={refreshKey} />}
         {activeTab === 'reports' && <PoleReportsTable />}
       </div>
 
@@ -87,6 +91,7 @@ export const FinancePage: React.FC = () => {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         defaultType={transactionType}
+        onCreated={handleCreated}
       />
     </div>
   );

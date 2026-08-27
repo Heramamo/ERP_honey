@@ -1,31 +1,27 @@
-export type PoleType = 'IT' | 'Formation' | 'Événementiel' | 'Tourisme';
-export type ChargeCategory = 'Fixe' | 'Variable';
-export type PaymentStatus = 'PAYÉ' | 'EN ATTENTE';
+import type { Pole, Revenu, Charge, BilanPole } from "../service/finance.service";
 
-export interface ChargeItem {
-  id: string;
-  label: string;
-  pole: PoleType;
-  type: ChargeCategory;
-  amount: number;
-  date: string;
-  documentUrl?: string;
+export interface PoleState {
+    poles: Pole[];
+    loading: boolean;
+    error: string | null;
 }
 
-export interface RevenuItem {
-  id: string;
-  client: string;
-  pole: PoleType;
-  amount: number;
-  status: PaymentStatus;
-  date: string;
+export interface RevenuState {
+    revenus: Revenu[];
+    loading: boolean;
+    error: string | null;
 }
 
-export interface PoleReport {
-  pole: PoleType;
-  revenus: number;
-  chargesFixes: number;
-  chargesVariables: number;
-  beneficeNet: number;
-  marge: number;
+export interface ChargeState {
+    charges: Charge[];
+    current: Charge | null;
+    loading: boolean;
+    error: string | null;
+}
+
+export interface BilanState {
+    bilans: Record<number, BilanPole>;
+    current: BilanPole | null;
+    loading: boolean;
+    error: string | null;
 }
