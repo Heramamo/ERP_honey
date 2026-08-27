@@ -16,7 +16,7 @@ import { fetchMyProfile } from '../store/slices/enseignantSlice';
 import type { SaisiePayload } from '../types/saisieFeuille';
 
 const getRawStatut = (statut: SaisiePayload['statut']) => {
-  return typeof statut === 'string' ? statut : statut?.statut;
+  return statut;
 };
 
 export const TeacherDashboard: React.FC = () => {

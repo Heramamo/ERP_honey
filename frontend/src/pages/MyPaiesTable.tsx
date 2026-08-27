@@ -16,8 +16,8 @@ const formatMois = (mois: string) => {
 };
 
 const STATUT_STYLES: Record<string, string> = {
-  PAYE: 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50',
-  EN_ATTENTE: 'bg-amber-950/60 text-amber-400 border-amber-800/50',
+  PAYE: 'bg-[var(--positive)]/10 text-[var(--positive)] border-[var(--positive)]/25',
+  EN_ATTENTE: 'bg-[var(--honey)]/10 text-[var(--honey)] border-[var(--honey)]/30',
 };
 
 const getStatutLabel = (statut: string) => {
@@ -49,7 +49,7 @@ export const MyPaiesTable: React.FC = () => {
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm shrink-0">
+        <div className="mb-6 px-4 py-3 rounded-lg bg-[var(--danger)]/10 border border-[var(--danger)]/40 text-[var(--danger)] text-sm shrink-0">
           {error}
         </div>
       )}
@@ -57,12 +57,12 @@ export const MyPaiesTable: React.FC = () => {
       <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl flex-1 min-h-0 flex flex-col">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
+            <Loader2 className="w-6 h-6 animate-spin text-[var(--honey)]" />
             <span className="text-sm">Chargement de vos fiches de paie...</span>
           </div>
         ) : mine.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Wallet className="w-8 h-8 text-slate-600" />
+            <Wallet className="w-8 h-8 text-[var(--t3)]" />
             <span className="text-sm">Aucune fiche de paie pour le moment.</span>
           </div>
         ) : (
@@ -83,7 +83,7 @@ export const MyPaiesTable: React.FC = () => {
                   <td className="py-4 px-6 text-[var(--t3)] text-xs">
                     {new Date(paie.date).toLocaleDateString('fr-FR')}
                   </td>
-                  <td className="py-4 px-6 font-semibold text-emerald-400">
+                  <td className="py-4 px-6 font-semibold text-[var(--positive)]">
                     {paie.totalSalaire.toLocaleString('fr-FR')} Ar
                   </td>
                   <td className="py-4 px-6">

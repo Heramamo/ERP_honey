@@ -53,7 +53,11 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
     }
   }, [dispatch, poles.length]);
 
-  useEffect(() => {
+  const [prevOpen, setPrevOpen] = useState(isOpen);
+  const [prevType, setPrevType] = useState(defaultType);
+  if (isOpen !== prevOpen || defaultType !== prevType) {
+    setPrevOpen(isOpen);
+    setPrevType(defaultType);
     if (isOpen) {
       setFormData((prev) => ({
         ...prev,
@@ -66,8 +70,7 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
       }));
       setError(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, defaultType, poles]);
+  }
 
   if (!isOpen) return null;
 
@@ -122,28 +125,28 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="bg-[#111827] border border-gray-800 rounded-2xl w-full max-w-2xl shadow-2xl text-white overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-2xl w-full max-w-2xl shadow-2xl text-[var(--t1)] overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-800 bg-[#0B0F17]/50">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]/50">
           <div className="flex items-center gap-3">
             <div className={`p-2 rounded-lg border ${
               isDepense
-                ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                ? 'bg-[var(--danger)]/10 border-[var(--danger)]/30 text-[var(--danger)]'
+                : 'bg-[var(--positive)]/10 border-[var(--positive)]/30 text-[var(--positive)]'
             }`}>
               <Tag className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white">
+              <h2 className="text-lg font-bold text-[var(--t1)]">
                 {isDepense ? 'Saisie d\'une Dépense' : 'Enregistrement d\'une Recette'}
               </h2>
-              <p className="text-xs text-gray-400 mt-0.5">Remplissez les informations comptables obligatoires</p>
+              <p className="text-xs text-[var(--t3)] mt-0.5">Remplissez les informations comptables obligatoires</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white p-2 hover:bg-gray-800/60 rounded-lg transition-colors cursor-pointer"
+            className="text-[var(--t3)] hover:text-[var(--t1)] p-2 hover:bg-[var(--chip)] rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -153,33 +156,33 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Section 1: Informations Générales */}
           <div className="space-y-4">
-            <span className="text-[11px] font-bold text-amber-500 uppercase tracking-widest block border-b border-gray-800/80 pb-1">
+            <span className="text-[11px] font-bold text-[var(--honey)] uppercase tracking-widest block border-b border-[var(--border-subtle)] pb-1">
               1. Détails de l'opération
             </span>
 
             <div className={`grid grid-cols-1 ${isDepense ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
               {/* Libellé */}
               <div className="md:col-span-2 space-y-1.5">
-                <label className="block text-xs font-semibold text-gray-300">
-                  Libellé de la transaction <span className="text-amber-500">*</span>
+                <label className="block text-xs font-semibold text-[var(--t2)]">
+                  Libellé de la transaction <span className="text-[var(--honey)]">*</span>
                 </label>
                 <div className="relative flex items-center">
-                  <FileText className="w-4 h-4 text-gray-500 absolute left-3 pointer-events-none" />
+                  <FileText className="w-4 h-4 text-[var(--t3)] absolute left-3 pointer-events-none" />
                   <input
                     type="text"
                     required
                     value={formData.libelle}
                     onChange={(e) => setFormData({ ...formData, libelle: e.target.value })}
                     placeholder={isDepense ? "Ex: Loyer Siège, Achat matériel IT..." : "Ex: Paiement Prestation Client X"}
-                    className="w-full h-10 bg-[#0B0F17] border border-gray-800 rounded-lg pl-9 pr-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-amber-500/80 focus:ring-1 focus:ring-amber-500/50 transition-all"
+                    className="field h-10 pl-9 pr-3 text-sm w-full"
                   />
                 </div>
               </div>
 
               {/* Montant */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-gray-300">
-                  Montant (Ariary) <span className="text-amber-500">*</span>
+                <label className="block text-xs font-semibold text-[var(--t2)]">
+                  Montant (Ariary) <span className="text-[var(--honey)]">*</span>
                 </label>
                 <div className="relative flex items-center">
                   <input
@@ -189,9 +192,9 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
                     value={formData.montant}
                     onChange={handleMontantChange}
                     placeholder="0"
-                    className="w-full h-10 bg-[#0B0F17] border border-gray-800 rounded-lg pl-3 pr-10 text-sm font-semibold text-white placeholder-gray-600 focus:outline-none focus:border-amber-500/80 focus:ring-1 focus:ring-amber-500/50 transition-all text-right"
+                    className="field h-10 pl-3 pr-10 text-sm font-semibold text-right w-full"
                   />
-                  <span className="absolute right-3 text-xs font-bold text-gray-500 pointer-events-none">
+                  <span className="absolute right-3 text-xs font-bold text-[var(--t3)] pointer-events-none">
                     Ar
                   </span>
                 </div>
@@ -201,23 +204,23 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
 
           {/* Section 2: Classification & Calendrier */}
           <div className="space-y-4">
-            <span className="text-[11px] font-bold text-amber-500 uppercase tracking-widest block border-b border-gray-800/80 pb-1">
+            <span className="text-[11px] font-bold text-[var(--honey)] uppercase tracking-widest block border-b border-[var(--border-subtle)] pb-1">
               2. Classification & Calendrier
             </span>
 
             <div className={`grid grid-cols-1 ${isDepense ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
               {/* Pôle d'affectation */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-gray-300">
-                  Pôle d'affectation <span className="text-amber-500">*</span>
+                <label className="block text-xs font-semibold text-[var(--t2)]">
+                  Pôle d'affectation <span className="text-[var(--honey)]">*</span>
                 </label>
                 <div className="relative flex items-center">
-                  <Building2 className="w-4 h-4 text-gray-500 absolute left-3 pointer-events-none" />
+                  <Building2 className="w-4 h-4 text-[var(--t3)] absolute left-3 pointer-events-none" />
                   <select
                     value={formData.pole}
                     onChange={(e) => setFormData({ ...formData, pole: e.target.value })}
                     required
-                    className="w-full h-10 bg-[#0B0F17] border border-gray-800 rounded-lg pl-9 pr-3 text-sm text-gray-200 focus:outline-none focus:border-amber-500/80 transition-all appearance-none cursor-pointer"
+                    className="field h-10 pl-9 pr-3 text-sm w-full appearance-none cursor-pointer"
                   >
                     <option value="" disabled>Choisir un pôle...</option>
                     {poles.map((pole) => (
@@ -232,15 +235,15 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
               {/* Nature de la charge (Dépenses uniquement) */}
               {isDepense && (
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-gray-300">
-                    Nature de la charge <span className="text-amber-500">*</span>
+                  <label className="block text-xs font-semibold text-[var(--t2)]">
+                    Nature de la charge <span className="text-[var(--honey)]">*</span>
                   </label>
                   <div className="relative flex items-center">
-                    <Tag className="w-4 h-4 text-gray-500 absolute left-3 pointer-events-none" />
+                    <Tag className="w-4 h-4 text-[var(--t3)] absolute left-3 pointer-events-none" />
                     <select
                       value={formData.nature}
                       onChange={(e) => setFormData({ ...formData, nature: e.target.value })}
-                      className="w-full h-10 bg-[#0B0F17] border border-gray-800 rounded-lg pl-9 pr-3 text-sm text-gray-200 focus:outline-none focus:border-amber-500/80 transition-all appearance-none cursor-pointer"
+                      className="field h-10 pl-9 pr-3 text-sm w-full appearance-none cursor-pointer"
                     >
                       <option value="FIXE">Charge Fixe (Loyer, Salaire...)</option>
                       <option value="VARIABLE">Charge Variable (Prestation, Achat...)</option>
@@ -251,17 +254,17 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
 
               {/* Date d'opération */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-gray-300">
-                  {isDepense ? "Date de décaissement" : "Date d'encaissement"} <span className="text-amber-500">*</span>
+                <label className="block text-xs font-semibold text-[var(--t2)]">
+                  {isDepense ? "Date de décaissement" : "Date d'encaissement"} <span className="text-[var(--honey)]">*</span>
                 </label>
                 <div className="relative flex items-center">
-                  <Calendar className="w-4 h-4 text-gray-500 absolute left-3 pointer-events-none" />
+                  <Calendar className="w-4 h-4 text-[var(--t3)] absolute left-3 pointer-events-none" />
                   <input
                     type="date"
                     required
                     value={formData.dateOperation}
                     onChange={(e) => setFormData({ ...formData, dateOperation: e.target.value })}
-                    className="w-full h-10 bg-[#0B0F17] border border-gray-800 rounded-lg pl-9 pr-3 text-sm text-gray-200 focus:outline-none focus:border-amber-500/80 transition-all [color-scheme:dark]"
+                    className="field h-10 pl-9 pr-3 text-sm w-full [color-scheme:dark] cursor-pointer"
                   />
                 </div>
               </div>
@@ -270,17 +273,17 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
             {/* Type de revenu (Recettes uniquement) */}
             {!isDepense && (
               <div className="space-y-1.5 md:max-w-md">
-                <label className="block text-xs font-semibold text-gray-300">
+                <label className="block text-xs font-semibold text-[var(--t2)]">
                   Type de revenu
                 </label>
                 <div className="relative flex items-center">
-                  <Hash className="w-4 h-4 text-gray-500 absolute left-3 pointer-events-none" />
+                  <Hash className="w-4 h-4 text-[var(--t3)] absolute left-3 pointer-events-none" />
                   <input
                     type="text"
                     value={formData.typeRevenu}
                     onChange={(e) => setFormData({ ...formData, typeRevenu: e.target.value })}
                     placeholder="Ex: Ecolage, Prestation..."
-                    className="w-full h-10 bg-[#0B0F17] border border-gray-800 rounded-lg pl-9 pr-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-amber-500/80 transition-all"
+                    className="field h-10 pl-9 pr-3 text-sm w-full"
                   />
                 </div>
               </div>
@@ -289,16 +292,16 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
 
           {/* Message d'erreur */}
           {error && (
-            <div className="px-4 py-2.5 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs flex items-start gap-2">
+            <div className="px-4 py-2.5 rounded-lg bg-[var(--danger)]/10 border border-[var(--danger)]/40 text-[var(--danger)] text-xs flex items-start gap-2">
               <AlertCircle className="w-4 h-4 shrink-0 mt-px" />
               <span>{error}</span>
             </div>
           )}
 
           {/* Actions */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-800 mt-6">
-            <div className="flex items-center gap-1.5 text-xs text-gray-500">
-              <AlertCircle className="w-3.5 h-3.5 text-amber-500/80" />
+          <div className="flex items-center justify-between pt-4 border-t border-[var(--border-subtle)] mt-6">
+            <div className="flex items-center gap-1.5 text-xs text-[var(--t3)]">
+              <AlertCircle className="w-3.5 h-3.5 text-[var(--honey)]/80" />
               <span>Champs avec * obligatoires</span>
             </div>
 
@@ -307,14 +310,14 @@ export const NewTransactionModal: React.FC<NewTransactionModalProps> = ({
                 type="button"
                 onClick={onClose}
                 disabled={submitting}
-                className="px-4 py-2 bg-gray-800/80 hover:bg-gray-800 text-gray-300 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
+                className="px-4 py-2 bg-[var(--chip)] hover:bg-[var(--border-subtle)] text-[var(--t2)] rounded-lg text-sm font-medium transition-colors disabled:opacity-50 cursor-pointer"
               >
                 Annuler
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-black font-semibold rounded-lg text-sm transition-colors shadow-lg shadow-amber-500/10 flex items-center gap-2 disabled:opacity-60 cursor-pointer"
+                className="px-5 py-2 btn-honey font-semibold rounded-lg text-sm flex items-center gap-2 disabled:opacity-60 cursor-pointer"
               >
                 {submitting ? (
                   <>

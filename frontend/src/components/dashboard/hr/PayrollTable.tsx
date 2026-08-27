@@ -9,14 +9,14 @@ interface PayrollRecord {
   teacherName: string;
   month: string;
   netAmount: number;
-  status: 'PAYÉ' | 'EN ATTENTE';
+  status: 'Payé' | 'En attente';
 }
 
 const MOCK_PAYROLL: PayrollRecord[] = [
-  { id: '1', teacherName: 'Ramanantsoa M.', month: 'Juillet 2026', netAmount: 2400000, status: 'PAYÉ' },
-  { id: '2', teacherName: 'Andriamihaja H.', month: 'Juillet 2026', netAmount: 1960000, status: 'PAYÉ' },
-  { id: '3', teacherName: 'Müller K.', month: 'Juillet 2026', netAmount: 2560000, status: 'PAYÉ' },
-  { id: '4', teacherName: 'Rakotoarisoa J.', month: 'Juillet 2026', netAmount: 1500000, status: 'EN ATTENTE' },
+  { id: '1', teacherName: 'Ramanantsoa M.', month: 'Juillet 2026', netAmount: 2400000, status: 'Payé' },
+  { id: '2', teacherName: 'Andriamihaja H.', month: 'Juillet 2026', netAmount: 1960000, status: 'Payé' },
+  { id: '3', teacherName: 'Müller K.', month: 'Juillet 2026', netAmount: 2560000, status: 'Payé' },
+  { id: '4', teacherName: 'Rakotoarisoa J.', month: 'Juillet 2026', netAmount: 1500000, status: 'En attente' },
 ];
 
 interface PayrollTableProps {

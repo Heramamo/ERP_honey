@@ -1,6 +1,7 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { Card } from '../../ui/Card';
+import { chartSeries } from '../chartTheme';
 
 interface DistributionItem {
   name: string;
@@ -12,7 +13,14 @@ interface TimeDistributionChartProps {
   totalHours?: number;
 }
 
-const COLORS = ['#10b981', '#f59e0b', '#3b82f6', '#a855f7', '#06b6d4', '#ef4444'];
+const COLORS = [
+  chartSeries.honey,
+  chartSeries.sage,
+  chartSeries.azure,
+  chartSeries.lilac,
+  chartSeries.clay,
+  chartSeries.leaf,
+];
 
 export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ data = [], totalHours = 0 }) => {
   const repartitionData = data
@@ -24,8 +32,8 @@ export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ da
 
   return (
     <Card className="justify-between">
-      <div className="flex items-center gap-2 text-amber-500 mb-2">
-        <div className="w-2.5 h-2.5 rounded-full border-2 border-amber-500 inline-block" />
+      <div className="flex items-center gap-2 text-[var(--honey)] mb-2">
+        <div className="w-2.5 h-2.5 rounded-full border-2 border-[var(--honey)] inline-block" />
         <h3 className="text-sm font-bold text-[var(--t1)]">Répartition du Temps</h3>
       </div>
 

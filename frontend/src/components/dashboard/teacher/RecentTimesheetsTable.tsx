@@ -25,7 +25,7 @@ const formatShortDate = (date: Date | string) => {
 };
 
 const mapStatut = (statut: SaisiePayload['statut']): TimesheetItem['statut'] => {
-  const value = typeof statut === 'string' ? statut : statut?.statut;
+  const value = statut;
   switch (value) {
     case 'VALIDE': return 'Validé';
     case 'REFUSE': return 'En révision';

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {  Building2 } from 'lucide-react';
 import { AuthHeader } from '../components/ui/AuthHeader';
 import { LoginForm } from '../components/auth/LoginForm';
 import type { LoginFormValues } from '../components/auth/LoginForm';
@@ -32,35 +31,65 @@ export default function LoginPage(): React.ReactElement {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#080d1a] text-slate-200 flex flex-col justify-between p-6 md:p-12 relative overflow-hidden font-sans">
-      {/* Halo lumineux d'arrière-plan */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[#d4af37]/5 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen w-full bg-[var(--app-bg)] text-[var(--t1)] flex flex-col p-6 md:p-10 relative overflow-hidden font-sans">
+      {/* Contexte — halo de miel */}
+      <div className="absolute top-1/4 left-1/3 -translate-y-1/2 -translate-x-1/2 w-[640px] h-[640px] bg-[var(--honey)]/6 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Conteneur principal split screen */}
-      <div className="flex-1 flex items-center justify-center w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center w-full">
-          
-          {/* CÔTÉ GAUCHE : Branding */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
-            <div className="w-16 h-16 bg-[#d4af37] rounded-2xl shadow-lg shadow-[#d4af37]/10 flex items-center justify-center">
-              <Building2 size={36} className="text-slate-950" />
+      {/* Marque mobile */}
+      <div className="lg:hidden flex items-center gap-3 mb-8">
+        <div className="hex-chip w-10 h-10 text-xl">
+          <span className="font-display font-black leading-none">H</span>
+        </div>
+        <div>
+          <p className="font-display font-bold text-lg leading-none tracking-tight uppercase">HONEY GROUP</p>
+          <p className="font-mono text-[9px] font-semibold text-[var(--t3)] tracking-[0.2em] uppercase mt-1">ERP INTERNE</p>
+        </div>
+      </div>
+
+      {/* Conteneur principal */}
+      <div className="flex-1 flex items-center justify-center w-full max-w-6xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full">
+
+          {/* CÔTÉ GAUCHE : Branding — la page du registre */}
+          <div className="hidden lg:flex flex-col justify-between min-h-[520px] rounded-3xl border border-[var(--border-subtle)] bg-[var(--panel-deep)] comb-paper p-10 relative overflow-hidden">
+            <div className="flex items-center gap-3">
+              <div className="hex-chip w-11 h-11 text-xl shadow-[0_10px_30px_-12px_var(--honey)]">
+                <span className="font-display font-black leading-none">H</span>
+              </div>
+              <div>
+                <p className="font-display font-bold text-xl leading-none tracking-tight uppercase">HONEY GROUP</p>
+                <p className="font-mono text-[9px] font-semibold text-[var(--t3)] tracking-[0.2em] uppercase mt-1.5">ERP INTERNE</p>
+              </div>
             </div>
 
-            <div className="space-y-4 max-w-lg">
-              <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+            <div className="space-y-6 py-10">
+              <h1 className="font-display font-semibold text-[2.4rem] leading-[1.08] tracking-tight text-[var(--t1)]">
                 Bienvenue dans votre espace ERP
               </h1>
-              <p className="text-slate-400 text-base md:text-lg leading-relaxed font-medium">
+              <p className="text-[var(--t3)] text-[15px] leading-relaxed font-medium max-w-md">
                 Accédez à vos outils de gestion intégrés avec un niveau de sécurité optimal pour votre environnement de travail.
               </p>
+            </div>
+
+            <div className="font-mono text-[10px] font-semibold tracking-[0.2em] uppercase text-[var(--t3)]">
+              Feuilles de temps · Mois courant
+              <span className="block mt-3 flex items-center gap-[3px]">
+                {Array.from({ length: 9 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className="comb-cell"
+                    style={{ background: i < 5 ? 'var(--honey)' : 'var(--ledger-rule)' }}
+                  />
+                ))}
+              </span>
             </div>
           </div>
 
           {/* CÔTÉ DROIT : Formulaire */}
           <div className="w-full max-w-md mx-auto">
-            <div className="bg-[#101827]/90 border border-slate-800 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
-              
-              <AuthHeader 
+            <div className="folio rounded-2xl border border-[var(--border-subtle)] bg-[var(--panel)] p-8 shadow-2xl">
+
+              <AuthHeader
                 tag="HONEY GROUP • ERP INTERNE"
                 title="Authentification Session Desktop"
                 subtitle="Accès sécurisé au réseau d'entreprise"
@@ -69,19 +98,19 @@ export default function LoginPage(): React.ReactElement {
               <LoginForm onSubmit={handleLogin} error={error} />
 
               <div className="mt-5 flex flex-col items-center gap-3 text-center">
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   onClick={handleHelpClick}
-                  className="text-xs text-slate-400 hover:text-slate-200 transition-colors"
+                  className="text-xs text-[var(--t3)] hover:text-[var(--t2)] transition-colors"
                 >
                   Problème de connexion ?
                 </a>
 
-                <div className="h-[1px] bg-slate-800 w-full my-1" />
+                <div className="h-px bg-[var(--border-subtle)] w-full my-1" />
 
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-[var(--t3)]">
                   Vous n'avez pas encore de compte ?{' '}
-                  <Link to="/register" className="text-[#d4af37] font-bold hover:underline">
+                  <Link to="/register" className="text-[var(--honey)] font-bold hover:underline">
                     Créer un compte
                   </Link>
                 </p>

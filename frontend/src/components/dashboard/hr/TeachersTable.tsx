@@ -90,14 +90,14 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
               setSearchTerm(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full bg-[var(--panel)] border border-[var(--border-subtle)] rounded-lg pl-10 pr-4 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+            className="w-full bg-[var(--panel)] border border-[var(--border-subtle)] rounded-lg pl-10 pr-4 py-2.5 text-sm text-[var(--t2)] placeholder-[var(--t3)]/60 focus:outline-none focus:border-[var(--honey)]/50 transition-colors"
           />
         </div>
 
         {isHrOrAdmin && (
           <button
             onClick={() => setCreateOpen(true)}
-            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 cursor-pointer"
+            className="btn-honey font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             Nouvel Enseignant
@@ -120,7 +120,7 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
           </div>
         ) : pageTeachers.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Users className="w-8 h-8 text-slate-600" />
+            <Users className="w-8 h-8 text-[var(--t3)]" />
             <span className="text-sm">Aucun enseignant trouvé.</span>
           </div>
         ) : (

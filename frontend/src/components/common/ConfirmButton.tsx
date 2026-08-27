@@ -15,7 +15,7 @@ interface ConfirmButtonProps {
 }
 
 const TONE_CLASSES: Record<Tone, string> = {
-  default: 'bg-amber-500 hover:bg-amber-400 text-slate-950',
+  default: 'bg-[var(--honey)] hover:bg-[var(--honey-deep)] text-[var(--honey-ink)]',
   success: 'bg-emerald-600 hover:bg-emerald-500 text-white',
   danger: 'bg-rose-600 hover:bg-rose-500 text-white',
 };

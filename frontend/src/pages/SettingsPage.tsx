@@ -28,7 +28,7 @@ const PasswordField: React.FC<{
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           autoComplete={autoComplete}
-          className="w-full bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 pr-10 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+          className="w-full bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 pr-10 text-sm text-[var(--t2)] placeholder-[var(--t3)]/60 focus:outline-none focus:border-[var(--honey)]/50 transition-colors"
         />
         <button
           type="button"
@@ -84,7 +84,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ allowedRoles }) => {
 
       <div className="mt-6 bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl shadow-2xl overflow-hidden">
         <div className="flex items-center gap-2.5 px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
-          <KeyRound className="w-4 h-4 text-amber-500" />
+          <KeyRound className="w-4 h-4 text-[var(--honey)]" />
           <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Changer le mot de passe</h2>
         </div>
 
@@ -115,13 +115,13 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ allowedRoles }) => {
           </div>
 
           {error && (
-            <div className="px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs">
+            <div className="px-4 py-3 rounded-lg bg-[var(--danger)]/10 border border-[var(--danger)]/40 text-[var(--danger)] text-xs">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-emerald-950/40 border border-emerald-800/50 text-emerald-300 text-xs">
+            <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-[var(--positive)]/10 border border-[var(--positive)]/25 text-[var(--positive)] text-xs">
               <CheckCircle2 className="w-4 h-4" />
               Mot de passe modifié avec succès.
             </div>
@@ -131,7 +131,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ allowedRoles }) => {
             <button
               type="submit"
               disabled={submitting || !motDePasseActuel || !nouveauMotDePasse || !confirmation}
-              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+              className="btn-honey font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
               {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
               {submitting ? 'Modification...' : 'Mettre à jour'}

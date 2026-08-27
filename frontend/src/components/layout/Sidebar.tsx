@@ -90,27 +90,31 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="flex-1 min-h-0 overflow-y-auto scroll-thin">
           {/* Logo HONEY GROUP */}
           <div
-            className={`p-5 flex items-center border-b border-[var(--border-subtle)] ${
-              collapsed ? 'lg:justify-center' : ''
+            className={`p-5 flex items-center gap-3 border-b border-[var(--border-subtle)] overflow-hidden ${
+              collapsed ? 'lg:justify-center lg:gap-0' : ''
             }`}
           >
-            <div className="w-9 h-9 rounded-lg bg-[#f59e0b] flex items-center justify-center text-slate-950 font-black text-lg shadow-md shrink-0">
-              H
+            <div className="hex-chip w-9 h-9 text-lg shrink-0">
+              <span className="font-display font-black leading-none">H</span>
             </div>
             <div
               className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
                 collapsed
                   ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-3'
-                  : 'max-w-[160px] ml-3 opacity-100'
+                  : 'max-w-[170px] opacity-100'
               }`}
             >
-              <h1 className="font-black text-[var(--t1)] text-sm tracking-wide leading-none uppercase">HONEY GROUP</h1>
-              <span className="text-[10px] font-semibold text-[var(--t3)] tracking-wider uppercase block mt-1">ERP INTERNE</span>
+              <h1 className="font-display font-bold text-[var(--t1)] text-[15px] tracking-tight leading-none uppercase">
+                HONEY GROUP
+              </h1>
+              <span className="font-mono text-[9px] font-semibold text-[var(--t3)] tracking-[0.2em] uppercase block mt-1.5">
+                ERP INTERNE
+              </span>
             </div>
           </div>
 
           {/* Liens de navigation */}
-          <nav className="px-3 space-y-1.5 mt-4">
+          <nav className="px-3 space-y-1 mt-4">
             {navItems.map((item, index) => (
               <NavLink
                 key={item.path}
@@ -123,7 +127,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     collapsed ? 'lg:justify-center lg:px-0' : ''
                   } ${
                     isActive
-                      ? 'bg-[#f59e0b] text-slate-950 shadow-lg shadow-[#f59e0b]/20'
+                      ? 'bg-[var(--honey)] text-[var(--honey-ink)] shadow-[0_8px_24px_-10px_var(--honey-soft)]'
                       : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)]'
                   }`
                 }
@@ -190,7 +194,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               collapsed ? 'lg:flex-col lg:gap-y-2 lg:px-0' : ''
             }`}
           >
-            <div className="w-8 h-8 rounded-full bg-[#f59e0b] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+            <div className="hex-chip w-8 h-8 text-xs shrink-0">
               {getInitials(user?.email)}
             </div>
             <div
@@ -201,7 +205,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               }`}
             >
               <p className="text-xs font-bold text-[var(--t1)] truncate">{formatDisplayName(user?.email)}</p>
-              <p className="text-[10px] font-semibold text-[var(--t3)] uppercase tracking-wider truncate">
+              <p className="font-mono text-[9px] font-semibold text-[var(--t3)] uppercase tracking-[0.18em] truncate">
                 {user?.role ?? 'Utilisateur'}
               </p>
             </div>

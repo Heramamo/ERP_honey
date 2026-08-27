@@ -15,11 +15,11 @@ export function CompleteTeacherProfileForm() {
   ] as const;
 
   return (
-    <div className="md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white">
+    <div className="lg:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-[var(--shell-bg)]">
       <AuthHeader
         tag="PREMIÈRE CONNEXION"
         title="Finalisation de votre profil Enseignant"
-        subtitle="Renseignez vos informations pour configurer votre accès à l'ERP."
+        subtitle="Renseignez vos informations pour configurer votre accès au registre."
       />
 
       <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
@@ -36,14 +36,12 @@ export function CompleteTeacherProfileForm() {
           disabled
         />
 
-        <div className="pt-2 border-t border-slate-100" />
+        <div className="pt-2 border-t border-[var(--border-subtle)]" />
 
         {/* Sélection moderne du Statut (Sélecteur à pilules / Segmented Buttons) */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-            Statut Enseignant
-          </label>
-          <div className="grid grid-cols-3 gap-1 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/60">
+          <label className="col-heat block">Statut Enseignant</label>
+          <div className="grid grid-cols-3 gap-1 bg-[var(--panel-deep)] p-1.5 rounded-2xl border border-[var(--border-subtle)]">
             {statusOptions.map((opt) => {
               const isActive = status === opt.value;
               return (
@@ -53,8 +51,8 @@ export function CompleteTeacherProfileForm() {
                   onClick={() => setStatus(opt.value)}
                   className={`py-2 px-3 rounded-xl text-xs font-bold transition-all duration-200 ${
                     isActive
-                      ? 'bg-white text-slate-900 shadow-sm border border-slate-200/50'
-                      : 'text-slate-500 hover:text-slate-800'
+                      ? 'bg-[var(--honey)] text-[var(--honey-ink)] shadow-sm'
+                      : 'text-[var(--t3)] hover:text-[var(--t2)]'
                   }`}
                 >
                   {opt.label}

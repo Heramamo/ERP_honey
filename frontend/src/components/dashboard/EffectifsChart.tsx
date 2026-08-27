@@ -3,9 +3,9 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { Card } from '../ui/Card';
 
 const effectifsData = [
-  { name: 'IT', value: 45, color: '#3b82f6' },
-  { name: 'Formation', value: 30, color: '#f59e0b' },
-  { name: 'Évén. / Tourisme', value: 25, color: '#6366f1' },
+  { name: 'IT', value: 45, color: '#e5a73a' },
+  { name: 'Formation', value: 30, color: '#5ca493' },
+  { name: 'Évén. / Tourisme', value: 25, color: '#9171b4' },
 ];
 
 export const EffectifsChart: React.FC = () => {

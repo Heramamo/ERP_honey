@@ -36,7 +36,7 @@ import { fetchPendingSaisies } from '../store/slices/saisieSlice';
 import { formatAr } from '../utils/finance';
 import { formatDateShort } from '../const/date';
 
-const POLE_CHART_COLORS = ['#3b82f6', '#14b8a6', '#f59e0b', '#38bdf8', '#a78bfa', '#f472b6', '#34d399'];
+const POLE_CHART_COLORS = ['#e5a73a', '#5ca493', '#9171b4', '#6683a9', '#c9861f', '#d85268', '#3e8e5a'];
 
 const recentRequestStatus = (statut: string) => {
   const s = String(statut).toUpperCase();
@@ -104,8 +104,6 @@ export const AdminDashboard: React.FC = () => {
     dispatch(fetchPendingSaisies());
   }, [dispatch]);
 
-  const poleName = (id: number) => poles.find((p) => p.id === id)?.nom ?? `Pôle ${id}`;
-
   const totalRevenus = useMemo(() => revenus.reduce((s, r) => s + r.montant, 0), [revenus]);
   const totalCharges = useMemo(() => charges.reduce((s, c) => s + c.montant, 0), [charges]);
   const beneficeNet = totalRevenus - totalCharges;
@@ -134,12 +132,14 @@ export const AdminDashboard: React.FC = () => {
   );
 
   const budgetDistributionData = useMemo(
-    () =>
-      [...poleChargeMap.entries()].map(([idPole, value], idx) => ({
+    () => {
+      const poleName = (id: number) => poles.find((p) => p.id === id)?.nom ?? `Pôle ${id}`;
+      return [...poleChargeMap.entries()].map(([idPole, value], idx) => ({
         name: poleName(idPole),
         value: totalPoleCharges > 0 ? Math.round((value / totalPoleCharges) * 1000) / 10 : 0,
         color: POLE_CHART_COLORS[idx % POLE_CHART_COLORS.length],
-      })),
+      }));
+    },
     [poleChargeMap, totalPoleCharges, poles]
   );
 
@@ -365,8 +365,8 @@ export const AdminDashboard: React.FC = () => {
                   <XAxis dataKey="pole" {...chartAxis} />
                   <YAxis {...chartAxis} unit="M" />
                   <Tooltip contentStyle={chartTooltipStyle} formatter={(value) => [`${value}M Ar`, '']} cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }} />
-                  <Bar dataKey="revenus" fill="#14b8a6" radius={[6, 6, 0, 0]} barSize={22} name="Revenus" />
-                  <Bar dataKey="charges" fill="#3b82f6" radius={[6, 6, 0, 0]} barSize={22} name="Charges" />
+                  <Bar dataKey="revenus" fill="#5ca493" radius={[6, 6, 0, 0]} barSize={22} name="Revenus" />
+                  <Bar dataKey="charges" fill="#6683a9" radius={[6, 6, 0, 0]} barSize={22} name="Charges" />
                 </BarChart>
               </ResponsiveContainer>
             )}

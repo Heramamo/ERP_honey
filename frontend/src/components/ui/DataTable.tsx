@@ -25,9 +25,9 @@ export const DataTable = <T,>({ columns, data, rowKey }: DataTableProps<T>) => {
     <div className="overflow-x-auto">
       <table className="w-full text-left text-xs">
         <thead>
-          <tr className="text-[var(--t3)] font-bold uppercase text-[10px] tracking-wider border-b border-[var(--border-subtle)]">
+          <tr className="border-b border-[var(--border-subtle)]">
             {columns.map((column, index) => (
-              <th key={index} className={`pb-3 px-2 ${alignClass[column.align ?? 'left']}`}>
+              <th key={index} className={`pb-3 px-2 col-heat ${alignClass[column.align ?? 'left']}`}>
                 {column.header}
               </th>
             ))}

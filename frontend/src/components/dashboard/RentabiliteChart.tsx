@@ -31,11 +31,11 @@ export const RentabiliteChart: React.FC = () => {
         <h3 className="text-sm font-bold text-[var(--t1)]">Rentabilité par pôle d'activité</h3>
         <div className="flex items-center gap-4 text-[11px] text-[var(--t3)] font-medium">
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded bg-[#3b82f6] inline-block" />
+            <span className="w-2.5 h-2.5 rounded bg-[#6683a9] inline-block" />
             Revenus
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded bg-[#f59e0b] inline-block" />
+            <span className="w-2.5 h-2.5 rounded bg-[#e5a73a] inline-block" />
             Charges
           </span>
         </div>
@@ -65,8 +65,8 @@ export const RentabiliteChart: React.FC = () => {
             />
 
             {/* Barres du graphique */}
-            <Bar dataKey="revenus" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={20} />
-            <Bar dataKey="charges" fill="#f59e0b" radius={[4, 4, 0, 0]} barSize={20} />
+            <Bar dataKey="revenus" fill="#6683a9" radius={[4, 4, 0, 0]} barSize={20} />
+            <Bar dataKey="charges" fill="#e5a73a" radius={[4, 4, 0, 0]} barSize={20} />
           </BarChart>
         </ResponsiveContainer>
       </div>

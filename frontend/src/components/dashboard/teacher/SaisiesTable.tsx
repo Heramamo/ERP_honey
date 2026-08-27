@@ -15,8 +15,7 @@ const STATUT_STYLES: Record<string, string> = {
 };
 
 const resolveStatut = (statut: SaisiePayload['statut']): string => {
-  if (typeof statut === 'string') return statut;
-  return statut?.statut ?? '';
+  return statut ?? '';
 };
 
 const getStatutStyle = (statut: SaisiePayload['statut']) => {
@@ -65,7 +64,7 @@ export const SaisiesTable: React.FC = () => {
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 cursor-pointer"
+          className="btn-honey font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
           Nouvelle saisie
@@ -86,7 +85,7 @@ export const SaisiesTable: React.FC = () => {
           </div>
         ) : pageSaisies.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Inbox className="w-8 h-8 text-slate-600" />
+            <Inbox className="w-8 h-8 text-[var(--t3)]" />
             <span className="text-sm">Aucune feuille de temps pour le moment.</span>
           </div>
         ) : (

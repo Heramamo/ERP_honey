@@ -15,7 +15,7 @@ const formatDate = (date: Date | string) => {
 };
 
 const getStatutLabel = (statut: SaisiePayload['statut']) => {
-  const value = typeof statut === 'string' ? statut : statut?.statut;
+  const value = statut;
   switch (value) {
     case 'VALIDE': return 'Validé';
     case 'REFUSE': return 'Refusé';
@@ -25,7 +25,7 @@ const getStatutLabel = (statut: SaisiePayload['statut']) => {
 };
 
 const getStatutClass = (statut: SaisiePayload['statut']) => {
-  const value = typeof statut === 'string' ? statut : statut?.statut;
+  const value = statut;
   if (value === 'VALIDE') return 'bg-emerald-500/20 text-emerald-400';
   if (value === 'REFUSE') return 'bg-rose-500/20 text-rose-400';
   return 'bg-amber-500/20 text-amber-400';
@@ -67,7 +67,7 @@ export const LastEntryCard: React.FC<LastEntryCardProps> = ({ saisie }) => {
           </>
         ) : (
           <div className="py-8 text-center">
-            <p className="text-3xl font-black text-slate-600 tracking-tight">—</p>
+            <p className="text-3xl font-black text-[var(--t3)] tracking-tight">—</p>
             <p className="text-xs text-[var(--t3)] mt-2">Aucune saisie pour le moment</p>
           </div>
         )}

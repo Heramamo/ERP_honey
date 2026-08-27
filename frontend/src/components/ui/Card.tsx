@@ -9,13 +9,15 @@ interface CardProps {
 }
 
 const toneStyles: Record<CardTone, string> = {
-  default: 'bg-[var(--panel)] border-[var(--border-subtle)]',
-  subtle: 'bg-[var(--panel-deep)] border-[var(--border-subtle)]',
+  default: 'bg-[var(--panel)]',
+  subtle: 'bg-[var(--panel-deep)]',
 };
 
 export const Card: React.FC<CardProps> = ({ children, tone = 'default', className = '' }) => {
   return (
-    <div className={`flex flex-col rounded-2xl border p-6 shadow-lg ${toneStyles[tone]} ${className}`}>
+    <div
+      className={`folio flex flex-col rounded-2xl border border-[var(--border-subtle)] p-6 shadow-lg ${toneStyles[tone]} ${className}`}
+    >
       {children}
     </div>
   );

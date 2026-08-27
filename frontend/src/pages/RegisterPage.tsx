@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Building2 } from 'lucide-react';
 import { RegisterForm } from '../components/auth/RegisterForm';
 import type { RegisterFormValues } from '../components/auth/RegisterForm';
 import { api } from '../service/api';
@@ -26,51 +25,85 @@ export default function RegisterPage(): React.ReactElement {
   };
 
   return (
-    <div className="w-screen min-h-screen bg-[#0b132b] flex items-center justify-center p-4 md:p-8 m-0 font-sans">
-      <div className="w-full max-w-5xl bg-[#0d162d] rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[580px] border border-slate-800">
-        
-        {/* Panneau Gauche - Branding */}
-        <div className="lg:col-span-5 relative p-8 md:p-12 flex flex-col items-center justify-center text-center overflow-hidden bg-gradient-to-br from-[#0c1328] via-[#0f1b3d] to-[#070d1e]">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#d4af37]/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10 flex flex-col items-center">
-            <div className="w-20 h-20 bg-[#d4af37] rounded-3xl flex items-center justify-center shadow-lg shadow-[#d4af37]/20 mb-6">
-              <Building2 size={40} className="text-slate-950" />
-            </div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-wider mb-2">
-              HONEY GROUP
-            </h1>
-            <p className="text-sm font-medium text-slate-400 max-w-xs">
-              Rejoignez l'ERP interne.
-            </p>
-          </div>
-        </div>
+    <div className="min-h-screen w-full bg-[var(--app-bg)] text-[var(--t1)] flex flex-col p-6 md:p-10 relative overflow-hidden font-sans">
+      <div className="absolute top-1/4 left-1/3 -translate-y-1/2 -translate-x-1/2 w-[640px] h-[640px] bg-[var(--honey)]/6 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Panneau Droit - Formulaire */}
-        <div className="lg:col-span-7 bg-white p-8 md:p-12 flex flex-col justify-center">
-          <div className="max-w-md mx-auto w-full">
-            <div className="mb-8">
-              <span className="text-[11px] font-bold text-[#d4af37] tracking-widest uppercase block mb-1">
-                NOUVEL UTILISATEUR
-              </span>
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-                Créer un compte
-              </h2>
-              <p className="text-xs font-medium text-slate-500 mt-1">
-                Renseignez vos informations pour configurer votre accès à l'ERP.
+      {/* Marque mobile */}
+      <div className="lg:hidden flex items-center gap-3 mb-8">
+        <div className="hex-chip w-10 h-10 text-xl">
+          <span className="font-display font-black leading-none">H</span>
+        </div>
+        <div>
+          <p className="font-display font-bold text-lg leading-none tracking-tight uppercase">HONEY GROUP</p>
+          <p className="font-mono text-[9px] font-semibold text-[var(--t3)] tracking-[0.2em] uppercase mt-1">ERP INTERNE</p>
+        </div>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center w-full max-w-6xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full">
+
+          {/* CÔTÉ GAUCHE : Branding */}
+          <div className="hidden lg:flex flex-col justify-between min-h-[580px] rounded-3xl border border-[var(--border-subtle)] bg-[var(--panel-deep)] comb-paper p-10 relative overflow-hidden">
+            <div className="flex items-center gap-3">
+              <div className="hex-chip w-11 h-11 text-xl shadow-[0_10px_30px_-12px_var(--honey)]">
+                <span className="font-display font-black leading-none">H</span>
+              </div>
+              <div>
+                <p className="font-display font-bold text-xl leading-none tracking-tight uppercase">HONEY GROUP</p>
+                <p className="font-mono text-[9px] font-semibold text-[var(--t3)] tracking-[0.2em] uppercase mt-1.5">ERP INTERNE</p>
+              </div>
+            </div>
+
+            <div className="space-y-6 py-10">
+              <h1 className="font-display font-semibold text-[2.4rem] leading-[1.08] tracking-tight text-[var(--t1)]">
+                Rejoignez l'ERP interne.
+              </h1>
+              <p className="text-[var(--t3)] text-[15px] leading-relaxed font-medium max-w-md">
+                Un compte pour déclarer vos heures, faire valider vos feuilles de temps et suivre votre paie.
               </p>
             </div>
 
-            <RegisterForm onSubmit={handleRegister} error={error} />
-
-            <div className="mt-8 text-center text-xs font-medium text-slate-500">
-              Vous avez déjà un compte ?{' '}
-              <Link to="/login" className="text-slate-900 font-bold hover:underline">
-                Se connecter
-              </Link>
+            <div className="font-mono text-[10px] font-semibold tracking-[0.2em] uppercase text-[var(--t3)]">
+              Feuilles de temps · Mois courant
+              <span className="block mt-3 flex items-center gap-[3px]">
+                {Array.from({ length: 9 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className="comb-cell"
+                    style={{ background: i < 3 ? 'var(--honey)' : 'var(--ledger-rule)' }}
+                  />
+                ))}
+              </span>
             </div>
           </div>
-        </div>
 
+          {/* CÔTÉ DROIT : Formulaire */}
+          <div className="w-full max-w-md mx-auto">
+            <div className="folio rounded-2xl border border-[var(--border-subtle)] bg-[var(--panel)] p-8 shadow-2xl">
+              <div className="mb-6">
+                <span className="font-mono text-[10px] font-semibold text-[var(--honey)] tracking-[0.22em] uppercase block mb-2">
+                  NOUVEL UTILISATEUR
+                </span>
+                <h2 className="font-display text-[1.6rem] font-bold text-[var(--t1)] leading-tight tracking-tight">
+                  Créer un compte
+                </h2>
+                <p className="text-sm text-[var(--t3)] font-medium mt-1">
+                  Renseignez vos informations pour configurer votre accès à l'ERP.
+                </p>
+              </div>
+
+              <RegisterForm onSubmit={handleRegister} error={error} />
+
+              <div className="mt-8 text-center text-xs font-medium text-[var(--t3)]">
+                Vous avez déjà un compte ?{' '}
+                <Link to="/login" className="text-[var(--honey)] font-bold hover:underline">
+                  Se connecter
+                </Link>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   );

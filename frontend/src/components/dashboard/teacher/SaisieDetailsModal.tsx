@@ -86,7 +86,7 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
             <p className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider mb-3">Validation</p>
             {saisie.validePar ? (
               <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[var(--panel-deep)] border border-[var(--border-subtle)]">
-                <div className="w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[var(--honey)] text-[#2a1606] font-black text-xs flex items-center justify-center shrink-0">
                   {(saisie.validePar.prenom[0] ?? '') + (saisie.validePar.nom[0] ?? '')}
                 </div>
                 <div className="min-w-0">

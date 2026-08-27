@@ -58,7 +58,7 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
   };
 
   const inputClass =
-    'w-full bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors';
+    'w-full bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] placeholder-[var(--t3)]/60 focus:outline-none focus:border-[var(--honey)]/50 transition-colors';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -152,7 +152,7 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
             <button
               type="submit"
               disabled={submitting}
-              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+              className="btn-honey font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
               {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
               {submitting ? 'Enregistrement...' : 'Enregistrer'}

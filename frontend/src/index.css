@@ -1,26 +1,184 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-/* 1. Force le curseur standard sur tout le document */
-html, body, #root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  cursor: default;
+/* ============================================================
+   RUCHER · Design system "Le Registre de la Ruche"
+   Honey is the ledger: every logged hour fills a cell of comb.
+   Two warm themes — day "registre de cire", night "soirée au rucher".
+   ============================================================ */
+
+@theme {
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: "Bricolage Grotesque", "Instrument Sans", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", "Cascadia Mono",
+    Menlo, Consolas, monospace;
+
+  /* Honey gold — reclaims the amber scale */
+  --color-amber-50: #fbf3e0;
+  --color-amber-100: #f6e6bc;
+  --color-amber-200: #eed394;
+  --color-amber-300: #e4bc6a;
+  --color-amber-400: #e5a73a;
+  --color-amber-500: #c9861f;
+  --color-amber-600: #ac7118;
+  --color-amber-700: #8a5a14;
+  --color-amber-800: #674310;
+  --color-amber-900: #462d0b;
+  --color-amber-950: #2b1a06;
+
+  /* Leaf honey — validation / money */
+  --color-emerald-50: #f1f7f0;
+  --color-emerald-100: #ddeedf;
+  --color-emerald-200: #bfe0c7;
+  --color-emerald-300: #93cda8;
+  --color-emerald-400: #5fae7b;
+  --color-emerald-500: #3e8e5a;
+  --color-emerald-600: #2e7045;
+  --color-emerald-700: #255939;
+  --color-emerald-800: #1b422a;
+  --color-emerald-900: #122e1d;
+  --color-emerald-950: #0a1f12;
+
+  /* Clay — danger / refus */
+  --color-rose-50: #fdf1f2;
+  --color-rose-100: #fae3e6;
+  --color-rose-200: #f3c3ca;
+  --color-rose-300: #f39ba9;
+  --color-rose-400: #e87282;
+  --color-rose-500: #d85268;
+  --color-rose-600: #be3e54;
+  --color-rose-700: #9a2e41;
+  --color-rose-800: #752131;
+  --color-rose-900: #50161f;
+  --color-rose-950: #330d13;
+
+  /* Slate azure — secondary data series (charges) */
+  --color-blue-50: #f2f5f9;
+  --color-blue-100: #e3eaf2;
+  --color-blue-200: #c6d3e3;
+  --color-blue-300: #a6bbd6;
+  --color-blue-400: #85a0c2;
+  --color-blue-500: #6683a9;
+  --color-blue-600: #506993;
+  --color-blue-700: #3f5278;
+  --color-blue-800: #303e5e;
+  --color-blue-900: #222c45;
+  --color-blue-950: #161c2b;
+
+  /* Lilac — tertiary series */
+  --color-purple-50: #f6f3fa;
+  --color-purple-100: #ece4f3;
+  --color-purple-200: #dac9e8;
+  --color-purple-300: #c5b0de;
+  --color-purple-400: #ac8ecc;
+  --color-purple-500: #9171b4;
+  --color-purple-600: #775a97;
+  --color-purple-700: #5f477a;
+  --color-purple-800: #47365c;
+  --color-purple-900: #322542;
+  --color-purple-950: #241a30;
+
+  /* Sage — teal series */
+  --color-teal-50: #f0f7f5;
+  --color-teal-100: #dcebe6;
+  --color-teal-200: #bbd8d0;
+  --color-teal-300: #a3cfc6;
+  --color-teal-400: #7fb8ac;
+  --color-teal-500: #5ca493;
+  --color-teal-600: #478679;
+  --color-teal-700: #3a6b61;
+  --color-teal-800: #2e524a;
+  --color-teal-900: #223b35;
+  --color-teal-950: #142420;
 }
 
-/* Zones de scroll internes : barre fine discrète */.scroll-thin {
+/* ------------------------------------------------------------
+   Scrollbars internes — fine & discrète
+   ------------------------------------------------------------ */
+@layer components {
+.scroll-thin {
   scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+  scrollbar-color: rgba(197, 154, 74, 0.35) transparent;
 }
-.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
-.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+.scroll-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
 .scroll-thin::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.35);
+  background: rgba(197, 154, 74, 0.35);
   border-radius: 9999px;
+}
+
+/* ------------------------------------------------------------
+   Thème sombre — "Soirée au rucher"
+   ------------------------------------------------------------ */
+:root {
+  --app-bg: #18100a;
+  --shell-bg: #1e150c;
+  --panel: #241910;
+  --panel-deep: #1b1209;
+  --surface-hover: #2b1e11;
+  --chip: #36261a;
+  --chip-hover: #45321f;
+  --surface-faint: rgba(229, 167, 58, 0.06);
+  --border-subtle: rgba(236, 178, 84, 0.13);
+  --ledger-rule: rgba(236, 178, 84, 0.08);
+
+  --t1: #f7eace;
+  --t2: #d3b78a;
+  --t3: #977b4e;
+
+  --text-primary: var(--t1);
+  --text-muted: var(--t3);
+
+  --honey: #e5a73a;
+  --honey-deep: #c9861f;
+  --honey-ink: #2b1404;
+  --honey-soft: rgba(229, 167, 58, 0.14);
+
+  --positive: #7fc69b;
+  --danger: #e87282;
+  --info: #85a0c2;
+
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------
+   Thème clair — "Registre de cire"
+   ------------------------------------------------------------ */
+html.light {
+  --app-bg: #f2e8d0;
+  --shell-bg: #faf2df;
+  --panel: #fef7e7;
+  --panel-deep: #efe2c3;
+  --surface-hover: #eadfc0;
+  --chip: #e0cea4;
+  --chip-hover: #d3bd8c;
+  --surface-faint: rgba(180, 122, 26, 0.07);
+  --border-subtle: rgba(150, 104, 30, 0.28);
+  --ledger-rule: rgba(150, 104, 30, 0.14);
+
+  --t1: #241708;
+  --t2: #5c4421;
+  --t3: #8d7242;
+
+  --text-primary: var(--t1);
+  --text-muted: var(--t3);
+
+  --honey: #a96e15;
+  --honey-deep: #8a5a14;
+  --honey-ink: #fff7e3;
+  --honey-soft: rgba(169, 110, 21, 0.14);
+
+  --positive: #2f7a4b;
+  --danger: #b93a4d;
+  --info: #44608c;
+
+  color-scheme: light;
 }
 
 /* Sélecteurs de date/mois : suivent le thème actif */
@@ -29,74 +187,201 @@ html.light input[type="date"] {
   color-scheme: light;
 }
 
-:root {
-  /* Surfaces */
-  --app-bg: #0a0e1a;
-  --shell-bg: #0b0e17;
-  --panel: #12161f;
-  --panel-deep: #0e1118;
-  --surface-hover: #151c2e;
-  --chip: #232c3f;
-  --chip-hover: #2c3750;
-  --surface-faint: rgba(148, 163, 184, 0.07);
-  --border-subtle: rgba(30, 41, 59, 0.6);
-  /* Encre */
-  --t1: #f1f5f9;
-  --t2: #cbd5e1;
-  --t3: #94a3b8;
-  /* Alias */
-  --text-primary: var(--t1);
-  --text-muted: var(--t3);
-}
+/* ------------------------------------------------------------
+   Statuts : pastilles — version claire du registre
+   ------------------------------------------------------------ */
+html.light [class*="bg-emerald-950"] { background-color: #ddeedf !important; }
+html.light [class*="border-emerald-800"] { border-color: #93cda8 !important; }
+html.light [class*="hover:bg-emerald-900"]:hover { background-color: #bfe0c7 !important; }
+html.light [class*="text-emerald-400"], html.light [class*="text-emerald-300"], html.light [class*="text-emerald-500"] { color: #2e7045 !important; }
+html.light [class*="bg-rose-950"] { background-color: #fae3e6 !important; }
+html.light [class*="border-rose-800"] { border-color: #e87282 !important; }
+html.light [class*="text-rose-300"], html.light [class*="text-rose-400"] { color: #be3e54 !important; }
+html.light [class*="bg-amber-950"] { background-color: #f6e6bc !important; }
+html.light [class*="border-amber-800"] { border-color: #e4bc6a !important; }
+html.light [class*="text-amber-400"], html.light [class*="text-amber-500"] { color: #a96e15 !important; }
+html.light [class*="bg-blue-950"] { background-color: #e3eaf2 !important; }
+html.light [class*="border-blue-800"] { border-color: #85a0c2 !important; }
+html.light [class*="text-blue-400"], html.light [class*="text-blue-300"] { color: #44608c !important; }
+html.light [class*="bg-purple-950"] { background-color: #ece4f3 !important; }
+html.light [class*="border-purple-800"] { border-color: #ac8ecc !important; }
+html.light [class*="text-purple-400"], html.light [class*="text-purple-300"] { color: #775a97 !important; }
+html.light [class*="bg-teal-950"] { background-color: #dcebe6 !important; }
+html.light [class*="border-teal-800"] { border-color: #7fb8ac !important; }
+html.light [class*="text-teal-400"], html.light [class*="text-teal-300"], html.light [class*="text-teal-500"] { color: #478679 !important; }
 
-html.light {
-  /* Surfaces — papier miel */
-  --app-bg: #f5efe2;
-  --shell-bg: #fdfbf4;
-  --panel: #fffdf7;
-  --panel-deep: #f4edda;
-  --surface-hover: #efe7d2;
-  --chip: #e7ddc4;
-  --chip-hover: #ddd0ae;
-  --surface-faint: rgba(146, 116, 52, 0.08);
-  --border-subtle: rgba(146, 118, 60, 0.32);
-  /* Encre — espresso */
-  --t1: #211a10;
-  --t2: #57492f;
-  --t3: #8a7a5c;
+/* ------------------------------------------------------------
+   Base
+   ------------------------------------------------------------ */
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
-
-/* Statuts : pastilles sombres -> teintes claires lisibles */
-html.light [class*="bg-emerald-950"] { background-color: #ddf3e6 !important; }
-html.light [class*="border-emerald-800"] { border-color: #a7dcc1 !important; }
-html.light [class*="hover:bg-emerald-900"]:hover { background-color: #bfe8d0 !important; }
-html.light [class*="text-emerald-400"], html.light [class*="text-emerald-300"] { color: #047247 !important; }
-html.light [class*="bg-rose-950"] { background-color: #fce4e6 !important; }
-html.light [class*="border-rose-800"] { border-color: #f2b8bd !important; }
-html.light [class*="text-rose-300"], html.light [class*="text-rose-400"] { color: #b3253a !important; }
-html.light [class*="bg-amber-950"] { background-color: #faedcf !important; }
-html.light [class*="border-amber-800"] { border-color: #e5c77e !important; }
-html.light [class*="text-amber-400"], html.light [class*="text-amber-500"] { color: #96650a !important; }
-html.light [class*="bg-blue-950"] { background-color: #e0eafb !important; }
-html.light [class*="border-blue-800"] { border-color: #adc4ee !important; }
-html.light [class*="text-blue-400"], html.light [class*="text-blue-300"] { color: #2456b8 !important; }
 
 body {
   background-color: var(--app-bg);
-}
-
-/* 2. Empêche la sélection de texte accidentelle sur le conteneur principal */
-body {
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   user-select: none;
 }
 
-/* 3. Affiche explicitement le pointeur de texte UNIQUEMENT dans les champs de saisie */
-input, textarea, [contenteditable="true"] {
-  cursor: text;
-  user-select: text; /* Permet la sélection de texte normale à l'intérieur des champs */
+/* chiffres tabulaires — rangées de chiffres propres, comme une colonne de livre de comptes */
+.tabular {
+  font-variant-numeric: tabular-nums;
 }
 
-/* 4. Pointeur de main pour les éléments cliquables */
-button, a, label, input[type="checkbox"], input[type="radio"] {
+::selection {
+  background: var(--honey);
+  color: var(--honey-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--honey);
+  outline-offset: 2px;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  cursor: text;
+  user-select: text;
+}
+
+button,
+a,
+label,
+input[type="checkbox"],
+input[type="radio"],
+select {
   cursor: pointer;
+}
+
+/* ------------------------------------------------------------
+   Signature — l'alvéole (l'hexagone de ruche)
+   ------------------------------------------------------------ */
+.hex {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Une seule cellule de comb, utilisée pour la frise du mois */
+.comb-cell {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  width: 9px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+/* Texture parchemin de la marque — alvéoles très pâles */
+.comb-paper {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='40' viewBox='0 0 46 40'%3E%3Cg fill='none' stroke='%23e5a73a' stroke-width='1' stroke-opacity='0.14'%3E%3Cpath d='M11.5 0l10 5.8-10 5.8-10-5.8z'/%3E%3Cpath d='M21.5 5.8l10 5.8v11.5l-10 5.8-10-5.8V11.6z'/%3E%3Cpath d='M11.5 40l10-5.8 10 5.8-10 5.8z'/%3E%3Cpath d='M31.5 11.6l10 5.8v11.5l-10 5.8'/%3E%3Cpath d='M31.5 40l10-5.8'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+html.light .comb-paper {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='40' viewBox='0 0 46 40'%3E%3Cg fill='none' stroke='%23a96e15' stroke-width='1' stroke-opacity='0.13'%3E%3Cpath d='M11.5 0l10 5.8-10 5.8-10-5.8z'/%3E%3Cpath d='M21.5 5.8l10 5.8v11.5l-10 5.8-10-5.8V11.6z'/%3E%3Cpath d='M11.5 40l10-5.8 10 5.8-10 5.8z'/%3E%3Cpath d='M31.5 11.6l10 5.8v11.5l-10 5.8'/%3E%3Cpath d='M31.5 40l10-5.8'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------
+   Éléments partagés — lexique du registre
+   ------------------------------------------------------------ */
+
+/* Folio : carte du registre, règle d'or en tête */
+.folio {
+  position: relative;
+}
+.folio::before {
+  content: "";
+  position: absolute;
+  inset-inline: 16px;
+  top: 0;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--honey) 18%,
+    var(--honey) 82%,
+    transparent
+  );
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* En-tête de colonne : étiquette de colonne de grand-livre */
+.col-heat {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  font-size: 10px;
+  color: var(--t3);
+}
+
+/* Bouton principal : cellule remplie de miel */
+.btn-honey {
+  background: var(--honey);
+  color: var(--honey-ink);
+  font-weight: 700;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-honey:hover {
+  background: var(--honey-deep);
+  box-shadow: 0 6px 20px -8px var(--honey-soft);
+}
+.btn-honey:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Champ cranté du registre */
+.field {
+  width: 100%;
+  background: var(--panel-deep);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--t2);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field::placeholder {
+  color: var(--t3);
+  opacity: 0.8;
+}
+.field:focus {
+  outline: none;
+  border-color: var(--honey);
+  box-shadow: 0 0 0 3px var(--honey-soft);
+}
+.field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Vignette hexagonale pour logos / avatars */
+.hex-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--honey);
+  color: var(--honey-ink);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+} /* fin @layer components */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

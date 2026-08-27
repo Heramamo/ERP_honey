@@ -52,7 +52,7 @@ export const HoursValidationTable: React.FC<HoursValidationTableProps> = ({ allo
           </div>
         ) : pending.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Inbox className="w-8 h-8 text-slate-600" />
+            <Inbox className="w-8 h-8 text-[var(--t3)]" />
             <span className="text-sm">Aucune feuille en attente de validation.</span>
           </div>
         ) : (

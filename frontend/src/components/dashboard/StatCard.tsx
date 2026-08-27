@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type GlowColor = 'blue' | 'amber' | 'emerald' | 'teal' | 'purple';
+export type GlowColor = 'blue' | 'amber' | 'emerald' | 'teal' | 'purple' | 'honey' | 'rose';
 
 interface StatCardProps {
   title: string;
@@ -13,33 +13,15 @@ interface StatCardProps {
   className?: string;
 }
 
-// Configuration des ombres portées lumineuses et des bordures brillantes
-const glowStyles: Record<GlowColor, { border: string; shadow: string; icon: string }> = {
-  blue: {
-    border: 'border-blue-500/50 hover:border-blue-400',
-    shadow: 'shadow-[0_0_18px_rgba(59,130,246,0.22)] hover:shadow-[0_0_25px_rgba(59,130,246,0.35)]',
-    icon: 'text-blue-400',
-  },
-  amber: {
-    border: 'border-amber-500/60 hover:border-amber-400',
-    shadow: 'shadow-[0_0_18px_rgba(245,158,11,0.25)] hover:shadow-[0_0_25px_rgba(245,158,11,0.40)]',
-    icon: 'text-amber-500',
-  },
-  emerald: {
-    border: 'border-emerald-500/50 hover:border-emerald-400',
-    shadow: 'shadow-[0_0_18px_rgba(16,185,129,0.22)] hover:shadow-[0_0_25px_rgba(16,185,129,0.35)]',
-    icon: 'text-emerald-400',
-  },
-  teal: {
-    border: 'border-teal-500/50 hover:border-teal-400',
-    shadow: 'shadow-[0_0_18px_rgba(20,184,166,0.22)] hover:shadow-[0_0_25px_rgba(20,184,166,0.35)]',
-    icon: 'text-teal-400',
-  },
-  purple: {
-    border: 'border-purple-500/50 hover:border-purple-400',
-    shadow: 'shadow-[0_0_18px_rgba(168,85,247,0.22)] hover:shadow-[0_0_25px_rgba(168,85,247,0.35)]',
-    icon: 'text-purple-400',
-  },
+// Teinte du glyphe — l'alvéole de la carte reste en miel doux
+const iconTints: Record<GlowColor, string> = {
+  blue: 'text-[#6683a9]',
+  amber: 'text-[var(--honey)]',
+  emerald: 'text-[#3e8e5a]',
+  teal: 'text-[#5ca493]',
+  purple: 'text-[#9171b4]',
+  honey: 'text-[var(--honey)]',
+  rose: 'text-[#d85268]',
 };
 
 export const StatCard: React.FC<StatCardProps> = ({
@@ -52,25 +34,38 @@ export const StatCard: React.FC<StatCardProps> = ({
   rightIndicator,
   className = '',
 }) => {
-  const glow = glowStyles[glowColor] || glowStyles.blue;
-  const finalIconColor = iconColor || glow.icon;
+  const tint = iconTints[glowColor] || iconTints.blue;
+  const finalIconColor = iconColor || tint;
 
   return (
     <div
-      className={`bg-[var(--app-bg)] border rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 ${glow.border} ${glow.shadow} ${className}`}
+      className={`folio rounded-2xl border border-[var(--border-subtle)] bg-[var(--panel)] p-5 flex flex-col justify-between transition-shadow duration-300 hover:shadow-[0_12px_32px_-16px_var(--honey-soft)] ${className}`}
     >
-      <div className="flex items-center justify-between">
-        <div className={`flex items-center gap-2 ${finalIconColor}`}>
-          {icon}
-          <span className="text-xs font-semibold text-[var(--t2)]">{title}</span>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-2.5 min-w-0">
+          {icon && (
+            <span
+              className="hex hidden sm:inline-flex items-center justify-center shrink-0"
+              style={{
+                width: '30px',
+                height: '32px',
+                background: 'var(--surface-faint)',
+              }}
+            >
+              <span className={`flex items-center justify-center ${finalIconColor}`}>{icon}</span>
+            </span>
+          )}
+          <span className="col-heat leading-tight">{title}</span>
         </div>
-        {rightIndicator && <div>{rightIndicator}</div>}
+        {rightIndicator && <div className="shrink-0">{rightIndicator}</div>}
       </div>
 
       <div className="mt-4">
-        <h2 className="text-3xl font-black text-[var(--t1)] tracking-tight">{value}</h2>
+        <h2 className="font-display font-bold text-[1.85rem] leading-none tabular tracking-tight text-[var(--t1)]">
+          {value}
+        </h2>
         {subtitle && (
-          <p className="text-[11px] text-[var(--t3)] font-medium mt-1">{subtitle}</p>
+          <p className="text-[11px] text-[var(--t3)] font-medium mt-2">{subtitle}</p>
         )}
       </div>
     </div>

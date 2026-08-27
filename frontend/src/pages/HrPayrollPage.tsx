@@ -45,7 +45,7 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
             {pendingCount}
           </span>
           {activeTab === 'validation' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--honey)] rounded-full" />
           )}
         </button>
 
@@ -57,7 +57,7 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
         >
           Toutes les Feuilles
           {activeTab === 'toutes' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--honey)] rounded-full" />
           )}
         </button>
       </div>

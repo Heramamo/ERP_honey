@@ -3,7 +3,8 @@ import { Loader2, Inbox, Plus } from 'lucide-react';
 import RoleGuard from '../components/RoleGuard';
 import type { Role } from '../types/auth';
 import type { PaiePayload } from '../types/paie';
-import { fetchAllPaies, updateStatutPaie, clearError as clearPaieError } from '../store/slices/paieSlice';import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { fetchAllPaies, updateStatutPaie, clearError as clearPaieError } from '../store/slices/paieSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { GeneratePaieModal } from '../components/dashboard/hr/GeneratePaieModal';
 
 interface HrPaiePageProps {
@@ -22,8 +23,8 @@ const formatMois = (mois: string) => {
 };
 
 const STATUT_STYLES: Record<string, string> = {
-  PAYE: 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50',
-  EN_ATTENTE: 'bg-amber-950/60 text-amber-400 border-amber-800/50',
+  PAYE: 'bg-[var(--positive)]/10 text-[var(--positive)] border-[var(--positive)]/25',
+  EN_ATTENTE: 'bg-[var(--honey)]/10 text-[var(--honey)] border-[var(--honey)]/30',
 };
 
 const getStatutLabel = (statut: string) => {
@@ -63,7 +64,7 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
             value={moisFilter}
             onChange={(e) => setMoisFilter(e.target.value)}
             placeholder="Filtrer par mois"
-            className="bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] focus:outline-none focus:border-amber-500/50 transition-colors [color-scheme:dark]"
+            className="bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] focus:outline-none focus:border-[var(--honey)]/50 transition-colors [color-scheme:dark] cursor-pointer"
           />
           {moisFilter && (
             <button
@@ -75,7 +76,7 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
           )}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 cursor-pointer"
+            className="btn-honey font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             Générer une fiche
@@ -84,7 +85,7 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm shrink-0">
+        <div className="mb-6 px-4 py-3 rounded-lg bg-[var(--danger)]/10 border border-[var(--danger)]/40 text-[var(--danger)] text-sm shrink-0">
           {error}
         </div>
       )}
@@ -92,12 +93,12 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
       <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl flex-1 min-h-0 flex flex-col">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
+            <Loader2 className="w-6 h-6 animate-spin text-[var(--honey)]" />
             <span className="text-sm">Chargement des fiches de paie...</span>
           </div>
         ) : paies.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Inbox className="w-8 h-8 text-slate-600" />
+            <Inbox className="w-8 h-8 text-[var(--t3)]" />
             <span className="text-sm">Aucune fiche de paie pour le moment.</span>
           </div>
         ) : (
@@ -124,7 +125,7 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
                     )}
                   </td>
                   <td className="py-4 px-6 text-[var(--t3)] text-xs">{formatMois(paie.mois)}</td>
-                  <td className="py-4 px-6 font-semibold text-emerald-400">
+                  <td className="py-4 px-6 font-semibold text-[var(--positive)]">
                     {paie.totalSalaire.toLocaleString('fr-FR')} Ar
                   </td>
                   <td className="py-4 px-6">
@@ -136,7 +137,7 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
                     {paie.statutpaie === 'EN_ATTENTE' ? (
                       <button
                         onClick={() => handleMarkPaid(paie.id)}
-                        className="px-3 py-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/60 hover:bg-emerald-900 text-emerald-400 text-xs font-bold transition-colors cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-[var(--positive)]/10 border border-[var(--positive)]/25 hover:bg-[var(--positive)]/20 text-[var(--positive)] text-xs font-bold transition-colors cursor-pointer"
                       >
                         Marquer payé
                       </button>

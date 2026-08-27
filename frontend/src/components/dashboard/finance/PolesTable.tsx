@@ -58,22 +58,22 @@ export const PolesTable: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 text-gray-100">
+    <div className="space-y-6 text-[var(--t1)]">
       {/* En-tête */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-500">
+          <div className="p-2.5 rounded-xl bg-[var(--surface-faint)] border border-[var(--border-subtle)] text-[var(--honey)]">
             <Building2 className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">Pôles d'activité</h2>
-            <p className="text-xs text-gray-400">Gérez les pôles de revenus et de charges du groupe.</p>
+            <h2 className="font-display text-xl font-bold text-[var(--t1)] tracking-tight">Pôles d'activité</h2>
+            <p className="text-xs text-[var(--t3)]">Gérez les pôles de revenus et de charges du groupe.</p>
           </div>
         </div>
 
         <button
           onClick={() => setCreateOpen(true)}
-          className="bg-amber-500 hover:bg-amber-600 text-black font-semibold text-sm px-4 py-2 rounded-lg flex items-center gap-2 transition-colors shadow-lg shadow-amber-500/10 cursor-pointer"
+          className="btn-honey text-sm px-4 py-2 rounded-lg flex items-center gap-2 cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
           Ajouter un Pôle
@@ -81,11 +81,11 @@ export const PolesTable: React.FC = () => {
       </div>
 
       {/* Carte principale */}
-      <div className="bg-[#111827] border border-gray-800 rounded-xl shadow-lg overflow-hidden">
+      <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl shadow-lg overflow-hidden">
         {/* Barre d'outils */}
-        <div className="flex flex-wrap items-center justify-between gap-4 p-5 border-b border-gray-800">
+        <div className="flex flex-wrap items-center justify-between gap-4 p-5 border-b border-[var(--border-subtle)]">
           <div className="relative flex-1 min-w-[240px] max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--t3)]" />
             <input
               type="text"
               placeholder="Rechercher un pôle..."
@@ -94,39 +94,39 @@ export const PolesTable: React.FC = () => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-[#0B0F17] border border-gray-800 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-500"
+              className="field pl-9 text-sm"
             />
           </div>
-          <div className="flex items-center gap-2 text-xs text-gray-400 bg-[#0B0F17] border border-gray-800 rounded-lg px-3 py-2">
-            <Boxes className="w-4 h-4 text-amber-500" />
+          <div className="flex items-center gap-2 text-xs text-[var(--t3)] bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3 py-2">
+            <Boxes className="w-4 h-4 text-[var(--honey)]" />
             <span>
-              <strong className="text-white">{poles.length}</strong> pôle{poles.length > 1 ? 's' : ''}
+              <strong className="text-[var(--t1)]">{poles.length}</strong> pôle{poles.length > 1 ? 's' : ''}
             </span>
           </div>
         </div>
 
         {error && !loading && (
-          <div className="mx-5 mt-4 px-4 py-2.5 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs">
+          <div className="mx-5 mt-4 px-4 py-2.5 rounded-lg bg-[var(--danger)]/10 border border-[var(--danger)]/40 text-[var(--danger)] text-xs">
             {error}
           </div>
         )}
 
         {/* Tableau */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-            <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
+            <Loader2 className="w-6 h-6 animate-spin text-[var(--honey)]" />
             <span className="text-sm">Chargement des pôles...</span>
           </div>
         ) : pagePoles.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-            <Building2 className="w-8 h-8 text-gray-600" />
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
+            <Building2 className="w-8 h-8 text-[var(--t3)]" />
             <span className="text-sm">
               {searchTerm ? 'Aucun pôle ne correspond à votre recherche.' : 'Aucun pôle enregistré.'}
             </span>
             {!searchTerm && (
               <button
                 onClick={() => setCreateOpen(true)}
-                className="mt-2 text-xs font-semibold text-amber-500 hover:text-amber-400 flex items-center gap-1.5 cursor-pointer"
+                className="mt-2 text-xs font-semibold text-[var(--honey)] hover:text-[var(--honey-deep)] flex items-center gap-1.5 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Créer le premier pôle
@@ -137,34 +137,34 @@ export const PolesTable: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-gray-800 text-[11px] font-bold text-gray-400 uppercase tracking-wider bg-[#0B0F17]/40">
-                  <th className="py-3 px-5">Nom du pôle</th>
-                  <th className="py-3 px-5">Description</th>
-                  <th className="py-3 px-5">Date d'ajout</th>
-                  <th className="py-3 px-5 text-right">Actions</th>
+                <tr className="border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
+                  <th className="py-3 px-5 col-heat">Nom du pôle</th>
+                  <th className="py-3 px-5 col-heat">Description</th>
+                  <th className="py-3 px-5 col-heat">Date d'ajout</th>
+                  <th className="py-3 px-5 col-heat text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800/60 text-sm">
+              <tbody className="divide-y divide-[var(--border-subtle)] text-sm">
                 {pagePoles.map((pole) => (
-                  <tr key={pole.id} className="hover:bg-gray-800/30 transition-colors">
+                  <tr key={pole.id} className="hover:bg-[var(--chip)] transition-colors">
                     <td className="py-3.5 px-5">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-500 shrink-0">
+                        <div className="p-2 rounded-lg bg-[var(--surface-faint)] border border-[var(--border-subtle)] text-[var(--honey)] shrink-0">
                           <Building2 className="w-4 h-4" />
                         </div>
-                        <span className="font-semibold text-white">{pole.nom}</span>
+                        <span className="font-semibold text-[var(--t1)]">{pole.nom}</span>
                       </div>
                     </td>
-                    <td className="py-3.5 px-5 text-gray-400 text-xs max-w-[320px]">
+                    <td className="py-3.5 px-5 text-[var(--t3)] text-xs max-w-[320px]">
                       {pole.description || (
-                        <span className="text-gray-600 italic">Aucune description</span>
+                        <span className="text-[var(--t3)] italic opacity-70">Aucune description</span>
                       )}
                     </td>
-                    <td className="py-3.5 px-5 text-gray-400 text-xs whitespace-nowrap">
+                    <td className="py-3.5 px-5 text-[var(--t3)] text-xs whitespace-nowrap">
                       {pole.createdAt ? formatDateShort(pole.createdAt) : '-'}
                     </td>
                     <td className="py-3.5 px-5 text-right">
-                      <button className="text-gray-400 hover:text-white p-1.5 rounded-lg hover:bg-gray-800 transition-colors cursor-pointer">
+                      <button className="text-[var(--t3)] hover:text-[var(--t1)] p-1.5 rounded-lg hover:bg-[var(--chip)] transition-colors cursor-pointer">
                         <MoreVertical className="w-4 h-4 ml-auto" />
                       </button>
                     </td>
@@ -177,28 +177,28 @@ export const PolesTable: React.FC = () => {
 
         {/* Pagination */}
         {!loading && filteredPoles.length > 0 && (
-          <div className="flex items-center justify-between mt-4 py-4 px-5 border-t border-gray-800 text-xs text-gray-400">
+          <div className="flex items-center justify-between mt-4 py-4 px-5 border-t border-[var(--border-subtle)] text-xs text-[var(--t3)]">
             <span>
               Affichage de{' '}
-              <span className="font-bold text-white">{(safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
-              <span className="font-bold text-white">{Math.min(safePage * PAGE_SIZE, filteredPoles.length)}</span> sur{' '}
-              <span className="font-bold text-white">{filteredPoles.length}</span> pôles
+              <span className="font-bold text-[var(--t1)]">{(safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
+              <span className="font-bold text-[var(--t1)]">{Math.min(safePage * PAGE_SIZE, filteredPoles.length)}</span> sur{' '}
+              <span className="font-bold text-[var(--t1)]">{filteredPoles.length}</span> pôles
             </span>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={safePage === 1}
-                className="p-1.5 rounded-lg bg-[#0B0F17] border border-gray-800 hover:bg-gray-800 text-gray-400 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg bg-[var(--panel-deep)] border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] hover:text-[var(--t1)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <span className="text-gray-400">
-                Page <span className="font-bold text-white">{safePage}</span> / {totalPages}
+              <span className="text-[var(--t3)]">
+                Page <span className="font-bold text-[var(--t1)]">{safePage}</span> / {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={safePage === totalPages}
-                className="p-1.5 rounded-lg bg-[#0B0F17] border border-gray-800 hover:bg-gray-800 text-gray-400 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg bg-[var(--panel-deep)] border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] hover:text-[var(--t1)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card } from '../ui/Card';
-import { chartAxisTight, chartTooltipStyle } from './chartTheme';
+import { chartAxisTight, chartTooltipStyle, chartSeries } from './chartTheme';
 
 const evolutionData = [
   { mois: 'Mar', revenus: 8000000, charges: 3000000 },
@@ -29,8 +29,8 @@ export const EvolutionChart: React.FC = () => {
               tickFormatter={(val) => `${val / 1000000}M`}
             />
             <Tooltip contentStyle={chartTooltipStyle} />
-            <Line type="monotone" dataKey="revenus" stroke="#3b82f6" strokeWidth={3} dot={false} />
-            <Line type="monotone" dataKey="charges" stroke="#f59e0b" strokeWidth={3} dot={false} />
+            <Line type="monotone" dataKey="revenus" stroke={chartSeries.azure} strokeWidth={3} dot={false} />
+            <Line type="monotone" dataKey="charges" stroke={chartSeries.honey} strokeWidth={3} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>
