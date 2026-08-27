@@ -12,11 +12,12 @@ import { FinanceModule } from './modules/finance/finance.module';
 import { PoleModule } from './modules/pole/pole.module';
 import { ChargeModule } from './modules/charge/charge.module';
 import { RevenuModule } from './modules/revenu/revenu.module';
+import { BilanModule } from './modules/bilan/bilan.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
       isGlobal: true, 
-    }),UserModule, TeachersModule, SaisieFeuilleModule, PaieModule, FinanceModule, PoleModule, ChargeModule, RevenuModule],
+    }),UserModule, TeachersModule, SaisieFeuilleModule, PaieModule, FinanceModule, PoleModule, ChargeModule, RevenuModule, BilanModule],
   controllers: [AppController],
   providers: [AppService],
 })

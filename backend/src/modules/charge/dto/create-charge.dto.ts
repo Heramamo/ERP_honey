@@ -18,6 +18,7 @@ export class CreateChargeDto
     @IsDateString()
     date!:string
 
+    @ApiProperty({example:"FIXE"})
     @IsString()
     @IsNotEmpty()
     typeCharge!:string
