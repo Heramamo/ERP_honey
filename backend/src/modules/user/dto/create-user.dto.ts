@@ -49,7 +49,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     enum: Role,
-    example: Role.ENSEIGNANT,
+    example: Role.ADMIN,
     description: "Le rôle de l'utilisateur",
   })
   @IsNotEmpty({ message: 'Le role est obligatoire.' })

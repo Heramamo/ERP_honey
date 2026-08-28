@@ -23,7 +23,10 @@ export class SaisieFeuilleService {
     }
     async   create(userId:number,createSaisieDto:CreateSaisieFeuilleDto){
         const {date,heuresEffectuees,heuresSupp,typeActivite} = createSaisieDto
+        const list = await this.prisma.enseignant.findMany()
+        console.log(list)
         const enseignant = await this.prisma.enseignant.findUnique({where:{id_utilisateur:userId}})
+        console.log(userId)
         if (!enseignant)
             throw new NotFoundException("Auccun enseignant avec cet ID")
         return this.prisma.feuilleDeTemps.create({
