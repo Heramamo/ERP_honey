@@ -93,6 +93,7 @@ const paieSlice = createSlice({
             })
 
             .addCase(generatePaie.fulfilled, (state, action: PayloadAction<PaiePayload>) => {
+                console.log(action.payload)
                 state.all.unshift(action.payload)
             })
             .addCase(generatePaie.rejected, (state, action) => {

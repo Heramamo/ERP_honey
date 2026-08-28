@@ -27,7 +27,9 @@ export class PaieService {
                 totalSalaire,
                 statutpaie: "EN_ATTENTE",
                 mois: moisFormat,
-                date: new Date()
+                date: new Date(),
+            },
+            include:{enseignant:{include:{utilisateur:true}}
             }
         });
     }
