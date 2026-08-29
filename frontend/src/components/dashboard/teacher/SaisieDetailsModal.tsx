@@ -9,13 +9,13 @@ interface SaisieDetailsModalProps {
 }
 
 const STATUT_STYLES: Record<string, string> = {
-  VALIDE: 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50',
-  REFUSE: 'bg-rose-950/60 text-rose-400 border-rose-800/50',
-  EN_ATTENTE: 'bg-amber-950/60 text-amber-400 border-amber-800/50',
+  VALIDE: 'text-[var(--success)] bg-[var(--success-bg)] border-[var(--success-line)]',
+  REFUSE: 'text-[var(--danger)] bg-[var(--danger-bg)] border-[var(--danger-line)]',
+  EN_ATTENTE: 'text-[var(--warning)] bg-[var(--warning-bg)] border-[var(--warning-line)]',
 };
 
 const getStatutStyle = (statut: SaisiePayload['statut']) =>
-  STATUT_STYLES[String(statut)] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--border-subtle)]';
+  STATUT_STYLES[String(statut)] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--line)]';
 
 const getStatutLabel = (statut: SaisiePayload['statut']) => {
   switch (String(statut)) {
@@ -39,7 +39,7 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
     {
       label: "Type d'activité",
       value: (
-        <span className="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider border bg-blue-950/60 text-blue-400 border-blue-800/50">
+        <span className="inline-block px-3 py-1 rounded-full text-[10px] font-bold tracking-wide border bg-[var(--info-bg)] text-[var(--info)] border-[var(--info-line)]">
           {saisie.typeActivite}
         </span>
       ),
@@ -60,8 +60,8 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-y-auto scroll-thin">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
+      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--line)] rounded-2xl shadow-[var(--shadow-raised)] overflow-y-auto scroll-thin">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)] bg-[var(--panel-deep)]">
           <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Détails de la Saisie</h2>
           <button
             onClick={onClose}
@@ -82,11 +82,11 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
           </dl>
 
           {/* Validateur */}
-          <div className="pt-4 border-t border-[var(--border-subtle)]">
+          <div className="pt-4 border-t border-[var(--line)]">
             <p className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider mb-3">Validation</p>
             {saisie.validePar ? (
-              <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[var(--panel-deep)] border border-[var(--border-subtle)]">
-                <div className="w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[var(--panel-deep)] border border-[var(--line)]">
+                <div className="w-9 h-9 rounded-full bg-[var(--accent)] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
                   {(saisie.validePar.prenom[0] ?? '') + (saisie.validePar.nom[0] ?? '')}
                 </div>
                 <div className="min-w-0">
@@ -112,7 +112,7 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-lg border border-[var(--border-subtle)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
+              className="px-4 py-2.5 rounded-lg border border-[var(--line)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
             >
               Fermer
             </button>

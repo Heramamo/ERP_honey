@@ -11,6 +11,7 @@ import {
   LogOut,
   ChevronsLeft,
   Boxes,
+  Hexagon,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -70,6 +71,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
     navigate('/login');
   };
 
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `group flex items-center px-4 py-2.5 rounded-lg text-[13px] font-semibold transition-colors ${
+      collapsed ? 'lg:justify-center lg:px-0' : ''
+    } ${
+      isActive
+        ? 'bg-[var(--accent-soft)] text-[var(--accent)]'
+        : 'text-[var(--text-muted)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)]'
+    }`;
+
   return (
     <>
       {/* Backdrop mobile */}
@@ -81,21 +91,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
       />
 
       <aside
-        className={`bg-[var(--shell-bg)] text-[var(--t2)] flex flex-col justify-between border-r border-[var(--border-subtle)] font-sans select-none shrink-0 overflow-hidden transition-all duration-300
+        className={`bg-[var(--shell-bg)] text-[var(--t2)] flex flex-col justify-between border-r border-[var(--line)] font-sans select-none shrink-0 overflow-hidden transition-all duration-300
           fixed inset-y-0 left-0 z-50 w-64 lg:static lg:h-full lg:translate-x-0
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
           ${collapsed ? 'lg:w-[76px]' : 'lg:w-64'}
         `}
       >
         <div className="flex-1 min-h-0 overflow-y-auto scroll-thin">
-          {/* Logo HONEY GROUP */}
+          {/* Brand */}
           <div
-            className={`p-5 flex items-center border-b border-[var(--border-subtle)] ${
+            className={`p-5 flex items-center border-b border-[var(--line)] ${
               collapsed ? 'lg:justify-center' : ''
             }`}
           >
-            <div className="w-9 h-9 rounded-lg bg-[#f59e0b] flex items-center justify-center text-slate-950 font-black text-lg shadow-md shrink-0">
-              H
+            <div className="relative w-10 h-10 shrink-0 flex items-center justify-center">
+              <Hexagon size={40} className="text-[var(--accent)]" strokeWidth={1.5} />
+              <span className="absolute inset-0 flex items-center justify-center text-slate-950 font-black text-base">
+                H
+              </span>
             </div>
             <div
               className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
@@ -104,33 +117,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   : 'max-w-[160px] ml-3 opacity-100'
               }`}
             >
-              <h1 className="font-black text-[var(--t1)] text-sm tracking-wide leading-none uppercase">HONEY GROUP</h1>
-              <span className="text-[10px] font-semibold text-[var(--t3)] tracking-wider uppercase block mt-1">ERP INTERNE</span>
+              <h1 className="font-bold text-[var(--t1)] text-[15px] leading-none">Honey Group</h1>
+              <span className="text-[11px] font-medium text-[var(--t3)] block mt-1">ERP interne</span>
             </div>
           </div>
 
-          {/* Liens de navigation */}
-          <nav className="px-3 space-y-1.5 mt-4">
-            {navItems.map((item, index) => (
+          {/* Navigation */}
+          <nav className="px-3 space-y-1 mt-4">
+            {navItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 end={item.end}
                 onClick={onCloseMobile}
                 title={item.label}
-                className={({ isActive }) =>
-                  `group flex items-center px-4 py-3 rounded-lg text-xs font-bold transition-all duration-300 ${
-                    collapsed ? 'lg:justify-center lg:px-0' : ''
-                  } ${
-                    isActive
-                      ? 'bg-[#f59e0b] text-slate-950 shadow-lg shadow-[#f59e0b]/20'
-                      : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)]'
-                  }`
-                }
+                className={navLinkClass}
               >
-                <item.icon size={18} className="shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                <item.icon size={18} strokeWidth={2} className="shrink-0" />
                 <span
-                  style={{ transitionDelay: collapsed ? '0ms' : `${index * 25}ms` }}
                   className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
                     collapsed
                       ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-3'
@@ -143,12 +147,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
             ))}
           </nav>
 
-          {/* Bouton réduction (desktop uniquement) */}
+          {/* Collapse toggle (desktop) */}
           <div className="hidden lg:flex px-3 mt-4 justify-center">
             <button
               onClick={onToggleCollapsed}
               title={collapsed ? 'Déplier le menu' : 'Réduire le menu'}
-              className={`p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] transition-all duration-300 cursor-pointer ${
+              className={`p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] transition-colors cursor-pointer ${
                 collapsed ? '' : 'rotate-180'
               }`}
             >
@@ -157,23 +161,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
 
-        {/* Bas de Sidebar */}
-        <div className="p-3 space-y-3 border-t border-[var(--border-subtle)]">
+        {/* Footer */}
+        <div className="p-3 space-y-3 border-t border-[var(--line)]">
           <NavLink
             to="/dashboard/settings"
             onClick={onCloseMobile}
             title="Paramètres"
             className={({ isActive }) =>
-              `flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300 ${
+              `flex items-center px-4 py-2.5 rounded-lg text-[13px] font-semibold transition-colors ${
                 collapsed ? 'lg:justify-center lg:px-0' : ''
               } ${
                 isActive
                   ? 'text-[var(--t1)] bg-[var(--surface-hover)]'
-                  : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)]'
+                  : 'text-[var(--text-muted)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)]'
               }`
             }
           >
-            <Settings size={18} className="shrink-0" />
+            <Settings size={18} strokeWidth={2} className="shrink-0" />
             <span
               className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
                 collapsed
@@ -190,7 +194,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               collapsed ? 'lg:flex-col lg:gap-y-2 lg:px-0' : ''
             }`}
           >
-            <div className="w-8 h-8 rounded-full bg-[#f59e0b] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/30 text-[var(--accent)] font-bold text-sm flex items-center justify-center shrink-0">
               {getInitials(user?.email)}
             </div>
             <div
@@ -200,8 +204,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   : 'max-h-12 opacity-100 flex-1'
               }`}
             >
-              <p className="text-xs font-bold text-[var(--t1)] truncate">{formatDisplayName(user?.email)}</p>
-              <p className="text-[10px] font-semibold text-[var(--t3)] uppercase tracking-wider truncate">
+              <p className="text-[13px] font-semibold text-[var(--t1)] truncate">{formatDisplayName(user?.email)}</p>
+              <p className="text-[11px] font-medium text-[var(--t3)] truncate">
                 {user?.role ?? 'Utilisateur'}
               </p>
             </div>
@@ -210,7 +214,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               description="Voulez-vous vraiment vous déconnecter de votre session ?"
               confirmLabel="Se déconnecter"
               tone="danger"
-              buttonClassName="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] rounded-lg transition cursor-pointer shrink-0"
+              buttonClassName="p-2 text-[var(--text-muted)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] rounded-lg transition cursor-pointer shrink-0"
               onConfirm={handleLogout}
             >
               <LogOut size={16} />

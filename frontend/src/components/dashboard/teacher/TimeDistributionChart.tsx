@@ -24,8 +24,8 @@ export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ da
 
   return (
     <Card className="justify-between">
-      <div className="flex items-center gap-2 text-amber-500 mb-2">
-        <div className="w-2.5 h-2.5 rounded-full border-2 border-amber-500 inline-block" />
+      <div className="flex items-center gap-2 text-[var(--accent)] mb-2">
+        <div className="w-2.5 h-2.5 rounded-full border-2 border-[var(--accent)] inline-block" />
         <h3 className="text-sm font-bold text-[var(--t1)]">Répartition du Temps</h3>
       </div>
 

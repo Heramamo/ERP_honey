@@ -9,19 +9,18 @@ import { SaisieDetailsModal } from './SaisieDetailsModal';
 const PAGE_SIZE = 8;
 
 const STATUT_STYLES: Record<string, string> = {
-  VALIDE: 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50',
-  REFUSE: 'bg-rose-950/60 text-rose-400 border-rose-800/50',
-  EN_ATTENTE: 'bg-amber-950/60 text-amber-400 border-amber-800/50',
+  VALIDE: 'text-[var(--success)] bg-[var(--success-bg)] border-[var(--success-line)]',
+  REFUSE: 'text-[var(--danger)] bg-[var(--danger-bg)] border-[var(--danger-line)]',
+  EN_ATTENTE: 'text-[var(--warning)] bg-[var(--warning-bg)] border-[var(--warning-line)]',
 };
 
 const resolveStatut = (statut: SaisiePayload['statut']): string => {
-  if (typeof statut === 'string') return statut;
-  return statut?.statut ?? '';
+  return String(statut ?? '');
 };
 
 const getStatutStyle = (statut: SaisiePayload['statut']) => {
   const value = resolveStatut(statut);
-  return STATUT_STYLES[value] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--border-subtle)]';
+  return STATUT_STYLES[value] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--line)]';
 };
 
 const getStatutLabel = (statut: SaisiePayload['statut']) => {
@@ -58,14 +57,14 @@ export const SaisiesTable: React.FC = () => {
     <div className="p-8 max-w-[1200px] mx-auto w-full font-sans text-[var(--t1)] h-full flex flex-col min-h-0">
       <div className="flex items-center justify-between gap-4 mb-6 shrink-0">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[var(--t1)]">Mes Feuilles de Temps</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-[var(--t1)]">Mes Feuilles de Temps</h1>
           <p className="text-sm text-[var(--t3)] mt-1">
             Déclaration des heures effectuées par activité
           </p>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 cursor-pointer"
+          className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
           Nouvelle saisie
@@ -73,27 +72,27 @@ export const SaisiesTable: React.FC = () => {
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm shrink-0">
+        <div className="mb-6 px-4 py-3 rounded-lg bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-sm shrink-0">
           {error}
         </div>
       )}
 
-      <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl flex-1 min-h-0 flex flex-col">
+      <div className="bg-[var(--panel)] border border-[var(--line)] rounded-xl overflow-hidden shadow-[var(--shadow-raised)] flex-1 min-h-0 flex flex-col">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
+            <Loader2 className="w-6 h-6 animate-spin text-[var(--accent)]" />
             <span className="text-sm">Chargement des feuilles de temps...</span>
           </div>
         ) : pageSaisies.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Inbox className="w-8 h-8 text-slate-600" />
+            <Inbox className="w-8 h-8 text-[var(--t3)]" />
             <span className="text-sm">Aucune feuille de temps pour le moment.</span>
           </div>
         ) : (
           <div className="flex-1 min-h-0 overflow-auto scroll-thin">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="sticky top-0 z-10 border-b border-[var(--border-subtle)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
+              <tr className="sticky top-0 z-10 border-b border-[var(--line)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
                 <th className="py-4 px-6">DATE</th>
                 <th className="py-4 px-6">TYPE D'ACTIVITÉ</th>
                 <th className="py-4 px-6">HEURES DE BASE</th>
@@ -102,19 +101,19 @@ export const SaisiesTable: React.FC = () => {
                 <th className="py-4 px-6 text-right">DÉTAILS</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--border-subtle)] text-sm">
+            <tbody className="divide-y divide-[var(--line)] text-sm">
               {pageSaisies.map((saisie: SaisiePayload, index: number) => (
                 <tr key={`${saisie.date}-${index}`} className="hover:bg-[var(--chip)] transition-colors">
                   <td className="py-4 px-6 font-semibold text-[var(--t2)]">{formatDate(saisie.date)}</td>
                   <td className="py-4 px-6">
-                    <span className="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider border bg-blue-950/60 text-blue-400 border-blue-800/50">
+                    <span className="inline-block px-3 py-1 rounded-full text-[10px] font-bold tracking-wide border bg-[var(--info-bg)] text-[var(--info)] border-[var(--info-line)]">
                       {saisie.typeActivite}
                     </span>
                   </td>
                   <td className="py-4 px-6 font-mono font-semibold text-[var(--t2)]">
                     {saisie.heuresEffectuees} h
                   </td>
-                  <td className="py-4 px-6 font-mono font-semibold text-amber-400">
+                  <td className="py-4 px-6 font-mono font-semibold text-[var(--warning)]">
                     {saisie.heuresSupp} h
                   </td>
                   <td className="py-4 px-6">
@@ -139,7 +138,7 @@ export const SaisiesTable: React.FC = () => {
         )}
 
         {!loading && saisies.length > 0 && (
-          <div className="p-4 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs text-[var(--t3)] shrink-0">
+          <div className="p-4 border-t border-[var(--line)] flex items-center justify-between text-xs text-[var(--t3)] shrink-0">
             <div>
               Affichage de <span className="font-bold text-[var(--t2)]">{saisies.length === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
               <span className="font-bold text-[var(--t2)]">{Math.min(safePage * PAGE_SIZE, saisies.length)}</span> sur{' '}
@@ -150,7 +149,7 @@ export const SaisiesTable: React.FC = () => {
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={safePage === 1}
-                className="p-1.5 rounded-lg border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-[var(--line)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -160,7 +159,7 @@ export const SaisiesTable: React.FC = () => {
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={safePage === totalPages}
-                className="p-1.5 rounded-lg border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-[var(--line)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

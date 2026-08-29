@@ -7,13 +7,13 @@ interface AuthHeaderProps {
 export function AuthHeader({ tag, title, subtitle }: AuthHeaderProps) {
   return (
     <div className="mb-6">
-      <span className="text-xs font-extrabold text-[#D4AF37] tracking-widest uppercase block mb-1">
+      <span className="text-[11px] font-semibold text-[var(--accent)] uppercase tracking-widest block mb-2">
         {tag}
       </span>
-      <h2 className="text-2xl font-extrabold text-slate-900 mb-1 leading-tight">
+      <h2 className="text-2xl font-extrabold text-[var(--t1)] mb-1 leading-tight">
         {title}
       </h2>
-      <p className="text-slate-600 text-sm font-medium leading-relaxed">
+      <p className="text-[var(--t2)] text-sm leading-relaxed">
         {subtitle}
       </p>
     </div>

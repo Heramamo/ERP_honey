@@ -25,7 +25,7 @@ const formatShortDate = (date: Date | string) => {
 };
 
 const mapStatut = (statut: SaisiePayload['statut']): TimesheetItem['statut'] => {
-  const value = typeof statut === 'string' ? statut : statut?.statut;
+  const value = String(statut);
   switch (value) {
     case 'VALIDE': return 'Validé';
     case 'REFUSE': return 'En révision';
@@ -57,7 +57,7 @@ export const RecentTimesheetsTable: React.FC<RecentTimesheetsTableProps> = ({ sa
     {
       header: "TYPE D'ACTIVITÉ",
       render: (row) => (
-        <span className={`font-bold ${row.type === 'Cours' ? 'text-blue-400' : 'text-[var(--t2)]'}`}>
+        <span className={`font-bold ${row.type === 'Cours' ? 'text-[var(--info)]' : 'text-[var(--t2)]'}`}>
           {row.type}
         </span>
       ),
@@ -70,7 +70,7 @@ export const RecentTimesheetsTable: React.FC<RecentTimesheetsTableProps> = ({ sa
     {
       header: 'HEURES SUPP.',
       align: 'center',
-      render: (row) => <span className="text-amber-400 font-bold">{row.heuresSupp}</span>,
+      render: (row) => <span className="text-[var(--warning)] font-bold">{row.heuresSupp}</span>,
     },
     {
       header: 'STATUT',
@@ -85,7 +85,7 @@ export const RecentTimesheetsTable: React.FC<RecentTimesheetsTableProps> = ({ sa
         <h3 className="text-sm font-bold text-[var(--t1)]">Dernières Feuilles de Temps</h3>
         <button
           onClick={() => navigate('/dashboard/feuilles-de-temps')}
-          className="text-xs text-amber-500 hover:text-amber-400 transition font-semibold cursor-pointer"
+          className="text-xs text-[var(--accent)] hover:text-[var(--accent-strong)] transition font-semibold cursor-pointer"
         >
           Voir tout
         </button>

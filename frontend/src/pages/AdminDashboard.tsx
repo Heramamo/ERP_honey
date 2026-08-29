@@ -36,7 +36,7 @@ import { fetchPendingSaisies } from '../store/slices/saisieSlice';
 import { formatAr } from '../utils/finance';
 import { formatDateShort } from '../const/date';
 
-const POLE_CHART_COLORS = ['#3b82f6', '#14b8a6', '#f59e0b', '#38bdf8', '#a78bfa', '#f472b6', '#34d399'];
+const POLE_CHART_COLORS = ['#14b8a6', '#3b82f6', '#d97706', '#0ea5e9', '#8b5cf6', '#ec4899', '#10b981'];
 
 const recentRequestStatus = (statut: string) => {
   const s = String(statut).toUpperCase();
@@ -46,11 +46,11 @@ const recentRequestStatus = (statut: string) => {
 const RevenueExpenseLegend: React.FC = () => (
   <div className="flex items-center gap-4 text-xs font-medium">
     <div className="flex items-center gap-1.5">
-      <span className="w-3 h-3 rounded-sm bg-teal-500 inline-block" />
+      <span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: '#14b8a6' }} />
       <span className="text-[var(--t2)]">Revenus</span>
     </div>
     <div className="flex items-center gap-1.5">
-      <span className="w-3 h-3 rounded-sm bg-blue-500 inline-block" />
+      <span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: '#3b82f6' }} />
       <span className="text-[var(--t2)]">Dépenses</span>
     </div>
   </div>
@@ -171,7 +171,7 @@ export const AdminDashboard: React.FC = () => {
         enseignant,
         detail: `${formatDateShort(s.date)} • ${(s.heuresEffectuees ?? 0) + (s.heuresSupp ?? 0)}h`,
         pole: (s.typeActivite || 'Feuille de temps').slice(0, 12),
-        poleClass: 'text-amber-400',
+        poleClass: 'text-[var(--warning)]',
         statut: recentRequestStatus(s.statut as string),
       });
     });
@@ -185,7 +185,7 @@ export const AdminDashboard: React.FC = () => {
         enseignant: personne,
         detail: `Paie ${p.mois || ''} • ${formatAr(p.totalSalaire)}`,
         pole: 'Paie',
-        poleClass: 'text-blue-400',
+        poleClass: 'text-[var(--info)]',
         statut: 'En attente',
       });
     });
@@ -212,7 +212,7 @@ export const AdminDashboard: React.FC = () => {
             </div>
           }
           subtitle={`${revenus.length} opération${revenus.length > 1 ? 's' : ''} enregistrée${revenus.length > 1 ? 's' : ''}`}
-          icon={<TrendingUp size={16} className="text-teal-400" />}
+          icon={<TrendingUp size={16} />}
           glowColor="teal"
         />
 
@@ -224,7 +224,7 @@ export const AdminDashboard: React.FC = () => {
             </div>
           }
           subtitle={`${charges.length} charge${charges.length > 1 ? 's' : ''} enregistrée${charges.length > 1 ? 's' : ''}`}
-          icon={<TrendingDown size={16} className="text-blue-400" />}
+          icon={<TrendingDown size={16} />}
           glowColor="blue"
         />
 
@@ -232,11 +232,11 @@ export const AdminDashboard: React.FC = () => {
           title="Bénéfice Net"
           value={
             <div className="flex items-baseline gap-1">
-              <span className="text-amber-100">{formatAr(beneficeNet)}</span>
+              <span>{formatAr(beneficeNet)}</span>
             </div>
           }
           subtitle={`Marge nette : ${margeNetta.toFixed(1)}%`}
-          icon={<DollarSign size={16} className="text-amber-400" />}
+          icon={<DollarSign size={16} />}
           glowColor="amber"
         />
 
@@ -248,7 +248,7 @@ export const AdminDashboard: React.FC = () => {
             </div>
           }
           subtitle={`${paiesEnAttente.length} fiche${paiesEnAttente.length > 1 ? 's' : ''} de paie à valider`}
-          icon={<Clock size={16} className="text-amber-400" />}
+          icon={<Clock size={16} />}
           glowColor="amber"
           rightIndicator={paiesEnAttente.length > 0 ? <StatusBadge status="En attente" showDot /> : undefined}
         />
@@ -260,7 +260,7 @@ export const AdminDashboard: React.FC = () => {
         <Card className="lg:col-span-2 justify-between">
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
-              <Building2 size={16} className="text-amber-400" />
+              <Building2 size={16} className="text-[var(--accent)]" />
               Répartition des Charges
             </h3>
             <span className="text-[11px] text-[var(--t3)] font-medium">Par Pôle</span>
@@ -293,14 +293,14 @@ export const AdminDashboard: React.FC = () => {
             )}
 
             <div className="absolute text-center">
-              <span className="text-xl font-black text-amber-400 block leading-none">
+              <span className="text-xl font-black text-[var(--accent)] block leading-none">
                 {totalPoleCharges > 0 ? '100%' : '—'}
               </span>
               <span className="text-[9px] uppercase font-bold tracking-widest text-[var(--t3)] block mt-1">RÉPARTITION</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-xs font-medium pt-3 border-t border-[var(--border-subtle)]">
+          <div className="grid grid-cols-2 gap-2 text-xs font-medium pt-3 border-t border-[var(--line)]">
             {budgetDistributionData.map((item) => (
               <div key={item.name} className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ backgroundColor: item.color }} />
@@ -314,10 +314,10 @@ export const AdminDashboard: React.FC = () => {
           <div>
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
-                <Layers size={16} className="text-amber-400" />
+                <Layers size={16} className="text-[var(--accent)]" />
                 Demandes Récentes
               </h3>
-              <button className="text-[11px] text-blue-400 hover:text-blue-300 transition font-semibold cursor-pointer">
+              <button className="text-[11px] text-[var(--accent)] hover:text-[var(--accent-strong)] transition font-semibold cursor-pointer">
                 Voir tout →
               </button>
             </div>
@@ -331,9 +331,9 @@ export const AdminDashboard: React.FC = () => {
             )}
           </div>
 
-          <div className="pt-3 border-t border-[var(--border-subtle)] text-center mt-4">
+          <div className="pt-3 border-t border-[var(--line)] text-center mt-4">
             <span className="text-[11px] text-[var(--t3)]">
-              Total : <strong className="text-blue-400">{totalHeuresSuivi.toFixed(1)} heures</strong> en cours de suivi
+              Total : <strong className="text-[var(--accent)]">{totalHeuresSuivi.toFixed(1)} heures</strong> en cours de suivi
             </span>
           </div>
         </Card>
@@ -345,7 +345,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="flex justify-between items-center mb-5">
             <div>
               <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
-                <BarChart3 size={16} className="text-teal-400" />
+                <BarChart3 size={16} className="text-[var(--success)]" />
                 Revenus vs Charges par Pôle
               </h3>
               <p className="text-xs text-[var(--t3)] mt-0.5">Comparatif de rentabilité brute par activité (en M Ar)</p>

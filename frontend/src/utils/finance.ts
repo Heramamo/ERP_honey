@@ -4,13 +4,13 @@ export const formatAr = (value: number | null | undefined): string => {
 };
 
 const POLE_PALETTE = [
-  { iconBg: 'bg-[#1E293B] text-[#38BDF8] border border-[#0284C7]/30', dot: 'bg-[#38BDF8]' },
-  { iconBg: 'bg-[#064E3B] text-[#34D399] border border-[#059669]/30', dot: 'bg-[#34D399]' },
-  { iconBg: 'bg-[#2D1B18] text-[#F97316] border border-[#7C2D12]/40', dot: 'bg-[#F97316]' },
-  { iconBg: 'bg-[#134E4A] text-[#2DD4BF] border border-[#0D9488]/30', dot: 'bg-[#2DD4BF]' },
-  { iconBg: 'bg-[#3B0764] text-[#C084FC] border border-[#7E22CE]/30', dot: 'bg-[#C084FC]' },
-  { iconBg: 'bg-[#172554] text-[#60A5FA] border border-[#1D4ED8]/30', dot: 'bg-[#60A5FA]' },
-  { iconBg: 'bg-gray-800 text-gray-300 border border-gray-700', dot: 'bg-gray-400' },
+  { iconBg: 'bg-[var(--info-bg)] text-[var(--info)] border border-[var(--info-line)]', dot: 'bg-[var(--info)]' },
+  { iconBg: 'bg-[var(--success-bg)] text-[var(--success)] border border-[var(--success-line)]', dot: 'bg-[var(--success)]' },
+  { iconBg: 'bg-[var(--warning-bg)] text-[var(--warning)] border border-[var(--warning-line)]', dot: 'bg-[var(--warning)]' },
+  { iconBg: 'bg-[var(--info-bg)] text-[var(--info)] border border-[var(--info-line)]', dot: 'bg-[var(--info)]' },
+  { iconBg: 'bg-[var(--warning-bg)] text-[var(--warning)] border border-[var(--warning-line)]', dot: 'bg-[var(--warning)]' },
+  { iconBg: 'bg-[var(--success-bg)] text-[var(--success)] border border-[var(--success-line)]', dot: 'bg-[var(--success)]' },
+  { iconBg: 'bg-[var(--surface-hover)] text-[var(--t2)] border border-[var(--line)]', dot: 'bg-[var(--t3)]' },
 ];
 
 export const getPoleBadgeStyle = (id: number): string => POLE_PALETTE[id % POLE_PALETTE.length].iconBg;

@@ -15,9 +15,9 @@ interface ConfirmButtonProps {
 }
 
 const TONE_CLASSES: Record<Tone, string> = {
-  default: 'bg-amber-500 hover:bg-amber-400 text-slate-950',
-  success: 'bg-emerald-600 hover:bg-emerald-500 text-white',
-  danger: 'bg-rose-600 hover:bg-rose-500 text-white',
+  default: 'bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-slate-950',
+  success: 'bg-[var(--success)] hover:opacity-90 text-slate-950',
+  danger: 'bg-[var(--danger)] hover:opacity-90 text-white',
 };
 
 export const ConfirmButton: React.FC<ConfirmButtonProps> = ({
@@ -40,7 +40,7 @@ export const ConfirmButton: React.FC<ConfirmButtonProps> = ({
       <AlertDialog.Overlay className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60]" />
       <AlertDialog.Content className="fixed left-1/2 top-1/2 z-[60] w-full max-w-sm -translate-x-1/2 -translate-y-1/2 bg-[var(--panel)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-hidden focus:outline-none">
         <div className="px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
-          <AlertDialog.Title className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">
+          <AlertDialog.Title className="text-sm font-bold text-[var(--t1)]">
             {title}
           </AlertDialog.Title>
         </div>

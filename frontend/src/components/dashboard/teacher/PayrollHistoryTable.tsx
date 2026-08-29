@@ -43,7 +43,7 @@ export const PayrollHistoryTable: React.FC<PayrollHistoryTableProps> = ({ rows =
     <Card>
       <div className="flex justify-between items-center mb-5">
         <h3 className="text-sm font-bold text-[var(--t1)]">Historique des Bulletins de Paie</h3>
-        <button className="text-xs text-amber-500 hover:text-amber-400 transition font-semibold cursor-pointer">
+        <button className="text-xs text-[var(--accent)] hover:text-[var(--accent-strong)] transition font-semibold cursor-pointer">
           Voir archives
         </button>
       </div>

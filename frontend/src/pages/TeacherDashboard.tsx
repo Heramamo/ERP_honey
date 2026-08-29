@@ -16,7 +16,7 @@ import { fetchMyProfile } from '../store/slices/enseignantSlice';
 import type { SaisiePayload } from '../types/saisieFeuille';
 
 const getRawStatut = (statut: SaisiePayload['statut']) => {
-  return typeof statut === 'string' ? statut : statut?.statut;
+  return String(statut);
 };
 
 export const TeacherDashboard: React.FC = () => {
@@ -118,7 +118,7 @@ export const TeacherDashboard: React.FC = () => {
             taux > 0 ? (
               <div className="flex items-baseline gap-1">
                 <span>{estimatedSalary.toLocaleString('fr-FR')}</span>
-                <span className="text-xl font-bold text-emerald-400">Ar</span>
+                <span className="text-xl font-bold text-[var(--success)]">Ar</span>
               </div>
             ) : (
               <span className="text-xl font-bold text-[var(--t3)]">N/A</span>
@@ -143,8 +143,8 @@ export const TeacherDashboard: React.FC = () => {
             </div>
           }
           subtitle={
-            <span className="inline-flex items-center gap-1.5 text-purple-300/80 font-medium text-[11px]">
-              <Sparkles size={12} className="text-purple-400" />
+            <span className="inline-flex items-center gap-1.5 text-[var(--t3)] font-medium text-[11px]">
+              <Sparkles size={12} className="text-[var(--accent)]" />
               Traitement RH prévu fin de mois
             </span>
           }

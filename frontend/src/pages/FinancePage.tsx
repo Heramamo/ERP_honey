@@ -49,27 +49,27 @@ export const FinancePage: React.FC = () => {
   const currentTab = TABS_CONFIG[activeTab];
 
   return (
-    <div className="p-6 bg-[#0B0F17] min-h-screen text-white space-y-6">
+    <div className="p-6 md:p-8 w-full max-w-[1600px] mx-auto text-[var(--t1)] space-y-6 font-sans">
       {/* Header avec Titre et Subtitle Dynamiques */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold">{currentTab.title}</h1>
-          <p className="text-xs text-gray-400 mt-1">{currentTab.description}</p>
+          <h1 className="text-2xl font-bold tracking-tight">{currentTab.title}</h1>
+          <p className="text-sm text-[var(--t3)] mt-1">{currentTab.description}</p>
         </div>
       </div>
 
       {/* Navigation par Onglets */}
-      <div className="flex border-b border-gray-800 gap-8 text-sm">
+      <div className="flex border-b border-[var(--line)] gap-7 text-sm overflow-x-auto">
         {(Object.keys(TABS_CONFIG) as TabType[]).map((tabKey) => {
           const tab = TABS_CONFIG[tabKey];
           return (
             <button
               key={tabKey}
               onClick={() => setActiveTab(tabKey)}
-              className={`pb-3 font-medium transition-all ${
+              className={`pb-3 font-medium whitespace-nowrap transition-colors ${
                 activeTab === tabKey
-                  ? 'text-white border-b-2 border-amber-500'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-[var(--accent)] border-b-2 border-[var(--accent)]'
+                  : 'text-[var(--text-muted)] hover:text-[var(--t1)]'
               }`}
             >
               {tab.label}
@@ -87,9 +87,9 @@ export const FinancePage: React.FC = () => {
       </div>
 
       {/* Modale conditionnée par le type */}
-      <NewTransactionModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <NewTransactionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         defaultType={transactionType}
         onCreated={handleCreated}
       />

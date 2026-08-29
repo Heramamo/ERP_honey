@@ -15,7 +15,7 @@ const formatDate = (date: Date | string) => {
 };
 
 const getStatutLabel = (statut: SaisiePayload['statut']) => {
-  const value = typeof statut === 'string' ? statut : statut?.statut;
+  const value = String(statut);
   switch (value) {
     case 'VALIDE': return 'Validé';
     case 'REFUSE': return 'Refusé';
@@ -25,10 +25,10 @@ const getStatutLabel = (statut: SaisiePayload['statut']) => {
 };
 
 const getStatutClass = (statut: SaisiePayload['statut']) => {
-  const value = typeof statut === 'string' ? statut : statut?.statut;
-  if (value === 'VALIDE') return 'bg-emerald-500/20 text-emerald-400';
-  if (value === 'REFUSE') return 'bg-rose-500/20 text-rose-400';
-  return 'bg-amber-500/20 text-amber-400';
+  const value = String(statut);
+  if (value === 'VALIDE') return 'text-[var(--success)] bg-[var(--success-bg)] border border-[var(--success-line)]';
+  if (value === 'REFUSE') return 'text-[var(--danger)] bg-[var(--danger-bg)] border border-[var(--danger-line)]';
+  return 'text-[var(--warning)] bg-[var(--warning-bg)] border border-[var(--warning-line)]';
 };
 
 export const LastEntryCard: React.FC<LastEntryCardProps> = ({ saisie }) => {
@@ -37,7 +37,7 @@ export const LastEntryCard: React.FC<LastEntryCardProps> = ({ saisie }) => {
   return (
     <Card className="justify-between">
       <div>
-        <div className="flex items-center gap-2 text-amber-500 mb-6">
+        <div className="flex items-center gap-2 text-[var(--accent)] mb-6">
           <Activity size={18} />
           <h3 className="text-sm font-bold text-[var(--t1)]">Dernière Saisie Enregistrée</h3>
         </div>
@@ -49,14 +49,14 @@ export const LastEntryCard: React.FC<LastEntryCardProps> = ({ saisie }) => {
             </h2>
 
             <div className="flex flex-wrap items-center gap-2 mt-4">
-              <span className="bg-[var(--chip)] border border-[var(--border-subtle)] text-[var(--t2)] text-xs font-semibold px-3 py-1.5 rounded-lg">
+              <span className="bg-[var(--chip)] border border-[var(--line)] text-[var(--t2)] text-xs font-semibold px-3 py-1.5 rounded-lg">
                 {Number(saisie!.heuresEffectuees) + Number(saisie!.heuresSupp)} h total{' '}
                 <span className="text-[var(--t3)] text-[11px]">
                   ({saisie!.heuresEffectuees}h Base + {saisie!.heuresSupp}h Supp)
                 </span>
               </span>
 
-              <span className="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-1.5 rounded-lg">
+              <span className="bg-[var(--info-bg)] text-[var(--info)] border border-[var(--info-line)] text-xs font-semibold px-3 py-1.5 rounded-lg">
                 {saisie!.typeActivite}
               </span>
 
@@ -67,13 +67,13 @@ export const LastEntryCard: React.FC<LastEntryCardProps> = ({ saisie }) => {
           </>
         ) : (
           <div className="py-8 text-center">
-            <p className="text-3xl font-black text-slate-600 tracking-tight">—</p>
+            <p className="text-3xl font-black text-[var(--t3)] tracking-tight">—</p>
             <p className="text-xs text-[var(--t3)] mt-2">Aucune saisie pour le moment</p>
           </div>
         )}
       </div>
 
-      <div className="mt-8 pt-4 border-t border-[var(--border-subtle)] flex items-center gap-2 text-[11px] text-[var(--t3)] font-medium">
+      <div className="mt-8 pt-4 border-t border-[var(--line)] flex items-center gap-2 text-[11px] text-[var(--t3)] font-medium">
         <RotateCw size={12} className="text-[var(--t3)]" />
         <span>Dernière mise à jour transmise aux RH</span>
       </div>

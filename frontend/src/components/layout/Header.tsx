@@ -47,27 +47,27 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   };
 
   return (
-    <header className="h-16 bg-[var(--shell-bg)] border-b border-[var(--border-subtle)] px-4 md:px-6 flex items-center justify-between font-sans shrink-0">
-      {/* Toggle Sidebar + Fil d'Ariane Dynamique */}
-      <div className="flex items-center gap-3 text-xs font-semibold min-w-0">
+    <header className="h-16 bg-[var(--shell-bg)] border-b border-[var(--line)] px-4 md:px-6 flex items-center justify-between font-sans shrink-0">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-3 text-sm min-w-0">
         <button
           onClick={onToggleSidebar}
           aria-label="Afficher/Masquer le menu"
-          className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] transition cursor-pointer shrink-0"
+          className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] transition cursor-pointer shrink-0"
         >
           <Menu size={18} />
         </button>
-        <span className="text-slate-600">›</span>
-        <span className="font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
+        <span className="text-[var(--t3)] select-none">›</span>
+        <span className="font-semibold truncate" style={{ color: 'var(--t1)' }}>
           {pageTitle}
         </span>
       </div>
 
-      {/* Période courante */}
+      {/* Current period */}
       <div
         title="Période courante"
-        className="hidden sm:block text-xs font-bold px-3 py-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-hover)]"
-        style={{ color: 'var(--text-muted)' }}
+        className="hidden sm:block text-[13px] font-medium px-3 py-1.5 rounded-lg border border-[var(--line)] bg-[var(--surface-hover)]"
+        style={{ color: 'var(--t2)' }}
       >
         {getPeriodeActuelle()}
       </div>
@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           onClick={handleToggleTheme}
           aria-label={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
           title={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
-          className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] transition cursor-pointer"
+          className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] transition cursor-pointer"
         >
           {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
         </button>
@@ -88,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           description="Voulez-vous vraiment vous déconnecter de votre session ?"
           confirmLabel="Se déconnecter"
           tone="danger"
-          buttonClassName="p-2 rounded-lg text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+          buttonClassName="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--danger)] hover:bg-[var(--danger-bg)] transition cursor-pointer"
           onConfirm={handleLogout}
         >
           <LogOut size={16} />

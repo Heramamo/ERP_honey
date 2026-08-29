@@ -28,12 +28,12 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
   const content = (
     <div className="w-full h-full text-[var(--t1)] font-sans p-6 flex flex-col min-h-0">
       {/* Titre dynamique */}
-      <h1 className="text-3xl font-extrabold tracking-tight mb-6 text-[var(--t1)] transition-all shrink-0">
+      <h1 className="text-2xl font-bold tracking-tight mb-6 text-[var(--t1)] transition-all shrink-0">
         {pageTitles[activeTab]}
       </h1>
 
       {/* Navigation par sous-sections / Onglets */}
-      <div className="flex items-center gap-8 border-b border-[var(--border-subtle)] mb-6 text-sm font-semibold shrink-0">
+      <div className="flex items-center gap-8 border-b border-[var(--line)] mb-6 text-sm font-semibold shrink-0">
         <button
           onClick={() => setActiveTab('validation')}
           className={`pb-3 relative transition-colors flex items-center gap-2 ${
@@ -45,7 +45,7 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
             {pendingCount}
           </span>
           {activeTab === 'validation' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent)] rounded-full" />
           )}
         </button>
 
@@ -57,7 +57,7 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
         >
           Toutes les Feuilles
           {activeTab === 'toutes' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent)] rounded-full" />
           )}
         </button>
       </div>

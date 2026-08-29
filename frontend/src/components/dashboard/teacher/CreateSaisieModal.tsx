@@ -58,14 +58,14 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
   };
 
   const inputClass =
-    'w-full bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors';
+    'w-full bg-[var(--panel-deep)] border border-[var(--line)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-[var(--accent-muted)] transition-colors';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-y-auto scroll-thin">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
+      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--line)] rounded-2xl shadow-[var(--shadow-raised)] overflow-y-auto scroll-thin">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)] bg-[var(--panel-deep)]">
           <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Nouvelle Saisie</h2>
           <button
             onClick={onClose}
@@ -88,7 +88,7 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
                   setDate(e.target.value);
                   setLocalError(null);
                 }}
-                className={`${inputClass} [color-scheme:dark]`}
+                className={`${inputClass}`}
               />
             </div>
 
@@ -136,7 +136,7 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
           </div>
 
           {(localError || error) && (
-            <div className="px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs">
+            <div className="px-4 py-3 rounded-lg bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-sm">
               {localError ?? error}
             </div>
           )}
@@ -145,14 +145,14 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-lg border border-[var(--border-subtle)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
+              className="px-4 py-2.5 rounded-lg border border-[var(--line)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+              className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
               {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
               {submitting ? 'Enregistrement...' : 'Enregistrer'}

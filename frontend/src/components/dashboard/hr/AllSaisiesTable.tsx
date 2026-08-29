@@ -11,13 +11,13 @@ interface AllSaisiesTableProps {
 }
 
 const STATUT_STYLES: Record<string, string> = {
-  VALIDE: 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50',
-  REFUSE: 'bg-rose-950/60 text-rose-400 border-rose-800/50',
-  EN_ATTENTE: 'bg-amber-950/60 text-amber-400 border-amber-800/50',
+  VALIDE: 'text-[var(--success)] bg-[var(--success-bg)] border-[var(--success-line)]',
+  REFUSE: 'text-[var(--danger)] bg-[var(--danger-bg)] border-[var(--danger-line)]',
+  EN_ATTENTE: 'text-[var(--warning)] bg-[var(--warning-bg)] border-[var(--warning-line)]',
 };
 
 const getStatutStyle = (statut: SaisiePayload['statut']) =>
-  STATUT_STYLES[String(statut)] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--border-subtle)]';
+  STATUT_STYLES[String(statut)] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--line)]';
 
 const getStatutLabel = (statut: SaisiePayload['statut']) => {
   switch (String(statut)) {
@@ -44,27 +44,27 @@ export const AllSaisiesTable: React.FC<AllSaisiesTableProps> = ({ allowedRoles }
   const content = (
     <div className="space-y-4 flex-1 min-h-0 flex flex-col">
       {error && (
-        <div className="px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm">
+        <div className="px-4 py-3 rounded-lg bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-sm">
           {error}
         </div>
       )}
 
-      <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl flex-1 min-h-0 flex flex-col">
+      <div className="bg-[var(--panel)] border border-[var(--line)] rounded-xl overflow-hidden shadow-[var(--shadow-raised)] flex-1 min-h-0 flex flex-col">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
+            <Loader2 className="w-6 h-6 animate-spin text-[var(--accent)]" />
             <span className="text-sm">Chargement des feuilles de saisie...</span>
           </div>
         ) : all.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Inbox className="w-8 h-8 text-slate-600" />
+            <Inbox className="w-8 h-8 text-[var(--t3)]" />
             <span className="text-sm">Aucune feuille de saisie pour le moment.</span>
           </div>
         ) : (
           <div className="flex-1 min-h-0 overflow-auto scroll-thin">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="sticky top-0 z-10 border-b border-[var(--border-subtle)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
+              <tr className="sticky top-0 z-10 border-b border-[var(--line)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
                 <th className="py-4 px-6">ENSEIGNANT</th>
                 <th className="py-4 px-6">DATE</th>
                 <th className="py-4 px-6">TYPE D'ACTIVITÉ</th>
@@ -73,7 +73,7 @@ export const AllSaisiesTable: React.FC<AllSaisiesTableProps> = ({ allowedRoles }
                 <th className="py-4 px-6">STATUT</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--border-subtle)] text-sm">
+            <tbody className="divide-y divide-[var(--line)] text-sm">
               {all.map((saisie: SaisiePayload) => (
                 <tr key={saisie.id ?? `${saisie.enseignantId}-${saisie.date}`} className="hover:bg-[var(--chip)] transition-colors">
                   <td className="py-4 px-6 font-bold text-[var(--t1)]">
@@ -86,12 +86,12 @@ export const AllSaisiesTable: React.FC<AllSaisiesTableProps> = ({ allowedRoles }
                   </td>
                   <td className="py-4 px-6 text-[var(--t3)] text-xs">{formatDate(saisie.date)}</td>
                   <td className="py-4 px-6">
-                    <span className="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider border bg-blue-950/60 text-blue-400 border-blue-800/50">
+                    <span className="inline-block px-3 py-1 rounded-full text-[10px] font-bold tracking-wide border bg-[var(--info-bg)] text-[var(--info)] border-[var(--info-line)]">
                       {saisie.typeActivite}
                     </span>
                   </td>
                   <td className="py-4 px-6 font-mono font-semibold text-[var(--t2)]">{saisie.heuresEffectuees} h</td>
-                  <td className="py-4 px-6 font-mono font-semibold text-amber-400">{saisie.heuresSupp} h</td>
+                  <td className="py-4 px-6 font-mono font-semibold text-[var(--warning)]">{saisie.heuresSupp} h</td>
                   <td className="py-4 px-6">
                     <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border ${getStatutStyle(saisie.statut)}`}>
                       {getStatutLabel(saisie.statut)}
