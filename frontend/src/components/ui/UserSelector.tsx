@@ -9,25 +9,25 @@ interface UserSelectorProps {
 export const UserSelector: React.FC<UserSelectorProps> = ({ name, role }) => {
   return (
     <div>
-      <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+      <label className="block text-xs font-medium text-[var(--t2)] mb-1.5">
         Utilisateur
       </label>
-      <div className="flex items-center justify-between p-2.5 bg-white border border-gray-200 rounded-xl shadow-sm">
+      <div className="flex items-center justify-between p-2.5 bg-[var(--panel-deep)] border border-[var(--line)] rounded-md">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[var(--t3)]">
-            <User size={18} />
+          <div className="w-8 h-8 rounded-md bg-[var(--chip)] flex items-center justify-center text-[var(--t3)]">
+            <User size={15} />
           </div>
           <div>
-            <p className="text-xs font-bold text-gray-800 leading-tight">{name}</p>
-            <p className="text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+            <p className="text-xs font-semibold text-[var(--t1)] leading-tight">{name}</p>
+            <p className="text-[11px] font-medium text-[var(--success)] flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)] inline-block" />
               {role}
             </p>
           </div>
         </div>
-        <div className="text-gray-400 flex flex-col items-center">
-          <ChevronUp size={12} className="-mb-1" />
-          <ChevronDown size={12} />
+        <div className="text-[var(--t3)] flex flex-col items-center">
+          <ChevronUp size={11} className="-mb-0.5" />
+          <ChevronDown size={11} />
         </div>
       </div>
     </div>

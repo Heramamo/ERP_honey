@@ -15,9 +15,9 @@ export function CompleteTeacherProfileForm() {
   ] as const;
 
   return (
-    <div className="md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white">
+    <div className="md:w-7/12 p-8 md:p-12 flex flex-col justify-center">
       <AuthHeader
-        tag="PREMIÈRE CONNEXION"
+        tag="Première connexion"
         title="Finalisation de votre profil Enseignant"
         subtitle="Renseignez vos informations pour configurer votre accès à l'ERP."
       />
@@ -36,14 +36,14 @@ export function CompleteTeacherProfileForm() {
           disabled
         />
 
-        <div className="pt-2 border-t border-slate-100" />
+        <div className="pt-2 border-t border-[var(--line)]" />
 
         {/* Sélection moderne du Statut (Sélecteur à pilules / Segmented Buttons) */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label className="block text-xs font-medium text-[var(--t2)] mb-1.5">
             Statut Enseignant
           </label>
-          <div className="grid grid-cols-3 gap-1 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/60">
+          <div className="grid grid-cols-3 gap-1 bg-[var(--panel-deep)] p-1 rounded-md border border-[var(--line)]">
             {statusOptions.map((opt) => {
               const isActive = status === opt.value;
               return (
@@ -51,10 +51,10 @@ export function CompleteTeacherProfileForm() {
                   key={opt.value}
                   type="button"
                   onClick={() => setStatus(opt.value)}
-                  className={`py-2 px-3 rounded-xl text-xs font-bold transition-all duration-200 ${
+                  className={`py-2 px-3 rounded-md text-xs font-medium transition-colors ${
                     isActive
-                      ? 'bg-white text-slate-900 shadow-sm border border-slate-200/50'
-                      : 'text-slate-500 hover:text-slate-800'
+                      ? 'bg-[var(--accent)] text-[#1a1408]'
+                      : 'text-[var(--t3)] hover:text-[var(--t1)]'
                   }`}
                 >
                   {opt.label}

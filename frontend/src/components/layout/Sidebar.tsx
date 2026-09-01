@@ -3,7 +3,6 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   GraduationCap,
-  PieChart,
   Settings,
   Clock,
   FileText,
@@ -11,6 +10,7 @@ import {
   LogOut,
   ChevronsLeft,
   Boxes,
+  PieChart,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -70,71 +70,71 @@ export const Sidebar: React.FC<SidebarProps> = ({
     navigate('/login');
   };
 
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `group flex items-center px-3 py-2 rounded-md text-[13px] font-medium transition-colors ${
+      collapsed ? 'lg:justify-center lg:px-0' : ''
+    } ${
+      isActive
+        ? 'bg-[var(--accent-soft)] text-[var(--accent)]'
+        : 'text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)]'
+    }`;
+
   return (
     <>
       {/* Backdrop mobile */}
       <div
         onClick={onCloseMobile}
-        className={`fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 z-40 bg-black/50 lg:hidden transition-opacity duration-200 ${
           mobileOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       />
 
       <aside
-        className={`bg-[var(--shell-bg)] text-[var(--t2)] flex flex-col justify-between border-r border-[var(--border-subtle)] font-sans select-none shrink-0 overflow-hidden transition-all duration-300
-          fixed inset-y-0 left-0 z-50 w-64 lg:static lg:h-full lg:translate-x-0
+        className={`bg-[var(--shell-bg)] text-[var(--t2)] flex flex-col justify-between border-r border-[var(--line)] font-sans select-none shrink-0 overflow-hidden transition-all duration-200
+          fixed inset-y-0 left-0 z-50 w-60 lg:static lg:h-full lg:translate-x-0
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
-          ${collapsed ? 'lg:w-[76px]' : 'lg:w-64'}
+          ${collapsed ? 'lg:w-[60px]' : 'lg:w-60'}
         `}
       >
         <div className="flex-1 min-h-0 overflow-y-auto scroll-thin">
-          {/* Logo HONEY GROUP */}
+          {/* Brand */}
           <div
-            className={`p-5 flex items-center border-b border-[var(--border-subtle)] ${
+            className={`px-4 py-4 flex items-center border-b border-[var(--line)] ${
               collapsed ? 'lg:justify-center' : ''
             }`}
           >
-            <div className="w-9 h-9 rounded-lg bg-[#f59e0b] flex items-center justify-center text-slate-950 font-black text-lg shadow-md shrink-0">
-              H
+            <div className="w-8 h-8 shrink-0 rounded-md bg-[var(--accent)] flex items-center justify-center">
+              <span className="text-[#1a1408] font-bold text-sm">H</span>
             </div>
             <div
-              className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
+              className={`overflow-hidden whitespace-nowrap transition-all duration-200 ease-out ${
                 collapsed
-                  ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-3'
-                  : 'max-w-[160px] ml-3 opacity-100'
+                  ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-2'
+                  : 'max-w-[140px] ml-2.5 opacity-100'
               }`}
             >
-              <h1 className="font-black text-[var(--t1)] text-sm tracking-wide leading-none uppercase">HONEY GROUP</h1>
-              <span className="text-[10px] font-semibold text-[var(--t3)] tracking-wider uppercase block mt-1">ERP INTERNE</span>
+              <h1 className="font-semibold text-[var(--t1)] text-[13px] leading-none">Honey Group</h1>
+              <span className="text-[10px] text-[var(--t3)] block mt-0.5">ERP interne</span>
             </div>
           </div>
 
-          {/* Liens de navigation */}
-          <nav className="px-3 space-y-1.5 mt-4">
-            {navItems.map((item, index) => (
+          {/* Navigation */}
+          <nav className={`px-2 space-y-0.5 mt-3 ${collapsed ? 'lg:px-1.5' : ''}`}>
+            {navItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 end={item.end}
                 onClick={onCloseMobile}
                 title={item.label}
-                className={({ isActive }) =>
-                  `group flex items-center px-4 py-3 rounded-lg text-xs font-bold transition-all duration-300 ${
-                    collapsed ? 'lg:justify-center lg:px-0' : ''
-                  } ${
-                    isActive
-                      ? 'bg-[#f59e0b] text-slate-950 shadow-lg shadow-[#f59e0b]/20'
-                      : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)]'
-                  }`
-                }
+                className={navLinkClass}
               >
-                <item.icon size={18} className="shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                <item.icon size={16} strokeWidth={2} className="shrink-0" />
                 <span
-                  style={{ transitionDelay: collapsed ? '0ms' : `${index * 25}ms` }}
-                  className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
+                  className={`overflow-hidden whitespace-nowrap transition-all duration-200 ease-out ${
                     collapsed
-                      ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-3'
-                      : 'max-w-[180px] ml-3.5 opacity-100'
+                      ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-2'
+                      : 'max-w-[160px] ml-2.5 opacity-100'
                   }`}
                 >
                   {item.label}
@@ -143,42 +143,42 @@ export const Sidebar: React.FC<SidebarProps> = ({
             ))}
           </nav>
 
-          {/* Bouton réduction (desktop uniquement) */}
-          <div className="hidden lg:flex px-3 mt-4 justify-center">
+          {/* Collapse toggle (desktop) */}
+          <div className="hidden lg:flex px-2 mt-3 justify-center">
             <button
               onClick={onToggleCollapsed}
               title={collapsed ? 'Déplier le menu' : 'Réduire le menu'}
-              className={`p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] transition-all duration-300 cursor-pointer ${
+              className={`p-1.5 rounded-md text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] transition-colors cursor-pointer ${
                 collapsed ? '' : 'rotate-180'
               }`}
             >
-              <ChevronsLeft size={16} />
+              <ChevronsLeft size={14} />
             </button>
           </div>
         </div>
 
-        {/* Bas de Sidebar */}
-        <div className="p-3 space-y-3 border-t border-[var(--border-subtle)]">
+        {/* Footer */}
+        <div className={`p-2 space-y-1 border-t border-[var(--line)]`}>
           <NavLink
             to="/dashboard/settings"
             onClick={onCloseMobile}
             title="Paramètres"
             className={({ isActive }) =>
-              `flex items-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-300 ${
+              `flex items-center px-3 py-2 rounded-md text-[13px] font-medium transition-colors ${
                 collapsed ? 'lg:justify-center lg:px-0' : ''
               } ${
                 isActive
                   ? 'text-[var(--t1)] bg-[var(--surface-hover)]'
-                  : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)]'
+                  : 'text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)]'
               }`
             }
           >
-            <Settings size={18} className="shrink-0" />
+            <Settings size={16} strokeWidth={2} className="shrink-0" />
             <span
-              className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
+              className={`overflow-hidden whitespace-nowrap transition-all duration-200 ease-out ${
                 collapsed
-                  ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-3'
-                  : 'max-w-[160px] ml-3.5 opacity-100'
+                  ? 'lg:max-w-0 lg:opacity-0 lg:-translate-x-2'
+                  : 'max-w-[140px] ml-2.5 opacity-100'
               }`}
             >
               Paramètres
@@ -186,22 +186,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </NavLink>
 
           <div
-            className={`pt-2 items-center gap-3 px-2 flex ${
+            className={`items-center gap-2.5 px-2 flex ${
               collapsed ? 'lg:flex-col lg:gap-y-2 lg:px-0' : ''
             }`}
           >
-            <div className="w-8 h-8 rounded-full bg-[#f59e0b] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+            <div className="w-7 h-7 rounded-md bg-[var(--accent-soft)] text-[var(--accent)] font-semibold text-[11px] flex items-center justify-center shrink-0">
               {getInitials(user?.email)}
             </div>
             <div
-              className={`min-w-0 overflow-hidden transition-all duration-300 ease-out ${
+              className={`min-w-0 overflow-hidden transition-all duration-200 ease-out ${
                 collapsed
                   ? 'lg:max-h-0 lg:opacity-0 lg:-translate-y-1'
                   : 'max-h-12 opacity-100 flex-1'
               }`}
             >
-              <p className="text-xs font-bold text-[var(--t1)] truncate">{formatDisplayName(user?.email)}</p>
-              <p className="text-[10px] font-semibold text-[var(--t3)] uppercase tracking-wider truncate">
+              <p className="text-[12px] font-medium text-[var(--t1)] truncate">{formatDisplayName(user?.email)}</p>
+              <p className="text-[10px] text-[var(--t3)] truncate">
                 {user?.role ?? 'Utilisateur'}
               </p>
             </div>
@@ -210,10 +210,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
               description="Voulez-vous vraiment vous déconnecter de votre session ?"
               confirmLabel="Se déconnecter"
               tone="danger"
-              buttonClassName="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)] rounded-lg transition cursor-pointer shrink-0"
+              buttonClassName="p-1.5 text-[var(--t3)] hover:text-[var(--danger)] hover:bg-[var(--danger-bg)] rounded-md transition cursor-pointer shrink-0"
               onConfirm={handleLogout}
             >
-              <LogOut size={16} />
+              <LogOut size={14} />
             </ConfirmButton>
           </div>
         </div>

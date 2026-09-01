@@ -6,6 +6,7 @@ import { fetchCharges } from '../../../store/slices/chargeSlice';
 import { fetchPoles } from '../../../store/slices/poleSlice';
 import { formatAr } from '../../../utils/finance';
 import { formatDateShort } from '../../../const/date';
+import { StatCard } from '../StatCard';
 
 interface RecentOperation {
   id: string;
@@ -56,63 +57,52 @@ export const FinanceOverview: React.FC<{ refreshKey?: number }> = ({ refreshKey 
     .slice(0, 6);
 
   return (
-    <div className="space-y-6">
-      {/* Cards KPI */}
+    <div className="space-y-5">
+      {/* KPI cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-[#111827] p-5 rounded-xl border border-gray-800">
-          <div className="flex justify-between items-center text-gray-400 mb-2">
-            <span className="text-sm font-medium">Total Revenus</span>
-            <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400">
-              <TrendingUp className="w-5 h-5" />
-            </div>
-          </div>
-          <p className="text-2xl font-bold text-white">{formatAr(totalRevenus)}</p>
-          <span className="text-xs text-gray-500 mt-2 inline-block">{revenus.length} recette{revenus.length > 1 ? 's' : ''}</span>
-        </div>
-
-        <div className="bg-[#111827] p-5 rounded-xl border border-gray-800">
-          <div className="flex justify-between items-center text-gray-400 mb-2">
-            <span className="text-sm font-medium">Total Charges</span>
-            <div className="p-2 bg-rose-500/10 rounded-lg text-rose-400">
-              <TrendingDown className="w-5 h-5" />
-            </div>
-          </div>
-          <p className="text-2xl font-bold text-white">{formatAr(totalCharges)}</p>
-          <span className="text-xs text-gray-500 mt-2 inline-block">{charges.length} charge{charges.length > 1 ? 's' : ''}</span>
-        </div>
-
-        <div className="bg-[#111827] p-5 rounded-xl border border-gray-800">
-          <div className="flex justify-between items-center text-gray-400 mb-2">
-            <span className="text-sm font-medium">Bénéfice Net Consolidé</span>
-            <div className="p-2 bg-amber-500/10 rounded-lg text-amber-500">
-              <DollarSign className="w-5 h-5" />
-            </div>
-          </div>
-          <p className={`text-2xl font-bold ${beneficeNet >= 0 ? 'text-amber-500' : 'text-rose-500'}`}>{formatAr(beneficeNet)}</p>
-          <span className="text-xs text-gray-500 mt-2 inline-block">Revenus - Charges</span>
-        </div>
+        <StatCard
+          title="Total revenus"
+          value={formatAr(totalRevenus)}
+          subtitle={`${revenus.length} recette${revenus.length > 1 ? 's' : ''}`}
+          icon={<TrendingUp size={14} />}
+          glowColor="emerald"
+        />
+        <StatCard
+          title="Total charges"
+          value={formatAr(totalCharges)}
+          subtitle={`${charges.length} charge${charges.length > 1 ? 's' : ''}`}
+          icon={<TrendingDown size={14} />}
+          glowColor="blue"
+        />
+        <StatCard
+          title="Bénéfice net"
+          value={formatAr(beneficeNet)}
+          subtitle="Revenus - Charges"
+          icon={<DollarSign size={14} />}
+          glowColor="amber"
+        />
       </div>
 
-      {/* Mini-Tableau des Dernières Transactions */}
-      <div className="bg-[#111827] rounded-xl border border-gray-800 p-5">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-bold text-white">Opérations Récentes</h3>
+      {/* Recent operations */}
+      <div className="bg-[var(--panel)] rounded-lg border border-[var(--line)] p-4">
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-sm font-semibold text-[var(--t1)]">Opérations récentes</h3>
         </div>
         {operations.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 gap-2 text-gray-400">
-            <TrendingUp className="w-8 h-8 text-gray-600" />
-            <span className="text-sm">Aucune opération enregistrée.</span>
+          <div className="flex flex-col items-center justify-center py-10 gap-1.5 text-[var(--t3)]">
+            <TrendingUp className="w-6 h-6" />
+            <span className="text-xs">Aucune opération enregistrée.</span>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-1.5">
             {operations.map((item) => (
-              <div key={item.id} className="flex justify-between items-center p-3 bg-[#161B26] rounded-lg border border-gray-800/50">
-                <div>
-                  <p className="text-sm font-medium text-white">{item.label}</p>
-                  <p className="text-xs text-gray-400">{item.pole} • {formatDateShort(item.date)}</p>
+              <div key={item.id} className="flex justify-between items-center px-3 py-2.5 rounded-md bg-[var(--panel-deep)] border border-[var(--line)]">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-[var(--t1)] truncate">{item.label}</p>
+                  <p className="text-[11px] text-[var(--t3)]">{item.pole} · {formatDateShort(item.date)}</p>
                 </div>
-                <span className={`text-sm font-bold ${item.type === 'revenu' ? 'text-emerald-400' : 'text-rose-400'}`}>
-                  {item.type === 'revenu' ? '+' : '-'} {formatAr(item.amount)}
+                <span className={`text-sm font-mono font-semibold tabular-nums shrink-0 ml-3 ${item.type === 'revenu' ? 'text-[var(--success)]' : 'text-[var(--danger)]'}`}>
+                  {item.type === 'revenu' ? '+' : '-'}{formatAr(item.amount)}
                 </span>
               </div>
             ))}

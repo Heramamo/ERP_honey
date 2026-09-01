@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {  Building2 } from 'lucide-react';
 import { AuthHeader } from '../components/ui/AuthHeader';
 import { LoginForm } from '../components/auth/LoginForm';
 import type { LoginFormValues } from '../components/auth/LoginForm';
@@ -32,56 +31,61 @@ export default function LoginPage(): React.ReactElement {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#080d1a] text-slate-200 flex flex-col justify-between p-6 md:p-12 relative overflow-hidden font-sans">
-      {/* Halo lumineux d'arrière-plan */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[#d4af37]/5 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen w-full bg-[var(--app-bg)] text-[var(--t1)] flex items-center justify-center p-4 md:p-8 font-sans">
+      <div className="relative w-full max-w-5xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
-      {/* Conteneur principal split screen */}
-      <div className="flex-1 flex items-center justify-center w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center w-full">
-          
-          {/* CÔTÉ GAUCHE : Branding */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
-            <div className="w-16 h-16 bg-[#d4af37] rounded-2xl shadow-lg shadow-[#d4af37]/10 flex items-center justify-center">
-              <Building2 size={36} className="text-slate-950" />
+          {/* Left: Branding */}
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-md bg-[var(--accent)] flex items-center justify-center shrink-0">
+                <span className="text-[#1a1408] font-bold text-sm">H</span>
+              </div>
+              <div className="leading-tight">
+                <p className="text-sm font-semibold text-[var(--t1)]">Honey Group</p>
+                <p className="text-[10px] text-[var(--t3)]">ERP interne</p>
+              </div>
             </div>
 
-            <div className="space-y-4 max-w-lg">
-              <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight">
-                Bienvenue dans votre espace ERP
+            <div className="mt-10">
+              <p className="text-[10px] font-semibold text-[var(--accent)] uppercase tracking-widest mb-2.5">
+                Bienvenue sur Honey ERP
+              </p>
+              <h1 className="text-2xl md:text-3xl font-bold tracking-tight leading-snug">
+                Vos opérations, regroupées dans un seul espace de travail.
               </h1>
-              <p className="text-slate-400 text-base md:text-lg leading-relaxed font-medium">
-                Accédez à vos outils de gestion intégrés avec un niveau de sécurité optimal pour votre environnement de travail.
+              <p className="text-[var(--t3)] text-sm leading-relaxed mt-3 max-w-md">
+                Accédez à la finance, aux pôles et à la paie depuis un environnement sécurisé.
               </p>
             </div>
           </div>
 
-          {/* CÔTÉ DROIT : Formulaire */}
-          <div className="w-full max-w-md mx-auto">
-            <div className="bg-[#101827]/90 border border-slate-800 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
-              
-              <AuthHeader 
-                tag="HONEY GROUP • ERP INTERNE"
-                title="Authentification Session Desktop"
-                subtitle="Accès sécurisé au réseau d'entreprise"
+          {/* Right: Form */}
+          <div className="w-full max-w-sm mx-auto">
+            <div className="bg-[var(--panel)] border border-[var(--line)] rounded-lg p-6">
+
+              <AuthHeader
+                tag="Honey Group"
+                title="Connexion"
+                subtitle="Accès réservé au réseau d'entreprise"
               />
 
               <LoginForm onSubmit={handleLogin} error={error} />
 
-              <div className="mt-5 flex flex-col items-center gap-3 text-center">
-                <a 
-                  href="#" 
+              <div className="mt-4 flex flex-col items-center gap-2.5 text-center">
+                <a
+                  href="#"
                   onClick={handleHelpClick}
-                  className="text-xs text-slate-400 hover:text-slate-200 transition-colors"
+                  className="text-xs text-[var(--t3)] hover:text-[var(--t1)] transition-colors"
                 >
                   Problème de connexion ?
                 </a>
 
-                <div className="h-[1px] bg-slate-800 w-full my-1" />
+                <div className="h-px bg-[var(--line)] w-full" />
 
-                <p className="text-xs text-slate-400">
-                  Vous n'avez pas encore de compte ?{' '}
-                  <Link to="/register" className="text-[#d4af37] font-bold hover:underline">
+                <p className="text-xs text-[var(--t3)]">
+                  Pas encore de compte ?{' '}
+                  <Link to="/register" className="text-[var(--accent)] font-semibold hover:underline">
                     Créer un compte
                   </Link>
                 </p>

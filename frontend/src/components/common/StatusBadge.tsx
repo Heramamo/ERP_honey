@@ -1,24 +1,48 @@
 import React from 'react';
 
-type StatusType = 'Validé' | 'Payé' | 'En attente' | 'En révision';
-
 interface StatusBadgeProps {
-  status: StatusType;
+  status: string;
   showDot?: boolean;
+  className?: string;
 }
 
-export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, showDot = false }) => {
-  const styles: Record<StatusType, string> = {
-    'Validé': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    'Payé': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    'En attente': 'bg-amber-500/10 text-amber-500 border-amber-500/30',
-    'En révision': 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-  };
+const normalize = (s: string): string => {
+  const upper = s.trim().toUpperCase();
+  if (upper === 'PAYÉ' || upper === 'PAYE' || upper === 'PAID') return 'Payé';
+  if (upper === 'VALIDE' || upper === 'VALIDATED') return 'Validé';
+  if (upper === 'EN_ATTENTE' || upper === 'EN ATTENTE' || upper === 'PENDING') return 'En attente';
+  if (upper === 'EN_REVISION' || upper === 'EN RÉVISION') return 'En révision';
+  if (upper === 'PERMANENT') return 'Permanent';
+  if (upper === 'VACATAIRE') return 'Vacataire';
+  if (upper === 'PRESTATAIRE') return 'Prestataire';
+  return s;
+};
 
+const group = (s: string): 'success' | 'warning' | 'info' | 'muted' => {
+  const n = normalize(s);
+  if (n === 'Validé' || n === 'Payé' || n === 'Permanent') return 'success';
+  if (n === 'En attente' || n === 'En révision') return 'warning';
+  if (n === 'Vacataire' || n === 'Prestataire') return 'info';
+  return 'muted';
+};
+
+const styles: Record<string, string> = {
+  success:
+    'text-[var(--success)] bg-[var(--success-bg)]',
+  warning:
+    'text-[var(--warning)] bg-[var(--warning-bg)]',
+  info: 'text-[var(--info)] bg-[var(--info-bg)]',
+  muted: 'text-[var(--t2)] bg-[var(--chip)]',
+};
+
+export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, showDot = false, className = '' }) => {
+  const g = group(status);
   return (
-    <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md inline-flex items-center gap-1.5 border uppercase ${styles[status]}`}>
+    <span
+      className={`text-[11px] font-medium px-2 py-0.5 rounded inline-flex items-center gap-1.5 whitespace-nowrap ${styles[g]} ${className}`}
+    >
       {showDot && <span className="w-1.5 h-1.5 rounded-full bg-current inline-block" />}
-      {status}
+      {normalize(status)}
     </span>
   );
 };

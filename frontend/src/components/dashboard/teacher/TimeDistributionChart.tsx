@@ -12,7 +12,7 @@ interface TimeDistributionChartProps {
   totalHours?: number;
 }
 
-const COLORS = ['#10b981', '#f59e0b', '#3b82f6', '#a855f7', '#06b6d4', '#ef4444'];
+const COLORS = ['#c8932a', '#8c6d3f', '#5b7a6d', '#7a6a9e', '#a8634a', '#6d7f8c'];
 
 export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ data = [], totalHours = 0 }) => {
   const repartitionData = data
@@ -24,14 +24,13 @@ export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ da
 
   return (
     <Card className="justify-between">
-      <div className="flex items-center gap-2 text-amber-500 mb-2">
-        <div className="w-2.5 h-2.5 rounded-full border-2 border-amber-500 inline-block" />
-        <h3 className="text-sm font-bold text-[var(--t1)]">Répartition du Temps</h3>
-      </div>
+      <h3 className="text-xs font-semibold text-[var(--t2)] uppercase tracking-wider mb-3">
+        Répartition du temps
+      </h3>
 
       {repartitionData.length > 0 ? (
         <>
-          <div className="h-44 w-full relative flex items-center justify-center my-2">
+          <div className="h-44 w-full relative flex items-center justify-center my-1">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -51,21 +50,22 @@ export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ da
             </ResponsiveContainer>
 
             <div className="absolute text-center">
-              <span className="text-2xl font-black text-[var(--t1)] block leading-none">
+              <span className="text-xl font-semibold text-[var(--t1)] font-mono tabular-nums block leading-none">
                 {Math.round(displayTotal)} h
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[var(--t3)] block mt-1">TOTAL</span>
+              <span className="text-[9px] uppercase font-medium tracking-wider text-[var(--t3)] block mt-0.5">Total</span>
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-xs font-medium pt-2">
+          <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-1.5 text-xs pt-2">
             {repartitionData.map((item) => {
               const pct = totalValue > 0 ? Math.round((item.value / totalValue) * 100) : 0;
               return (
-                <div key={item.name} className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ backgroundColor: item.color }} />
-                  <span className="text-[var(--t2)]">
-                    {item.name} : <strong className="text-[var(--t1)]">{pct}%</strong>
+                <div key={item.name} className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-sm inline-block shrink-0" style={{ backgroundColor: item.color }} />
+                  <span className="text-[var(--t2)] text-[11px]">
+                    {item.name}{' '}
+                    <span className="font-mono font-semibold text-[var(--t1)] tabular-nums">{pct}%</span>
                   </span>
                 </div>
               );
@@ -73,7 +73,7 @@ export const TimeDistributionChart: React.FC<TimeDistributionChartProps> = ({ da
           </div>
         </>
       ) : (
-        <div className="h-44 flex items-center justify-center">
+        <div className="h-40 flex items-center justify-center">
           <p className="text-xs text-[var(--t3)]">Aucune donnée de répartition</p>
         </div>
       )}

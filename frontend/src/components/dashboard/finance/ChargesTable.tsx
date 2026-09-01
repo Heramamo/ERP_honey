@@ -3,9 +3,6 @@ import {
   Search,
   Plus,
   Loader2,
-  TrendingDown,
-  Layers,
-  Zap,
   ChevronLeft,
   ChevronRight,
   MoreVertical,
@@ -58,57 +55,39 @@ export const ChargesTable: React.FC<ChargesTableProps> = ({ onOpenModal, refresh
   const safePage = Math.min(currentPage, totalPages);
   const pageCharges = filteredCharges.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
+  const kpi = (label: string, value: string, tone: string) => (
+    <div className="bg-[var(--panel)] border border-[var(--line)] rounded-lg p-4">
+      <p className="text-[11px] font-medium text-[var(--t3)]">{label}</p>
+      <p className={`mt-1.5 text-xl font-medium font-mono tabular-nums ${tone}`}>{value}</p>
+    </div>
+  );
+
   return (
-    <div className="space-y-6 text-gray-100">
-      {/* 1. Cartes KPI */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-[#111827] border border-gray-800 rounded-xl p-5 border-l-4 border-l-red-500 shadow-lg relative overflow-hidden">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Charges Totales</p>
-          <div className="flex items-baseline gap-2 mt-2">
-            <span className="text-2xl font-bold text-red-400">{formatAr(total)}</span>
-          </div>
-          <p className="text-xs text-gray-400 mt-2">{filteredCharges.length} charge{filteredCharges.length > 1 ? 's' : ''}</p>
-          <TrendingDown className="w-16 h-16 text-red-500/10 absolute right-4 bottom-2 pointer-events-none" />
-        </div>
-
-        <div className="bg-[#111827] border border-gray-800 rounded-xl p-5 border-l-4 border-l-blue-500 shadow-lg relative overflow-hidden">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Charges Fixes</p>
-          <div className="flex items-baseline gap-2 mt-2">
-            <span className="text-2xl font-bold text-blue-400">{formatAr(totalFixed)}</span>
-          </div>
-          <p className="text-xs text-gray-400 mt-2">Dépenses récurrentes</p>
-          <Layers className="w-16 h-16 text-blue-500/10 absolute right-4 bottom-2 pointer-events-none" />
-        </div>
-
-        <div className="bg-[#111827] border border-gray-800 rounded-xl p-5 border-l-4 border-l-purple-500 shadow-lg relative overflow-hidden">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Charges Variables</p>
-          <div className="flex items-baseline gap-2 mt-2">
-            <span className="text-2xl font-bold text-purple-400">{formatAr(totalVariable)}</span>
-          </div>
-          <p className="text-xs text-gray-400 mt-2">Dépenses ponctuelles</p>
-          <Zap className="w-16 h-16 text-purple-500/10 absolute right-4 bottom-2 pointer-events-none" />
-        </div>
+    <div className="space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        {kpi('Charges totales', formatAr(total), 'text-[var(--danger)]')}
+        {kpi('Charges fixes', formatAr(totalFixed), 'text-[var(--t1)]')}
+        {kpi('Charges variables', formatAr(totalVariable), 'text-[var(--t1)]')}
       </div>
 
-      {/* 2. Filtres et Tableau */}
-      <div className="bg-[#111827] border border-gray-800 rounded-xl p-5 shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <div className="flex flex-wrap items-center gap-3 flex-1">
-            <div className="relative flex-1 min-w-[240px] max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+      <div className="bg-[var(--panel)] border border-[var(--line)] rounded-lg">
+        <div className="flex flex-wrap items-center justify-between gap-3 p-4 border-b border-[var(--line)]">
+          <div className="flex flex-wrap items-center gap-2 flex-1">
+            <div className="relative flex-1 min-w-[200px] max-w-xs">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--t3)]" />
               <input
                 type="text"
-                placeholder="Rechercher une dépense..."
+                placeholder="Rechercher..."
                 value={searchTerm}
                 onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
-                className="w-full bg-[#0B0F17] border border-gray-800 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-500"
+                className="w-full bg-[var(--panel-deep)] border border-[var(--line)] rounded-md pl-8 pr-3 py-1.5 text-sm text-[var(--t1)] placeholder:text-[var(--t3)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-muted)] focus:border-transparent"
               />
             </div>
 
             <select
               value={selectedPole}
               onChange={(e) => { setSelectedPole(e.target.value); setCurrentPage(1); }}
-              className="bg-[#0B0F17] border border-gray-800 rounded-lg px-4 py-2 text-sm text-gray-300 focus:outline-none focus:border-amber-500"
+              className="bg-[var(--panel-deep)] border border-[var(--line)] rounded-md px-3 py-1.5 text-sm text-[var(--t2)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-muted)] cursor-pointer"
             >
               <option value="all">Tous les pôles</option>
               {poles.map((pole) => (
@@ -119,7 +98,7 @@ export const ChargesTable: React.FC<ChargesTableProps> = ({ onOpenModal, refresh
             <select
               value={selectedType}
               onChange={(e) => { setSelectedType(e.target.value); setCurrentPage(1); }}
-              className="bg-[#0B0F17] border border-gray-800 rounded-lg px-4 py-2 text-sm text-gray-300 focus:outline-none focus:border-amber-500"
+              className="bg-[var(--panel-deep)] border border-[var(--line)] rounded-md px-3 py-1.5 text-sm text-[var(--t2)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-muted)] cursor-pointer"
             >
               <option value="all">Toutes les natures</option>
               <option value="FIXE">Fixe</option>
@@ -129,60 +108,59 @@ export const ChargesTable: React.FC<ChargesTableProps> = ({ onOpenModal, refresh
 
           <button
             onClick={() => onOpenModal('DEPENSE')}
-            className="bg-amber-500 hover:bg-amber-600 text-black font-semibold text-sm px-4 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
+            className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[#1a1408] font-semibold text-sm px-3.5 py-2 rounded-md flex items-center gap-1.5 transition-colors cursor-pointer"
           >
-            <Plus className="w-4 h-4 stroke-[3]" />
+            <Plus className="w-4 h-4" />
             Ajouter une dépense
           </button>
         </div>
 
         {error && !loading && (
-          <div className="mb-4 px-4 py-2.5 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs">{error}</div>
+          <div className="mx-4 mt-4 px-3 py-2 rounded-md bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-xs">{error}</div>
         )}
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto scroll-thin">
           {loading ? (
-            <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-              <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
+            <div className="flex items-center justify-center py-16 gap-2.5 text-[var(--t3)]">
+              <Loader2 className="w-5 h-5 animate-spin text-[var(--accent)]" />
               <span className="text-sm">Chargement des dépenses...</span>
             </div>
           ) : pageCharges.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-              <TrendingDown className="w-8 h-8 text-gray-600" />
-              <span className="text-sm">Aucune dépense. Cliquez sur « Ajouter une dépense » pour commencer.</span>
+            <div className="flex flex-col items-center justify-center py-16 gap-2 text-[var(--t3)]">
+              <span className="text-sm">Aucune dépense à afficher.</span>
             </div>
           ) : (
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-gray-800 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-                  <th className="py-3 px-4">Libellé de la dépense</th>
-                  <th className="py-3 px-4">Pôle d'affectation</th>
-                  <th className="py-3 px-4">Nature</th>
-                  <th className="py-3 px-4 text-right">Montant Décaissé</th>
-                  <th className="py-3 px-4">Date de paiement</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                <tr className="border-b border-[var(--line)] text-[10px] font-semibold text-[var(--t3)] uppercase tracking-wider">
+                  <th className="py-2.5 px-4">Libellé</th>
+                  <th className="py-2.5 px-4">Pôle d'affectation</th>
+                  <th className="py-2.5 px-4">Nature</th>
+                  <th className="py-2.5 px-4 text-right">Montant</th>
+                  <th className="py-2.5 px-4">Date</th>
+                  <th className="py-2.5 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800/60 text-sm">
+              <tbody className="divide-y divide-[var(--line)] text-sm">
                 {pageCharges.map((charge) => (
-                  <tr key={charge.id} className="hover:bg-gray-800/30 transition-colors">
-                    <td className="py-4 px-4 font-medium text-white">{charge.libelle}</td>
-                    <td className="py-4 px-4">
-                      <span className={`inline-block px-2.5 py-1 text-[10px] font-bold rounded-md ${getPoleBadgeStyle(charge.idPole)}`}>
+                  <tr key={charge.id} className="hover:bg-[var(--chip)]/50 transition-colors">
+                    <td className="py-3 px-4 font-medium text-[var(--t1)]">{charge.libelle}</td>
+                    <td className="py-3 px-4">
+                      <span className={`inline-block px-2 py-0.5 text-[10px] font-medium rounded-md ${getPoleBadgeStyle(charge.idPole)}`}>
                         {poleName(charge.idPole)}
                       </span>
                     </td>
-                    <td className="py-4 px-4">
+                    <td className="py-3 px-4">
                       {charge.typeCharge === 'FIXE' ? (
-                        <span className="inline-block px-2 py-0.5 text-[10px] font-bold text-blue-300 bg-blue-950/80 border border-blue-800/50 rounded">FIXE</span>
+                        <span className="inline-block px-2 py-0.5 text-[10px] font-medium text-[var(--info)] bg-[var(--info-bg)] rounded">Fixe</span>
                       ) : (
-                        <span className="inline-block px-2 py-0.5 text-[10px] font-bold text-purple-300 bg-[#2E1065] border border-purple-800/50 rounded">VARIABLE</span>
+                        <span className="inline-block px-2 py-0.5 text-[10px] font-medium text-[var(--warning)] bg-[var(--warning-bg)] rounded">Variable</span>
                       )}
                     </td>
-                    <td className="py-4 px-4 text-right font-bold text-red-400">- {formatAr(charge.montant)}</td>
-                    <td className="py-4 px-4 text-gray-400 text-xs">{formatDateShort(charge.date)}</td>
-                    <td className="py-4 px-4 text-right">
-                      <button className="text-gray-400 hover:text-white p-1 rounded transition-colors cursor-pointer">
+                    <td className="py-3 px-4 text-right font-medium font-mono tabular-nums text-[var(--danger)]">- {formatAr(charge.montant)}</td>
+                    <td className="py-3 px-4 text-[var(--t3)] text-xs font-mono tabular-nums">{formatDateShort(charge.date)}</td>
+                    <td className="py-3 px-4 text-right">
+                      <button className="text-[var(--t3)] hover:text-[var(--t1)] p-1 rounded transition-colors cursor-pointer">
                         <MoreVertical className="w-4 h-4 ml-auto" />
                       </button>
                     </td>
@@ -194,26 +172,23 @@ export const ChargesTable: React.FC<ChargesTableProps> = ({ onOpenModal, refresh
         </div>
 
         {!loading && filteredCharges.length > 0 && (
-          <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-800 text-xs text-gray-400">
+          <div className="flex items-center justify-between gap-4 p-4 border-t border-[var(--line)] text-xs text-[var(--t3)]">
             <span>
-              Affichage de{' '}
-              <span className="font-bold text-white">{(safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
-              <span className="font-bold text-white">{Math.min(safePage * PAGE_SIZE, filteredCharges.length)}</span> sur{' '}
-              <span className="font-bold text-white">{filteredCharges.length}</span> dépenses
+              {(safePage - 1) * PAGE_SIZE + 1}–{Math.min(safePage * PAGE_SIZE, filteredCharges.length)} sur {filteredCharges.length}
             </span>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={safePage === 1}
-                className="p-1.5 rounded-lg bg-[#0B0F17] border border-gray-800 hover:bg-gray-800 text-gray-400 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-md bg-[var(--panel-deep)] border border-[var(--line)] hover:bg-[var(--chip)] text-[var(--t3)] hover:text-[var(--t1)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <span>Page <span className="font-bold text-white">{safePage}</span> / {totalPages}</span>
+              <span>{safePage} / {totalPages}</span>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={safePage === totalPages}
-                className="p-1.5 rounded-lg bg-[#0B0F17] border border-gray-800 hover:bg-gray-800 text-gray-400 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-md bg-[var(--panel-deep)] border border-[var(--line)] hover:bg-[var(--chip)] text-[var(--t3)] hover:text-[var(--t1)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

@@ -3,10 +3,7 @@ import {
   TrendingUp,
   TrendingDown,
   Clock,
-  Building2,
   DollarSign,
-  BarChart3,
-  Layers,
 } from 'lucide-react';
 import {
   BarChart,
@@ -36,7 +33,7 @@ import { fetchPendingSaisies } from '../store/slices/saisieSlice';
 import { formatAr } from '../utils/finance';
 import { formatDateShort } from '../const/date';
 
-const POLE_CHART_COLORS = ['#3b82f6', '#14b8a6', '#f59e0b', '#38bdf8', '#a78bfa', '#f472b6', '#34d399'];
+const POLE_CHART_COLORS = ['#c8932a', '#8c6d3f', '#5b7a6d', '#7a6a9e', '#a8634a', '#6d7f8c', '#4b5563'];
 
 const recentRequestStatus = (statut: string) => {
   const s = String(statut).toUpperCase();
@@ -46,11 +43,11 @@ const recentRequestStatus = (statut: string) => {
 const RevenueExpenseLegend: React.FC = () => (
   <div className="flex items-center gap-4 text-xs font-medium">
     <div className="flex items-center gap-1.5">
-      <span className="w-3 h-3 rounded-sm bg-teal-500 inline-block" />
+      <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: '#c8932a' }} />
       <span className="text-[var(--t2)]">Revenus</span>
     </div>
     <div className="flex items-center gap-1.5">
-      <span className="w-3 h-3 rounded-sm bg-blue-500 inline-block" />
+      <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: '#8c6d3f' }} />
       <span className="text-[var(--t2)]">Dépenses</span>
     </div>
   </div>
@@ -67,21 +64,21 @@ interface RecentRequest {
 
 const requestColumns: DataColumn<RecentRequest>[] = [
   {
-    header: 'ENSEIGNANT',
+    header: 'Enseignant',
     render: (row) => (
       <>
-        <span className="font-semibold text-[var(--t1)]">{row.enseignant}</span>
-        <span className="block text-[10px] text-[var(--t3)] font-normal">{row.detail}</span>
+        <span className="font-medium text-[var(--t1)]">{row.enseignant}</span>
+        <span className="block text-[10px] text-[var(--t3)]">{row.detail}</span>
       </>
     ),
   },
   {
-    header: 'ACTIVITÉ',
+    header: 'Activité',
     align: 'center',
-    render: (row) => <span className={`font-bold text-[11px] ${row.poleClass}`}>{row.pole}</span>,
+    render: (row) => <span className={`font-medium text-[11px] ${row.poleClass}`}>{row.pole}</span>,
   },
   {
-    header: 'STATUT',
+    header: 'Statut',
     align: 'right',
     render: (row) => <StatusBadge status={row.statut} showDot />,
   },
@@ -159,7 +156,7 @@ export const AdminDashboard: React.FC = () => {
     [poles, poleRevenuMap, poleChargeMap]
   );
 
- 
+
   const recentRequests: RecentRequest[] = useMemo(() => {
     const rows: RecentRequest[] = [];
     pendingSaisies.slice(0, 4).forEach((s) => {
@@ -171,7 +168,7 @@ export const AdminDashboard: React.FC = () => {
         enseignant,
         detail: `${formatDateShort(s.date)} • ${(s.heuresEffectuees ?? 0) + (s.heuresSupp ?? 0)}h`,
         pole: (s.typeActivite || 'Feuille de temps').slice(0, 12),
-        poleClass: 'text-amber-400',
+        poleClass: 'text-[var(--warning)]',
         statut: recentRequestStatus(s.statut as string),
       });
     });
@@ -185,7 +182,7 @@ export const AdminDashboard: React.FC = () => {
         enseignant: personne,
         detail: `Paie ${p.mois || ''} • ${formatAr(p.totalSalaire)}`,
         pole: 'Paie',
-        poleClass: 'text-blue-400',
+        poleClass: 'text-[var(--info)]',
         statut: 'En attente',
       });
     });
@@ -201,74 +198,54 @@ export const AdminDashboard: React.FC = () => {
   const margeNetta = totalRevenus > 0 ? (beneficeNet / totalRevenus) * 100 : 0;
 
   return (
-    <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans text-[var(--t1)]">
-      {/* ==================== 1. CARTES KPI ==================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div className="p-6 md:p-8 space-y-5 max-w-[1600px] mx-auto w-full font-sans text-[var(--t1)]">
+      {/* KPI cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="Revenus Globaux"
-          value={
-            <div className="flex items-baseline gap-1">
-              <span>{formatAr(totalRevenus)}</span>
-            </div>
-          }
-          subtitle={`${revenus.length} opération${revenus.length > 1 ? 's' : ''} enregistrée${revenus.length > 1 ? 's' : ''}`}
-          icon={<TrendingUp size={16} className="text-teal-400" />}
+          title="Revenus"
+          value={formatAr(totalRevenus)}
+          subtitle={`${revenus.length} opération${revenus.length > 1 ? 's' : ''}`}
+          icon={<TrendingUp size={14} />}
           glowColor="teal"
         />
 
         <StatCard
-          title="Dépenses Globales"
-          value={
-            <div className="flex items-baseline gap-1">
-              <span>{formatAr(totalCharges)}</span>
-            </div>
-          }
-          subtitle={`${charges.length} charge${charges.length > 1 ? 's' : ''} enregistrée${charges.length > 1 ? 's' : ''}`}
-          icon={<TrendingDown size={16} className="text-blue-400" />}
+          title="Dépenses"
+          value={formatAr(totalCharges)}
+          subtitle={`${charges.length} charge${charges.length > 1 ? 's' : ''}`}
+          icon={<TrendingDown size={14} />}
           glowColor="blue"
         />
 
         <StatCard
-          title="Bénéfice Net"
-          value={
-            <div className="flex items-baseline gap-1">
-              <span className="text-amber-100">{formatAr(beneficeNet)}</span>
-            </div>
-          }
-          subtitle={`Marge nette : ${margeNetta.toFixed(1)}%`}
-          icon={<DollarSign size={16} className="text-amber-400" />}
+          title="Bénéfice net"
+          value={formatAr(beneficeNet)}
+          subtitle={`Marge : ${margeNetta.toFixed(1)}%`}
+          icon={<DollarSign size={14} />}
           glowColor="amber"
         />
 
         <StatCard
-          title="Paies en Attente"
-          value={
-            <div className="flex items-baseline gap-1">
-              <span>{formatAr(totalPaiesEnAttente)}</span>
-            </div>
-          }
-          subtitle={`${paiesEnAttente.length} fiche${paiesEnAttente.length > 1 ? 's' : ''} de paie à valider`}
-          icon={<Clock size={16} className="text-amber-400" />}
+          title="Paies en attente"
+          value={formatAr(totalPaiesEnAttente)}
+          subtitle={`${paiesEnAttente.length} fiche${paiesEnAttente.length > 1 ? 's' : ''} à valider`}
+          icon={<Clock size={14} />}
           glowColor="amber"
           rightIndicator={paiesEnAttente.length > 0 ? <StatusBadge status="En attente" showDot /> : undefined}
         />
       </div>
 
-    
-      {/* ==================== 2. RÉPARTITION DES CHARGES + DEMANDES RÉCENTES ==================== */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Distribution + Recent requests */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <Card className="lg:col-span-2 justify-between">
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
-              <Building2 size={16} className="text-amber-400" />
-              Répartition des Charges
-            </h3>
-            <span className="text-[11px] text-[var(--t3)] font-medium">Par Pôle</span>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-sm font-semibold text-[var(--t1)]">Répartition des charges</h3>
+            <span className="text-[10px] text-[var(--t3)] font-medium uppercase tracking-wider">Par pôle</span>
           </div>
 
-          <div className="h-44 w-full relative flex items-center justify-center my-2">
+          <div className="h-44 w-full relative flex items-center justify-center my-1">
             {budgetDistributionData.length === 0 ? (
-              <div className="h-full flex items-center justify-center text-sm text-[var(--t3)]">
+              <div className="h-full flex items-center justify-center text-xs text-[var(--t3)]">
                 Aucune donnée.
               </div>
             ) : (
@@ -278,7 +255,7 @@ export const AdminDashboard: React.FC = () => {
                     data={budgetDistributionData}
                     innerRadius={55}
                     outerRadius={75}
-                    paddingAngle={4}
+                    paddingAngle={3}
                     dataKey="value"
                     startAngle={90}
                     endAngle={-270}
@@ -293,18 +270,18 @@ export const AdminDashboard: React.FC = () => {
             )}
 
             <div className="absolute text-center">
-              <span className="text-xl font-black text-amber-400 block leading-none">
+              <span className="text-lg font-semibold text-[var(--t1)] font-mono block leading-none tabular-nums">
                 {totalPoleCharges > 0 ? '100%' : '—'}
               </span>
-              <span className="text-[9px] uppercase font-bold tracking-widest text-[var(--t3)] block mt-1">RÉPARTITION</span>
+              <span className="text-[9px] uppercase font-medium tracking-wider text-[var(--t3)] block mt-0.5">Répartition</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-xs font-medium pt-3 border-t border-[var(--border-subtle)]">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs pt-3 border-t border-[var(--line)]">
             {budgetDistributionData.map((item) => (
               <div key={item.name} className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ backgroundColor: item.color }} />
-                <span className="text-[var(--t2)] text-[11px]">{item.name} : <strong className="text-[var(--t1)]">{item.value}%</strong></span>
+                <span className="w-2 h-2 rounded-sm inline-block shrink-0" style={{ backgroundColor: item.color }} />
+                <span className="text-[var(--t2)] text-[11px] truncate">{item.name} <span className="font-mono font-semibold text-[var(--t1)] tabular-nums">{item.value}%</span></span>
               </div>
             ))}
           </div>
@@ -312,18 +289,15 @@ export const AdminDashboard: React.FC = () => {
 
         <Card className="justify-between">
           <div>
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
-                <Layers size={16} className="text-amber-400" />
-                Demandes Récentes
-              </h3>
-              <button className="text-[11px] text-blue-400 hover:text-blue-300 transition font-semibold cursor-pointer">
-                Voir tout →
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-sm font-semibold text-[var(--t1)]">Demandes récentes</h3>
+              <button className="text-[11px] text-[var(--accent)] hover:text-[var(--accent-strong)] transition font-medium cursor-pointer">
+                Tout voir →
               </button>
             </div>
 
             {recentRequests.length === 0 ? (
-              <div className="py-10 text-center text-sm text-[var(--t3)]">
+              <div className="py-8 text-center text-xs text-[var(--t3)]">
                 Aucune demande en attente.
               </div>
             ) : (
@@ -331,48 +305,43 @@ export const AdminDashboard: React.FC = () => {
             )}
           </div>
 
-          <div className="pt-3 border-t border-[var(--border-subtle)] text-center mt-4">
+          <div className="pt-3 border-t border-[var(--line)] text-center mt-3">
             <span className="text-[11px] text-[var(--t3)]">
-              Total : <strong className="text-blue-400">{totalHeuresSuivi.toFixed(1)} heures</strong> en cours de suivi
+              Total : <span className="font-mono font-semibold text-[var(--accent)] tabular-nums">{totalHeuresSuivi.toFixed(1)} h</span> en cours de suivi
             </span>
           </div>
         </Card>
       </div>
 
-      {/* ==================== 3. REVENUS VS CHARGES PAR PÔLE (pleine largeur) ==================== */}
-      <div className="grid grid-cols-1 gap-6">
-        <Card className="justify-between">
-          <div className="flex justify-between items-center mb-5">
-            <div>
-              <h3 className="text-sm font-bold text-[var(--t1)] flex items-center gap-2">
-                <BarChart3 size={16} className="text-teal-400" />
-                Revenus vs Charges par Pôle
-              </h3>
-              <p className="text-xs text-[var(--t3)] mt-0.5">Comparatif de rentabilité brute par activité (en M Ar)</p>
-            </div>
-            <RevenueExpenseLegend />
+      {/* Revenue vs Expenses bar chart */}
+      <Card className="justify-between">
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h3 className="text-sm font-semibold text-[var(--t1)]">Revenus vs charges par pôle</h3>
+            <p className="text-xs text-[var(--t3)] mt-0.5">Rentabilité brute par activité (en M Ar)</p>
           </div>
+          <RevenueExpenseLegend />
+        </div>
 
-          <div className="h-60 w-full min-h-[220px]">
-            {polePerformanceData.length === 0 ? (
-              <div className="h-full flex items-center justify-center text-sm text-[var(--t3)]">
-                Aucun pôle enregistré.
-              </div>
-            ) : (
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={polePerformanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barGap={8}>
-                  <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} vertical={false} />
-                  <XAxis dataKey="pole" {...chartAxis} />
-                  <YAxis {...chartAxis} unit="M" />
-                  <Tooltip contentStyle={chartTooltipStyle} formatter={(value) => [`${value}M Ar`, '']} cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }} />
-                  <Bar dataKey="revenus" fill="#14b8a6" radius={[6, 6, 0, 0]} barSize={22} name="Revenus" />
-                  <Bar dataKey="charges" fill="#3b82f6" radius={[6, 6, 0, 0]} barSize={22} name="Charges" />
-                </BarChart>
-              </ResponsiveContainer>
-            )}
-          </div>
-        </Card>
-      </div>
+        <div className="h-56 w-full min-h-[200px]">
+          {polePerformanceData.length === 0 ? (
+            <div className="h-full flex items-center justify-center text-xs text-[var(--t3)]">
+              Aucun pôle enregistré.
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={polePerformanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }} barGap={8}>
+                <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} vertical={false} />
+                <XAxis dataKey="pole" {...chartAxis} />
+                <YAxis {...chartAxis} unit="M" />
+                <Tooltip contentStyle={chartTooltipStyle} formatter={(value) => [`${value}M Ar`, '']} cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }} />
+                <Bar dataKey="revenus" fill="#c8932a" radius={[3, 3, 0, 0]} barSize={20} name="Revenus" />
+                <Bar dataKey="charges" fill="#8c6d3f" radius={[3, 3, 0, 0]} barSize={20} name="Charges" />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+      </Card>
     </div>
   );
 };

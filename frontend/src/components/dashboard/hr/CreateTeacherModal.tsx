@@ -55,26 +55,26 @@ export const CreateTeacherModal: React.FC<CreateTeacherModalProps> = ({ open, on
   };
 
   const inputClass =
-    'w-full bg-[var(--panel-deep)] border border-[var(--border-subtle)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors';
-  const labelClass = 'text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider';
+    'w-full bg-[var(--panel-deep)] border border-[var(--line)] rounded-md px-3 py-2 text-sm text-[var(--t1)] placeholder:text-[var(--t3)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]/20 transition-colors';
+  const labelClass = 'text-xs font-medium text-[var(--t2)]';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={handleClose} />
+      <div className="absolute inset-0 bg-black/50" onClick={handleClose} />
 
-      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-y-auto scroll-thin">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--panel-deep)]">
-          <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Nouvel Enseignant</h2>
+      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--line)] rounded-lg shadow-[var(--shadow-raised)] overflow-y-auto scroll-thin">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[var(--line)]">
+          <h2 className="text-sm font-semibold text-[var(--t1)]">Nouvel enseignant</h2>
           <button
             onClick={handleClose}
-            className="p-1.5 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--chip)] rounded-lg transition cursor-pointer"
+            className="p-1 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] rounded-md transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <label className={labelClass}>Prénom</label>
               <input
@@ -129,7 +129,7 @@ export const CreateTeacherModal: React.FC<CreateTeacherModalProps> = ({ open, on
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <label className={labelClass}>Taux horaire (Ar/h)</label>
               <input
@@ -139,7 +139,7 @@ export const CreateTeacherModal: React.FC<CreateTeacherModalProps> = ({ open, on
                 step="0.5"
                 value={tauxHoraireBase}
                 onChange={(e) => setTauxHoraireBase(e.target.value)}
-                className={inputClass}
+                className={`${inputClass} font-mono tabular-nums`}
               />
             </div>
 
@@ -160,25 +160,25 @@ export const CreateTeacherModal: React.FC<CreateTeacherModalProps> = ({ open, on
           </div>
 
           {error && (
-            <div className="px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs">
+            <div className="px-3 py-2 rounded-md bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-xs">
               {error}
             </div>
           )}
 
-          <div className="flex items-center justify-end gap-3 pt-2">
+          <div className="flex items-center justify-end gap-2 pt-1">
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2.5 rounded-lg border border-[var(--border-subtle)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
+              className="px-3.5 py-2 rounded-md border border-[var(--line)] text-sm font-medium text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+              className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[#1a1408] font-semibold px-4 py-2 rounded-md flex items-center gap-1.5 text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
-              {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
+              {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               {submitting ? 'Création...' : 'Créer'}
             </button>
           </div>

@@ -7,27 +7,26 @@ import { NewTransactionModal, type TransactionType } from '../components/dashboa
 
 type TabType = 'overview' | 'charges' | 'revenus' | 'reports';
 
-// Configuration des titres et descriptions dynamiques par sous-section
 const TABS_CONFIG: Record<TabType, { label: string; title: string; description: string }> = {
   overview: {
     label: "Vue d'ensemble",
-    title: "Vue d'ensemble Financière",
-    description: "Aperçu global de la trésorerie, du solde net et des indicateurs clés de performance.",
+    title: "Vue d'ensemble",
+    description: "Trésorerie, solde net et indicateurs clés.",
   },
   charges: {
-    label: "Charges & Dépenses",
-    title: "Gestion des Charges & Dépenses",
-    description: "Suivi détaillé des charges fixes, variables et décaissements ventilés par pôle.",
+    label: "Charges",
+    title: "Charges & dépenses",
+    description: "Suivi des charges fixes, variables et décaissements par pôle.",
   },
   revenus: {
-    label: "Revenus & Recettes",
-    title: "Gestion des Revenus & Recettes",
-    description: "Historique et suivi des encaissements et prestations facturées.",
+    label: "Revenus",
+    title: "Revenus & recettes",
+    description: "Historique des encaissements et prestations facturées.",
   },
   reports: {
-    label: "Rapports & Bilans",
-    title: "Rapports & Bilans Comptables",
-    description: "Analyses de rentabilité analytique et bilans consolidés par pôle d'activité.",
+    label: "Rapports",
+    title: "Rapports & bilans",
+    description: "Analyses de rentabilité et bilans consolidés par pôle.",
   },
 };
 
@@ -49,27 +48,25 @@ export const FinancePage: React.FC = () => {
   const currentTab = TABS_CONFIG[activeTab];
 
   return (
-    <div className="p-6 bg-[#0B0F17] min-h-screen text-white space-y-6">
-      {/* Header avec Titre et Subtitle Dynamiques */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold">{currentTab.title}</h1>
-          <p className="text-xs text-gray-400 mt-1">{currentTab.description}</p>
-        </div>
+    <div className="p-6 md:p-8 w-full max-w-[1600px] mx-auto text-[var(--t1)] space-y-5 font-sans">
+      {/* Page header */}
+      <div>
+        <h1 className="text-lg font-semibold tracking-tight">{currentTab.title}</h1>
+        <p className="text-xs text-[var(--t3)] mt-0.5">{currentTab.description}</p>
       </div>
 
-      {/* Navigation par Onglets */}
-      <div className="flex border-b border-gray-800 gap-8 text-sm">
+      {/* Tab navigation */}
+      <div className="flex border-b border-[var(--line)] gap-6 text-sm overflow-x-auto">
         {(Object.keys(TABS_CONFIG) as TabType[]).map((tabKey) => {
           const tab = TABS_CONFIG[tabKey];
           return (
             <button
               key={tabKey}
               onClick={() => setActiveTab(tabKey)}
-              className={`pb-3 font-medium transition-all ${
+              className={`pb-2.5 font-medium whitespace-nowrap transition-colors text-[13px] ${
                 activeTab === tabKey
-                  ? 'text-white border-b-2 border-amber-500'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'text-[var(--accent)] border-b-2 border-[var(--accent)]'
+                  : 'text-[var(--t3)] hover:text-[var(--t1)]'
               }`}
             >
               {tab.label}
@@ -78,18 +75,17 @@ export const FinancePage: React.FC = () => {
         })}
       </div>
 
-      {/* Contenu de l'onglet actif */}
-      <div className="pt-2">
+      {/* Tab content */}
+      <div className="pt-1">
         {activeTab === 'overview' && <FinanceOverview refreshKey={refreshKey} />}
         {activeTab === 'charges' && <ChargesTable onOpenModal={() => handleOpenModal('DEPENSE')} refreshKey={refreshKey} />}
         {activeTab === 'revenus' && <RevenusTable onOpenModal={() => handleOpenModal('RECETTE')} refreshKey={refreshKey} />}
         {activeTab === 'reports' && <PoleReportsTable />}
       </div>
 
-      {/* Modale conditionnée par le type */}
-      <NewTransactionModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <NewTransactionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         defaultType={transactionType}
         onCreated={handleCreated}
       />

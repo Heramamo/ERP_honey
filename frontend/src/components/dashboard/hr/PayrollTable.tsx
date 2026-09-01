@@ -25,31 +25,31 @@ interface PayrollTableProps {
 
 export const PayrollTable: React.FC<PayrollTableProps> = ({ allowedRoles }) => {
   const content = (
-    <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl">
+    <div className="bg-[var(--panel)] border border-[var(--line)] rounded-lg overflow-hidden">
       <table className="w-full text-left border-collapse">
         <thead>
-          <tr className="border-b border-[var(--border-subtle)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
-            <th className="py-4 px-6">ENSEIGNANT</th>
-            <th className="py-4 px-6">PERIODE DE PAIE</th>
-            <th className="py-4 px-6">MONTANT NET</th>
-            <th className="py-4 px-6">STATUT PAIEMENT</th>
-            <th className="py-4 px-6 text-right">DOCUMENT</th>
+          <tr className="border-b border-[var(--line)] text-[10px] font-semibold text-[var(--t3)] tracking-wider uppercase">
+            <th className="py-3 px-5">Enseignant</th>
+            <th className="py-3 px-5">Période de paie</th>
+            <th className="py-3 px-5 text-right">Montant net</th>
+            <th className="py-3 px-5">Statut</th>
+            <th className="py-3 px-5 text-right">Document</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[var(--border-subtle)] text-sm">
+        <tbody className="divide-y divide-[var(--line)] text-sm">
           {MOCK_PAYROLL.map((payroll) => (
-            <tr key={payroll.id} className="hover:bg-[var(--chip)] transition-colors">
-              <td className="py-4 px-6 font-bold text-[var(--t1)]">{payroll.teacherName}</td>
-              <td className="py-4 px-6 text-[var(--t3)] text-xs">{payroll.month}</td>
-              <td className="py-4 px-6 font-semibold text-emerald-400">
+            <tr key={payroll.id} className="hover:bg-[var(--chip)]/50 transition-colors">
+              <td className="py-3 px-5 font-medium text-[var(--t1)]">{payroll.teacherName}</td>
+              <td className="py-3 px-5 text-[var(--t3)] text-xs">{payroll.month}</td>
+              <td className="py-3 px-5 text-right font-medium font-mono tabular-nums text-[var(--success)]">
                 {payroll.netAmount.toLocaleString('fr-FR')} Ar
               </td>
-              <td className="py-4 px-6">
+              <td className="py-3 px-5">
                 <StatusBadge status={payroll.status} />
               </td>
-              <td className="py-4 px-6 text-right">
-                <button className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--chip)] hover:bg-[var(--chip-hover)] text-[var(--t2)] text-xs font-semibold transition-colors">
-                  <Download className="w-3.5 h-3.5 text-amber-500" />
+              <td className="py-3 px-5 text-right">
+                <button className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[var(--line)] hover:bg-[var(--chip)] text-[var(--t2)] text-xs font-medium transition-colors">
+                  <Download className="w-3.5 h-3.5 text-[var(--accent)]" />
                   PDF
                 </button>
               </td>

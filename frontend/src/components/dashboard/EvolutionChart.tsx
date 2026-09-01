@@ -16,7 +16,7 @@ export const EvolutionChart: React.FC = () => {
   return (
     <Card tone="subtle">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-sm font-bold text-[var(--t1)]">Évolution du résultat</h3>
+        <h3 className="text-sm font-semibold text-[var(--t1)]">Évolution du résultat</h3>
         <span className="text-[11px] text-[var(--t3)] font-medium">6 derniers mois</span>
       </div>
 
@@ -29,8 +29,8 @@ export const EvolutionChart: React.FC = () => {
               tickFormatter={(val) => `${val / 1000000}M`}
             />
             <Tooltip contentStyle={chartTooltipStyle} />
-            <Line type="monotone" dataKey="revenus" stroke="#3b82f6" strokeWidth={3} dot={false} />
-            <Line type="monotone" dataKey="charges" stroke="#f59e0b" strokeWidth={3} dot={false} />
+            <Line type="monotone" dataKey="revenus" stroke="#c8932a" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="charges" stroke="#8c6d3f" strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>

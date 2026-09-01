@@ -25,7 +25,7 @@ const formatShortDate = (date: Date | string) => {
 };
 
 const mapStatut = (statut: SaisiePayload['statut']): TimesheetItem['statut'] => {
-  const value = typeof statut === 'string' ? statut : statut?.statut;
+  const value = String(statut);
   switch (value) {
     case 'VALIDE': return 'Validé';
     case 'REFUSE': return 'En révision';
@@ -51,29 +51,29 @@ export const RecentTimesheetsTable: React.FC<RecentTimesheetsTableProps> = ({ sa
 
   const columns: DataColumn<TimesheetItem>[] = [
     {
-      header: 'DATE',
-      render: (row) => <span className="font-semibold text-[var(--t2)]">{row.date}</span>,
+      header: 'Date',
+      render: (row) => <span className="font-medium text-[var(--t2)] font-mono tabular-nums">{row.date}</span>,
     },
     {
-      header: "TYPE D'ACTIVITÉ",
+      header: 'Activité',
       render: (row) => (
-        <span className={`font-bold ${row.type === 'Cours' ? 'text-blue-400' : 'text-[var(--t2)]'}`}>
+        <span className={`font-medium ${row.type === 'Cours' ? 'text-[var(--info)]' : 'text-[var(--t2)]'}`}>
           {row.type}
         </span>
       ),
     },
     {
-      header: 'HEURES DE BASE',
+      header: 'Base',
       align: 'center',
-      render: (row) => <span className="text-[var(--t2)] font-medium">{row.heuresBase}</span>,
+      render: (row) => <span className="text-[var(--t2)] font-mono tabular-nums">{row.heuresBase}</span>,
     },
     {
-      header: 'HEURES SUPP.',
+      header: 'Supp.',
       align: 'center',
-      render: (row) => <span className="text-amber-400 font-bold">{row.heuresSupp}</span>,
+      render: (row) => <span className="text-[var(--warning)] font-medium font-mono tabular-nums">{row.heuresSupp}</span>,
     },
     {
-      header: 'STATUT',
+      header: 'Statut',
       align: 'right',
       render: (row) => <StatusBadge status={row.statut} />,
     },
@@ -81,20 +81,20 @@ export const RecentTimesheetsTable: React.FC<RecentTimesheetsTableProps> = ({ sa
 
   return (
     <Card>
-      <div className="flex justify-between items-center mb-5">
-        <h3 className="text-sm font-bold text-[var(--t1)]">Dernières Feuilles de Temps</h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-sm font-semibold text-[var(--t1)]">Dernières feuilles de temps</h3>
         <button
           onClick={() => navigate('/dashboard/feuilles-de-temps')}
-          className="text-xs text-amber-500 hover:text-amber-400 transition font-semibold cursor-pointer"
+          className="text-xs text-[var(--accent)] hover:text-[var(--accent-strong)] transition font-medium cursor-pointer"
         >
-          Voir tout
+          Tout voir
         </button>
       </div>
 
       {rows.length > 0 ? (
         <DataTable columns={columns} data={rows} rowKey={(row) => row.id} />
       ) : (
-        <p className="text-xs text-[var(--t3)] py-6 text-center">Aucune feuille de temps enregistrée</p>
+        <p className="text-xs text-[var(--t3)] py-5 text-center">Aucune feuille de temps enregistrée</p>
       )}
     </Card>
   );

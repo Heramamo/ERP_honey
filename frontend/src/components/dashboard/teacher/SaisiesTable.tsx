@@ -1,31 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight, Plus, Loader2, Inbox, Info } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Loader2, Info } from 'lucide-react';
 import type { SaisiePayload } from '../../../types/saisieFeuille';
 import { fetchMySaisie } from '../../../store/slices/saisieSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { CreateSaisieModal } from './CreateSaisieModal';
 import { SaisieDetailsModal } from './SaisieDetailsModal';
+import { StatusBadge } from '../../common/StatusBadge';
 
 const PAGE_SIZE = 8;
 
-const STATUT_STYLES: Record<string, string> = {
-  VALIDE: 'bg-emerald-950/60 text-emerald-400 border-emerald-800/50',
-  REFUSE: 'bg-rose-950/60 text-rose-400 border-rose-800/50',
-  EN_ATTENTE: 'bg-amber-950/60 text-amber-400 border-amber-800/50',
-};
-
-const resolveStatut = (statut: SaisiePayload['statut']): string => {
-  if (typeof statut === 'string') return statut;
-  return statut?.statut ?? '';
-};
-
-const getStatutStyle = (statut: SaisiePayload['statut']) => {
-  const value = resolveStatut(statut);
-  return STATUT_STYLES[value] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--border-subtle)]';
-};
-
 const getStatutLabel = (statut: SaisiePayload['statut']) => {
-  const value = resolveStatut(statut);
+  const value = String(statut);
   switch (value) {
     case 'VALIDE': return 'Validé';
     case 'REFUSE': return 'Refusé';
@@ -55,17 +40,17 @@ export const SaisiesTable: React.FC = () => {
   const pageSaisies = saisies.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   return (
-    <div className="p-8 max-w-[1200px] mx-auto w-full font-sans text-[var(--t1)] h-full flex flex-col min-h-0">
-      <div className="flex items-center justify-between gap-4 mb-6 shrink-0">
+    <div className="p-6 md:p-8 max-w-[1000px] mx-auto w-full font-sans text-[var(--t1)] h-full flex flex-col min-h-0">
+      <div className="flex items-center justify-between gap-4 mb-5 shrink-0">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[var(--t1)]">Mes Feuilles de Temps</h1>
-          <p className="text-sm text-[var(--t3)] mt-1">
+          <h1 className="text-lg font-semibold tracking-tight">Mes feuilles de temps</h1>
+          <p className="text-xs text-[var(--t3)] mt-0.5">
             Déclaration des heures effectuées par activité
           </p>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors shadow-lg shadow-amber-500/10 cursor-pointer"
+          className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[#1a1408] font-semibold px-4 py-2 rounded-md flex items-center gap-1.5 text-sm transition-colors cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
           Nouvelle saisie
@@ -73,62 +58,59 @@ export const SaisiesTable: React.FC = () => {
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-sm shrink-0">
+        <div className="mb-5 px-3 py-2 rounded-md bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-xs shrink-0">
           {error}
         </div>
       )}
 
-      <div className="bg-[var(--panel)] border border-[var(--border-subtle)] rounded-xl overflow-hidden shadow-2xl flex-1 min-h-0 flex flex-col">
+      <div className="bg-[var(--panel)] border border-[var(--line)] rounded-lg overflow-hidden flex-1 min-h-0 flex flex-col">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
-            <span className="text-sm">Chargement des feuilles de temps...</span>
+          <div className="flex flex-col items-center justify-center py-16 gap-2.5 text-[var(--t3)]">
+            <Loader2 className="w-5 h-5 animate-spin text-[var(--accent)]" />
+            <span className="text-xs">Chargement des feuilles de temps...</span>
           </div>
         ) : pageSaisies.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Inbox className="w-8 h-8 text-slate-600" />
-            <span className="text-sm">Aucune feuille de temps pour le moment.</span>
+          <div className="flex flex-col items-center justify-center py-16 gap-2 text-[var(--t3)]">
+            <span className="text-xs">Aucune feuille de temps pour le moment.</span>
           </div>
         ) : (
           <div className="flex-1 min-h-0 overflow-auto scroll-thin">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="sticky top-0 z-10 border-b border-[var(--border-subtle)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
-                <th className="py-4 px-6">DATE</th>
-                <th className="py-4 px-6">TYPE D'ACTIVITÉ</th>
-                <th className="py-4 px-6">HEURES DE BASE</th>
-                <th className="py-4 px-6">HEURES SUPP.</th>
-                <th className="py-4 px-6">STATUT</th>
-                <th className="py-4 px-6 text-right">DÉTAILS</th>
+              <tr className="sticky top-0 z-10 border-b border-[var(--line)] text-[10px] font-semibold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
+                <th className="py-3 px-5">Date</th>
+                <th className="py-3 px-5">Activité</th>
+                <th className="py-3 px-5">Heures de base</th>
+                <th className="py-3 px-5">Heures supp.</th>
+                <th className="py-3 px-5">Statut</th>
+                <th className="py-3 px-5 text-right">Détails</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--border-subtle)] text-sm">
+            <tbody className="divide-y divide-[var(--line)] text-sm">
               {pageSaisies.map((saisie: SaisiePayload, index: number) => (
-                <tr key={`${saisie.date}-${index}`} className="hover:bg-[var(--chip)] transition-colors">
-                  <td className="py-4 px-6 font-semibold text-[var(--t2)]">{formatDate(saisie.date)}</td>
-                  <td className="py-4 px-6">
-                    <span className="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider border bg-blue-950/60 text-blue-400 border-blue-800/50">
+                <tr key={`${saisie.date}-${index}`} className="hover:bg-[var(--chip)]/50 transition-colors">
+                  <td className="py-3 px-5 font-medium text-[var(--t2)] font-mono tabular-nums">{formatDate(saisie.date)}</td>
+                  <td className="py-3 px-5">
+                    <span className="inline-block px-2 py-0.5 rounded text-[10px] font-medium bg-[var(--info-bg)] text-[var(--info)]">
                       {saisie.typeActivite}
                     </span>
                   </td>
-                  <td className="py-4 px-6 font-mono font-semibold text-[var(--t2)]">
+                  <td className="py-3 px-5 font-mono font-semibold text-[var(--t2)] tabular-nums">
                     {saisie.heuresEffectuees} h
                   </td>
-                  <td className="py-4 px-6 font-mono font-semibold text-amber-400">
+                  <td className="py-3 px-5 font-mono font-semibold text-[var(--warning)] tabular-nums">
                     {saisie.heuresSupp} h
                   </td>
-                  <td className="py-4 px-6">
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border ${getStatutStyle(saisie.statut)}`}>
-                      {getStatutLabel(saisie.statut)}
-                    </span>
+                  <td className="py-3 px-5">
+                    <StatusBadge status={getStatutLabel(saisie.statut)} />
                   </td>
-                  <td className="py-4 px-6 text-right">
+                  <td className="py-3 px-5 text-right">
                     <button
                       onClick={() => setSelectedSaisie(saisie)}
-                      className="p-1.5 rounded-lg bg-[var(--chip)] hover:bg-[var(--chip-hover)] text-[var(--t2)] transition-colors cursor-pointer"
+                      className="p-1.5 rounded-md bg-[var(--chip)] hover:bg-[var(--chip-hover)] text-[var(--t2)] transition-colors cursor-pointer"
                       title="Plus d'informations"
                     >
-                      <Info className="w-4 h-4" />
+                      <Info className="w-3.5 h-3.5" />
                     </button>
                   </td>
                 </tr>
@@ -139,30 +121,28 @@ export const SaisiesTable: React.FC = () => {
         )}
 
         {!loading && saisies.length > 0 && (
-          <div className="p-4 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs text-[var(--t3)] shrink-0">
+          <div className="p-3.5 border-t border-[var(--line)] flex items-center justify-between text-xs text-[var(--t3)] shrink-0">
             <div>
-              Affichage de <span className="font-bold text-[var(--t2)]">{saisies.length === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
-              <span className="font-bold text-[var(--t2)]">{Math.min(safePage * PAGE_SIZE, saisies.length)}</span> sur{' '}
-              <span className="font-bold text-[var(--t2)]">{saisies.length}</span> feuilles
+              Affichage de <span className="font-medium text-[var(--t2)] font-mono tabular-nums">{saisies.length === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1}</span> à{' '}
+              <span className="font-medium text-[var(--t2)] font-mono tabular-nums">{Math.min(safePage * PAGE_SIZE, saisies.length)}</span> sur{' '}
+              <span className="font-medium text-[var(--t2)] font-mono tabular-nums">{saisies.length}</span>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={safePage === 1}
-                className="p-1.5 rounded-lg border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-md border border-[var(--line)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-3.5 h-3.5" />
               </button>
-              <span className="text-[var(--t3)]">
-                Page <span className="font-bold text-[var(--t2)]">{safePage}</span> / {totalPages}
-              </span>
+              <span className="text-[var(--t3)]">{safePage} / {totalPages}</span>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={safePage === totalPages}
-                className="p-1.5 rounded-lg border border-[var(--border-subtle)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-md border border-[var(--line)] hover:bg-[var(--chip)] text-[var(--t3)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>

@@ -18,21 +18,21 @@ interface PayrollHistoryTableProps {
 
 const columns: DataColumn<PayrollItem>[] = [
   {
-    header: 'PÉRIODE',
-    render: (row) => <span className="font-bold text-[var(--t1)]">{row.periode}</span>,
+    header: 'Période',
+    render: (row) => <span className="font-medium text-[var(--t1)]">{row.periode}</span>,
   },
   {
-    header: 'TOTAL HEURES',
+    header: 'Total heures',
     align: 'center',
-    render: (row) => <span className="text-[var(--t2)] font-medium">{row.totalHeures}</span>,
+    render: (row) => <span className="text-[var(--t2)] font-mono tabular-nums">{row.totalHeures}</span>,
   },
   {
-    header: 'MONTANT CALCULÉ',
+    header: 'Montant',
     align: 'center',
-    render: (row) => <span className="font-bold text-[var(--t1)]">{row.montant}</span>,
+    render: (row) => <span className="font-medium text-[var(--t1)] font-mono tabular-nums">{row.montant}</span>,
   },
   {
-    header: 'STATUT DE PAIEMENT',
+    header: 'Statut',
     align: 'right',
     render: (row) => <StatusBadge status={row.statut} />,
   },
@@ -41,9 +41,9 @@ const columns: DataColumn<PayrollItem>[] = [
 export const PayrollHistoryTable: React.FC<PayrollHistoryTableProps> = ({ rows = [] }) => {
   return (
     <Card>
-      <div className="flex justify-between items-center mb-5">
-        <h3 className="text-sm font-bold text-[var(--t1)]">Historique des Bulletins de Paie</h3>
-        <button className="text-xs text-amber-500 hover:text-amber-400 transition font-semibold cursor-pointer">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-sm font-semibold text-[var(--t1)]">Historique des bulletins</h3>
+        <button className="text-xs text-[var(--accent)] hover:text-[var(--accent-strong)] transition font-medium cursor-pointer">
           Voir archives
         </button>
       </div>
@@ -51,7 +51,7 @@ export const PayrollHistoryTable: React.FC<PayrollHistoryTableProps> = ({ rows =
       {rows.length > 0 ? (
         <DataTable columns={columns} data={rows} rowKey={(row) => row.id} />
       ) : (
-        <p className="text-xs text-[var(--t3)] py-6 text-center">Aucun bulletin de paie pour le moment</p>
+        <p className="text-xs text-[var(--t3)] py-5 text-center">Aucun bulletin de paie pour le moment</p>
       )}
     </Card>
   );
