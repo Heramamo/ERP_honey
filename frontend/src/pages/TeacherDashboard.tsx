@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { Clock, Clock3, Banknote, CalendarCheck, Sparkles } from 'lucide-react';
+import { Clock, Clock3, Banknote, CalendarCheck } from 'lucide-react';
 
-// Composants globaux
 import { StatCard } from '../components/dashboard/StatCard';
 import { StatusBadge } from '../components/common/StatusBadge';
 
-// Sous-composants modulaires
 import { LastEntryCard } from '../components/dashboard/teacher/LastEntryCard';
 import { TimeDistributionChart } from '../components/dashboard/teacher/TimeDistributionChart';
 import { RecentTimesheetsTable } from '../components/dashboard/teacher/RecentTimesheetsTable';
@@ -88,78 +86,64 @@ export const TeacherDashboard: React.FC = () => {
     : 'Validé';
 
   return (
-    <div className="p-8 space-y-6 max-w-[1600px] mx-auto w-full font-sans text-[var(--t1)]">
+    <div className="p-6 md:p-8 space-y-5 max-w-[1600px] mx-auto w-full font-sans text-[var(--t1)]">
 
-      {/* ==================== 1. CARTES KPI BRILLANTES & HARMONISÉES ==================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      {/* KPI cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
-        {/* KPI 1 : Bleu (Temps) */}
         <StatCard
-          title="Heures Effectuées"
+          title="Heures effectuées"
           value={`${Math.round(totalBase * 10) / 10} h`}
-          subtitle="Cumul des heures du mois"
-          icon={<Clock size={16} />}
+          subtitle="Cumul du mois"
+          icon={<Clock size={14} />}
           glowColor="blue"
         />
 
-        {/* KPI 2 : Ambre / Doré (Bonus) */}
         <StatCard
-          title="Heures Supplémentaires"
+          title="Heures supplémentaires"
           value={`${Math.round(totalSupp * 10) / 10} h`}
-          subtitle="Cumul des heures majorées"
-          icon={<Clock3 size={16} />}
+          subtitle="Cumul majoré"
+          icon={<Clock3 size={14} />}
           glowColor="amber"
         />
 
-        {/* KPI 3 : Émeraude / Vert (Argent) */}
         <StatCard
-          title="Estimation du Salaire"
+          title="Estimation salaire"
           value={
             taux > 0 ? (
-              <div className="flex items-baseline gap-1">
-                <span>{estimatedSalary.toLocaleString('fr-FR')}</span>
-                <span className="text-xl font-bold text-[var(--success)]">Ar</span>
-              </div>
+              <span>{estimatedSalary.toLocaleString('fr-FR')} <span className="text-base font-medium text-[var(--success)]">Ar</span></span>
             ) : (
-              <span className="text-xl font-bold text-[var(--t3)]">N/A</span>
+              <span className="text-[var(--t3)]">N/A</span>
             )
           }
           subtitle="Montant brut calculé"
-          icon={<Banknote size={16} />}
+          icon={<Banknote size={14} />}
           glowColor="emerald"
         />
 
-        {/* KPI 4 : Violet Néon (Statut de la Paie) */}
         <StatCard
-          title="Statut de la Paie"
+          title="Statut paie"
           glowColor="purple"
-          icon={<CalendarCheck size={16} />}
+          icon={<CalendarCheck size={14} />}
           rightIndicator={<StatusBadge status={payStatus} showDot />}
           value={
-            <div className="flex items-center justify-between">
-              <span className="text-2xl font-black text-[var(--t1)] tracking-tight">
-                {monthName.charAt(0).toUpperCase() + monthName.slice(1)}
-              </span>
-            </div>
-          }
-          subtitle={
-            <span className="inline-flex items-center gap-1.5 text-[var(--t3)] font-medium text-[11px]">
-              <Sparkles size={12} className="text-[var(--accent)]" />
-              Traitement RH prévu fin de mois
+            <span className="text-base font-semibold text-[var(--t1)]">
+              {monthName.charAt(0).toUpperCase() + monthName.slice(1)}
             </span>
           }
+          subtitle="Traitement RH prévu fin de mois"
         />
 
       </div>
 
-      {/* ==================== 2. SECTION CENTRALE ==================== */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Center section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <LastEntryCard saisie={lastSaisie} />
         <TimeDistributionChart data={distribution} totalHours={totalBase} />
       </div>
 
-      {/* ==================== 3. TABLEAUX HISTORIQUES ==================== */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* History tables */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <RecentTimesheetsTable saisies={saisies} />
         <PayrollHistoryTable rows={history} />
       </div>

@@ -57,52 +57,52 @@ export const FinanceOverview: React.FC<{ refreshKey?: number }> = ({ refreshKey 
     .slice(0, 6);
 
   return (
-    <div className="space-y-6">
-      {/* Cards KPI */}
+    <div className="space-y-5">
+      {/* KPI cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <StatCard
-          title="Total Revenus"
-          value={<span>{formatAr(totalRevenus)}</span>}
+          title="Total revenus"
+          value={formatAr(totalRevenus)}
           subtitle={`${revenus.length} recette${revenus.length > 1 ? 's' : ''}`}
-          icon={<TrendingUp size={16} />}
+          icon={<TrendingUp size={14} />}
           glowColor="emerald"
         />
         <StatCard
-          title="Total Charges"
-          value={<span>{formatAr(totalCharges)}</span>}
+          title="Total charges"
+          value={formatAr(totalCharges)}
           subtitle={`${charges.length} charge${charges.length > 1 ? 's' : ''}`}
-          icon={<TrendingDown size={16} />}
+          icon={<TrendingDown size={14} />}
           glowColor="blue"
         />
         <StatCard
-          title="Bénéfice Net Consolidé"
-          value={<span>{formatAr(beneficeNet)}</span>}
+          title="Bénéfice net"
+          value={formatAr(beneficeNet)}
           subtitle="Revenus - Charges"
-          icon={<DollarSign size={16} />}
+          icon={<DollarSign size={14} />}
           glowColor="amber"
         />
       </div>
 
-      {/* Mini-Tableau des Dernières Transactions */}
-      <div className="bg-[var(--panel)] rounded-xl border border-[var(--line)] p-5 shadow-[var(--shadow-raised)]">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-base font-bold text-[var(--t1)]">Opérations récentes</h3>
+      {/* Recent operations */}
+      <div className="bg-[var(--panel)] rounded-lg border border-[var(--line)] p-4">
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-sm font-semibold text-[var(--t1)]">Opérations récentes</h3>
         </div>
         {operations.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 gap-2 text-[var(--t3)]">
-            <TrendingUp className="w-8 h-8 text-[var(--t3)]" />
-            <span className="text-sm">Aucune opération enregistrée.</span>
+          <div className="flex flex-col items-center justify-center py-10 gap-1.5 text-[var(--t3)]">
+            <TrendingUp className="w-6 h-6" />
+            <span className="text-xs">Aucune opération enregistrée.</span>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {operations.map((item) => (
-              <div key={item.id} className="flex justify-between items-center p-3 bg-[var(--panel-deep)] rounded-lg border border-[var(--line)]">
-                <div>
-                  <p className="text-sm font-medium text-[var(--t1)]">{item.label}</p>
-                  <p className="text-xs text-[var(--t3)]">{item.pole} • {formatDateShort(item.date)}</p>
+              <div key={item.id} className="flex justify-between items-center px-3 py-2.5 rounded-md bg-[var(--panel-deep)] border border-[var(--line)]">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-[var(--t1)] truncate">{item.label}</p>
+                  <p className="text-[11px] text-[var(--t3)]">{item.pole} · {formatDateShort(item.date)}</p>
                 </div>
-                <span className={`text-sm font-semibold ${item.type === 'revenu' ? 'text-[var(--success)]' : 'text-[var(--danger)]'}`}>
-                  {item.type === 'revenu' ? '+' : '-'} {formatAr(item.amount)}
+                <span className={`text-sm font-mono font-semibold tabular-nums shrink-0 ml-3 ${item.type === 'revenu' ? 'text-[var(--success)]' : 'text-[var(--danger)]'}`}>
+                  {item.type === 'revenu' ? '+' : '-'}{formatAr(item.amount)}
                 </span>
               </div>
             ))}

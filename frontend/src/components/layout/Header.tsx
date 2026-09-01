@@ -23,11 +23,6 @@ interface HeaderProps {
   onToggleSidebar?: () => void;
 }
 
-const getPeriodeActuelle = () => {
-  const label = new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
-  return label.charAt(0).toUpperCase() + label.slice(1);
-};
-
 export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -47,40 +42,30 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   };
 
   return (
-    <header className="h-16 bg-[var(--shell-bg)] border-b border-[var(--line)] px-4 md:px-6 flex items-center justify-between font-sans shrink-0">
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-3 text-sm min-w-0">
+    <header className="h-12 bg-[var(--shell-bg)] border-b border-[var(--line)] px-4 md:px-5 flex items-center justify-between font-sans shrink-0">
+      {/* Left side */}
+      <div className="flex items-center gap-2.5 text-sm min-w-0">
         <button
           onClick={onToggleSidebar}
           aria-label="Afficher/Masquer le menu"
-          className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] transition cursor-pointer shrink-0"
+          className="p-1.5 rounded-md text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] transition cursor-pointer shrink-0 lg:hidden"
         >
-          <Menu size={18} />
+          <Menu size={16} />
         </button>
-        <span className="text-[var(--t3)] select-none">›</span>
-        <span className="font-semibold truncate" style={{ color: 'var(--t1)' }}>
+        <h2 className="font-semibold text-[var(--t1)] text-[13px] truncate">
           {pageTitle}
-        </span>
+        </h2>
       </div>
 
-      {/* Current period */}
-      <div
-        title="Période courante"
-        className="hidden sm:block text-[13px] font-medium px-3 py-1.5 rounded-lg border border-[var(--line)] bg-[var(--surface-hover)]"
-        style={{ color: 'var(--t2)' }}
-      >
-        {getPeriodeActuelle()}
-      </div>
-
-      {/* Actions */}
-      <div className="flex items-center gap-1.5">
+      {/* Right side */}
+      <div className="flex items-center gap-1">
         <button
           onClick={handleToggleTheme}
           aria-label={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
           title={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
-          className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] transition cursor-pointer"
+          className="p-1.5 rounded-md text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] transition cursor-pointer"
         >
-          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
         </button>
 
         <ConfirmButton
@@ -88,10 +73,10 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           description="Voulez-vous vraiment vous déconnecter de votre session ?"
           confirmLabel="Se déconnecter"
           tone="danger"
-          buttonClassName="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--danger)] hover:bg-[var(--danger-bg)] transition cursor-pointer"
+          buttonClassName="p-1.5 rounded-md text-[var(--t3)] hover:text-[var(--danger)] hover:bg-[var(--danger-bg)] transition cursor-pointer"
           onConfirm={handleLogout}
         >
-          <LogOut size={16} />
+          <LogOut size={15} />
         </ConfirmButton>
       </div>
     </header>

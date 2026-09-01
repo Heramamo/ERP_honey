@@ -77,20 +77,20 @@ const GeneratePaieModalForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
   };
 
   const inputClass =
-    'w-full bg-[var(--panel-deep)] border border-[var(--line)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-[var(--accent-muted)] transition-colors';
-  const labelClass = 'text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider';
+    'w-full bg-[var(--panel-deep)] border border-[var(--line)] rounded-md px-3 py-2 text-sm text-[var(--t2)] placeholder:text-[var(--t3)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-muted)] focus:border-transparent transition-colors';
+  const labelClass = 'text-[11px] font-medium text-[var(--t3)]';
   const error = loadError ?? paieError;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={handleClose} />
+      <div className="absolute inset-0 bg-black/50" onClick={handleClose} />
 
-      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--line)] rounded-2xl shadow-[var(--shadow-raised)] overflow-y-auto scroll-thin">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)] bg-[var(--panel-deep)]">
-          <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Générer une Fiche de Paie</h2>
+      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--line)] rounded-lg shadow-[var(--shadow-raised)] overflow-y-auto scroll-thin">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[var(--line)]">
+          <h2 className="text-sm font-semibold text-[var(--t1)]">Générer une fiche de paie</h2>
           <button
             onClick={handleClose}
-            className="p-1.5 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--chip)] rounded-lg transition cursor-pointer"
+            className="p-1 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] rounded-md transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -132,23 +132,23 @@ const GeneratePaieModalForm: React.FC<{ onClose: () => void }> = ({ onClose }) =
           </div>
 
           {error && (
-            <div className="px-4 py-3 rounded-lg bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-sm">
+            <div className="px-3 py-2 rounded-md bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-xs">
               {error}
             </div>
           )}
 
-          <div className="flex items-center justify-end gap-3 pt-2">
+          <div className="flex items-center justify-end gap-2 pt-2">
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2.5 rounded-lg border border-[var(--line)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
+              className="px-3.5 py-2 rounded-md border border-[var(--line)] text-sm font-medium text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+              className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[#1a1408] font-semibold px-4 py-2 rounded-md flex items-center gap-2 text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
               {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
               {submitting ? 'Génération...' : 'Générer'}

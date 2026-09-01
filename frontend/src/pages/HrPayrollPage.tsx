@@ -19,50 +19,46 @@ export const HrPayrollPage: React.FC<HrPayrollPageProps> = ({ allowedRoles }) =>
     dispatch(fetchPendingSaisies());
   }, [dispatch]);
 
-  // Mappage des titres principaux selon la sous-section active
   const pageTitles = {
-    validation: 'Feuilles en Attente de Validation',
-    toutes: 'Toutes les Feuilles de Saisie',
+    validation: 'Feuilles en attente de validation',
+    toutes: 'Toutes les feuilles de saisie',
   };
 
   const content = (
-    <div className="w-full h-full text-[var(--t1)] font-sans p-6 flex flex-col min-h-0">
-      {/* Titre dynamique */}
-      <h1 className="text-2xl font-bold tracking-tight mb-6 text-[var(--t1)] transition-all shrink-0">
+    <div className="w-full h-full text-[var(--t1)] font-sans p-6 md:p-8 flex flex-col min-h-0">
+      <h1 className="text-lg font-semibold tracking-tight mb-5 text-[var(--t1)] shrink-0">
         {pageTitles[activeTab]}
       </h1>
 
-      {/* Navigation par sous-sections / Onglets */}
-      <div className="flex items-center gap-8 border-b border-[var(--line)] mb-6 text-sm font-semibold shrink-0">
+      <div className="flex items-center gap-7 border-b border-[var(--line)] mb-5 text-sm shrink-0">
         <button
           onClick={() => setActiveTab('validation')}
-          className={`pb-3 relative transition-colors flex items-center gap-2 ${
+          className={`pb-2.5 relative transition-colors flex items-center gap-2 text-[13px] font-medium ${
             activeTab === 'validation' ? 'text-[var(--t1)]' : 'text-[var(--t3)] hover:text-[var(--t2)]'
           }`}
         >
-          En Attente de Validation
-          <span className="bg-[var(--chip)] text-[var(--t2)] text-xs px-2 py-0.5 rounded-full font-bold">
+          En attente
+          <span className="bg-[var(--chip)] text-[var(--t2)] text-[11px] px-1.5 py-0.5 rounded font-semibold font-mono tabular-nums">
             {pendingCount}
           </span>
           {activeTab === 'validation' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent)] rounded-full" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent)]" />
           )}
         </button>
 
         <button
           onClick={() => setActiveTab('toutes')}
-          className={`pb-3 relative transition-colors ${
+          className={`pb-2.5 relative transition-colors text-[13px] font-medium ${
             activeTab === 'toutes' ? 'text-[var(--t1)]' : 'text-[var(--t3)] hover:text-[var(--t2)]'
           }`}
         >
-          Toutes les Feuilles
+          Toutes les feuilles
           {activeTab === 'toutes' && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent)] rounded-full" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--accent)]" />
           )}
         </button>
       </div>
 
-      {/* Affichage du contenu dynamique */}
       <div className="flex-1 min-h-0 flex flex-col">
         {activeTab === 'validation' && <HoursValidationTable allowedRoles={allowedRoles} />}
         {activeTab === 'toutes' && <AllSaisiesTable allowedRoles={allowedRoles} />}

@@ -3,9 +3,9 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { Card } from '../ui/Card';
 
 const effectifsData = [
-  { name: 'IT', value: 45, color: '#3b82f6' },
-  { name: 'Formation', value: 30, color: '#f59e0b' },
-  { name: 'Évén. / Tourisme', value: 25, color: '#6366f1' },
+  { name: 'IT', value: 45, color: '#c8932a' },
+  { name: 'Formation', value: 30, color: '#8c6d3f' },
+  { name: 'Évén. / Tourisme', value: 25, color: '#4b5563' },
 ];
 
 export const EffectifsChart: React.FC = () => {
@@ -31,8 +31,8 @@ export const EffectifsChart: React.FC = () => {
         </ResponsiveContainer>
 
         <div className="absolute text-center">
-          <span className="text-2xl font-black text-[var(--t1)] block leading-none">17</span>
-          <span className="text-[9px] uppercase font-bold tracking-wider text-[var(--t3)] block mt-1">INTERVENANTS</span>
+          <span className="text-xl font-semibold font-mono tabular-nums text-[var(--t1)] block leading-none">17</span>
+          <span className="text-[9px] uppercase font-medium tracking-wider text-[var(--t3)] block mt-1">Intervenants</span>
         </div>
       </div>
 
@@ -43,7 +43,7 @@ export const EffectifsChart: React.FC = () => {
               <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: item.color }} />
               <span className="text-[var(--t2)] font-medium">{item.name}</span>
             </div>
-            <span className="font-bold text-[var(--t3)]">{item.value}%</span>
+            <span className="font-medium font-mono tabular-nums text-[var(--t3)]">{item.value}%</span>
           </div>
         ))}
       </div>

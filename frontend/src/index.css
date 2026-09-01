@@ -1,100 +1,104 @@
 @import "tailwindcss";
 
 /* ============================================================
-   HONEY ERP — Design System
-   A professional, human-crafted system.
+   HONEY ERP — Design Tokens
    Warm neutral surfaces + amber/copper brand accent.
    Dark and light modes share the same semantic token set.
    ============================================================ */
 
+@theme {
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code",
+    "Segoe UI Mono", "Roboto Mono", Menlo, monospace;
+}
+
 :root {
   /* ---- Accent (brand) ---- */
-  --accent: #d9a62e;          /* honey gold — primary action */
-  --accent-strong: #c29121;   /* hover */
-  --accent-soft: rgba(217, 166, 46, 0.12);
+  --accent: #c8932a;
+  --accent-strong: #b07e1e;
+  --accent-soft: rgba(200, 147, 42, 0.10);
 
   /* ---- Neutrals (warm slate) ---- */
-  --app-bg: #0b0f17;
-  --shell-bg: #0e131d;
-  --panel: #141a26;
-  --panel-deep: #11161f;
+  --app-bg: #0c1018;
+  --shell-bg: #0f141e;
+  --panel: #151c28;
+  --panel-deep: #111721;
   --surface-hover: #1a2230;
-  --chip: #222b3b;
-  --chip-hover: #2a3547;
+  --chip: #1f2938;
+  --chip-hover: #263245;
 
   /* ---- Text tiers ---- */
-  --t1: #f3f4f6;
-  --t2: #cbd2dc;
-  --t3: #8b95a5;
+  --t1: #f0f1f4;
+  --t2: #b8bfcc;
+  --t3: #6b7585;
 
   /* ---- Surfaces / borders ---- */
-  --line: rgba(148, 163, 184, 0.14);
-  --line-strong: rgba(148, 163, 184, 0.24);
+  --line: rgba(148, 163, 184, 0.12);
+  --line-strong: rgba(148, 163, 184, 0.22);
 
-  /* ---- Status (semantic, overridden for light) ---- */
+  /* ---- Status (semantic) ---- */
   --success: #34d399;
-  --success-bg: rgba(52, 211, 153, 0.1);
-  --success-line: rgba(52, 211, 153, 0.28);
+  --success-bg: rgba(52, 211, 153, 0.08);
+  --success-line: rgba(52, 211, 153, 0.22);
   --warning: #fbbf24;
-  --warning-bg: rgba(251, 191, 36, 0.1);
-  --warning-line: rgba(251, 191, 36, 0.3);
-  --danger: #fb7185;
-  --danger-bg: rgba(251, 113, 133, 0.1);
-  --danger-line: rgba(251, 113, 133, 0.28);
+  --warning-bg: rgba(251, 191, 36, 0.08);
+  --warning-line: rgba(251, 191, 36, 0.25);
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.08);
+  --danger-line: rgba(248, 113, 113, 0.22);
   --info: #60a5fa;
-  --info-bg: rgba(96, 165, 250, 0.12);
-  --info-line: rgba(96, 165, 250, 0.28);
+  --info-bg: rgba(96, 165, 250, 0.08);
+  --info-line: rgba(96, 165, 250, 0.22);
 
   /* ---- Charts ---- */
-  --chart-grid: rgba(148, 163, 184, 0.12);
+  --chart-grid: rgba(148, 163, 184, 0.10);
 
   /* ---- Elevation ---- */
-  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-raised: 0 8px 24px -12px rgba(0, 0, 0, 0.5);
-  --shadow-modal: 0 24px 60px -20px rgba(0, 0, 0, 0.65);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-raised: 0 4px 12px -4px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0 16px 48px -12px rgba(0, 0, 0, 0.55);
 }
 
 html.light {
-  --accent: #b8860b;
-  --accent-strong: #9a6f08;
-  --accent-soft: rgba(184, 134, 11, 0.1);
+  --accent: #b07e1e;
+  --accent-strong: #966a14;
+  --accent-soft: rgba(176, 126, 30, 0.08);
 
-  --app-bg: #f3efe6;
-  --shell-bg: #fbf9f3;
-  --panel: #fffdf8;
-  --panel-deep: #f2eddf;
-  --surface-hover: #ece6d6;
-  --chip: #e9e2d0;
-  --chip-hover: #ddd4bc;
+  --app-bg: #f4f1eb;
+  --shell-bg: #faf8f4;
+  --panel: #ffffff;
+  --panel-deep: #f0ece3;
+  --surface-hover: #e8e2d6;
+  --chip: #e4ded0;
+  --chip-hover: #d8d0c0;
 
-  --t1: #201a12;
-  --t2: #5b5138;
-  --t3: #8a7f63;
+  --t1: #1c1710;
+  --t2: #5a5040;
+  --t3: #8a7f68;
 
-  --line: rgba(90, 80, 55, 0.18);
-  --line-strong: rgba(90, 80, 55, 0.3);
+  --line: rgba(90, 80, 55, 0.15);
+  --line-strong: rgba(90, 80, 55, 0.28);
 
-  --success: #178a57;
-  --success-bg: rgba(23, 138, 87, 0.1);
-  --success-line: rgba(23, 138, 87, 0.28);
-  --warning: #b45309;
-  --warning-bg: rgba(180, 83, 9, 0.1);
-  --warning-line: rgba(180, 83, 9, 0.28);
-  --danger: #c0392b;
-  --danger-bg: rgba(192, 57, 43, 0.1);
-  --danger-line: rgba(192, 57, 43, 0.26);
-  --info: #1d63c9;
-  --info-bg: rgba(29, 99, 201, 0.1);
-  --info-line: rgba(29, 99, 201, 0.26);
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.07);
+  --success-line: rgba(22, 163, 74, 0.22);
+  --warning: #ca8a04;
+  --warning-bg: rgba(202, 138, 4, 0.07);
+  --warning-line: rgba(202, 138, 4, 0.22);
+  --danger: #dc2626;
+  --danger-bg: rgba(220, 38, 38, 0.06);
+  --danger-line: rgba(220, 38, 38, 0.20);
+  --info: #2563eb;
+  --info-bg: rgba(37, 99, 235, 0.06);
+  --info-line: rgba(37, 99, 235, 0.20);
 
-  --chart-grid: rgba(90, 80, 55, 0.14);
+  --chart-grid: rgba(90, 80, 55, 0.12);
 
-  --shadow-soft: 0 1px 2px rgba(60, 50, 25, 0.08);
-  --shadow-raised: 0 10px 30px -18px rgba(60, 50, 25, 0.25);
-  --shadow-modal: 0 24px 60px -24px rgba(60, 50, 25, 0.35);
+  --shadow-soft: 0 1px 2px rgba(60, 50, 25, 0.06);
+  --shadow-raised: 0 4px 12px -4px rgba(60, 50, 25, 0.15);
+  --shadow-modal: 0 16px 48px -12px rgba(60, 50, 25, 0.25);
 }
 
-/* ---- Legacy aliases (kept for compatibility) ---- */
+/* ---- Legacy aliases ---- */
 :root,
 html.light {
   --text-primary: var(--t1);
@@ -128,6 +132,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   user-select: none;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 /* Allow text selection only in inputs */
@@ -146,11 +151,11 @@ button:disabled, [disabled] { cursor: not-allowed; }
   scrollbar-width: thin;
   scrollbar-color: var(--line-strong) transparent;
 }
-.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar { width: 5px; height: 5px; }
 .scroll-thin::-webkit-scrollbar-track { background: transparent; }
 .scroll-thin::-webkit-scrollbar-thumb {
   background: var(--line-strong);
-  border-radius: 9999px;
+  border-radius: 3px;
 }
 
 /* ---- Focus visibility ---- */
@@ -158,6 +163,11 @@ button:disabled, [disabled] { cursor: not-allowed; }
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* ---- Tabular figures for data ---- */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Respect reduced motion */

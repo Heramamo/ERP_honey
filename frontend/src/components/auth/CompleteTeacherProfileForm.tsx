@@ -40,10 +40,10 @@ export function CompleteTeacherProfileForm() {
 
         {/* Sélection moderne du Statut (Sélecteur à pilules / Segmented Buttons) */}
         <div>
-          <label className="block text-xs font-semibold text-[var(--t2)] mb-1.5">
+          <label className="block text-xs font-medium text-[var(--t2)] mb-1.5">
             Statut Enseignant
           </label>
-          <div className="grid grid-cols-3 gap-1 bg-[var(--panel-deep)] p-1.5 rounded-lg border border-[var(--line)]">
+          <div className="grid grid-cols-3 gap-1 bg-[var(--panel-deep)] p-1 rounded-md border border-[var(--line)]">
             {statusOptions.map((opt) => {
               const isActive = status === opt.value;
               return (
@@ -51,9 +51,9 @@ export function CompleteTeacherProfileForm() {
                   key={opt.value}
                   type="button"
                   onClick={() => setStatus(opt.value)}
-                  className={`py-2 px-3 rounded-lg text-xs font-bold transition-all duration-200 ${
+                  className={`py-2 px-3 rounded-md text-xs font-medium transition-colors ${
                     isActive
-                      ? 'bg-[var(--accent)] text-slate-950 shadow-sm'
+                      ? 'bg-[var(--accent)] text-[#1a1408]'
                       : 'text-[var(--t3)] hover:text-[var(--t1)]'
                   }`}
                 >

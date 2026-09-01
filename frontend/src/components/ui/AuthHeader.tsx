@@ -6,14 +6,14 @@ interface AuthHeaderProps {
 
 export function AuthHeader({ tag, title, subtitle }: AuthHeaderProps) {
   return (
-    <div className="mb-6">
-      <span className="text-[11px] font-semibold text-[var(--accent)] uppercase tracking-widest block mb-2">
+    <div className="mb-5">
+      <span className="text-[10px] font-semibold text-[var(--accent)] uppercase tracking-widest block mb-2">
         {tag}
       </span>
-      <h2 className="text-2xl font-extrabold text-[var(--t1)] mb-1 leading-tight">
+      <h2 className="text-xl font-bold text-[var(--t1)] mb-0.5 leading-tight">
         {title}
       </h2>
-      <p className="text-[var(--t2)] text-sm leading-relaxed">
+      <p className="text-[var(--t3)] text-sm">
         {subtitle}
       </p>
     </div>

@@ -16,7 +16,7 @@ const toneStyles: Record<CardTone, string> = {
 export const Card: React.FC<CardProps> = ({ children, tone = 'default', className = '' }) => {
   return (
     <div
-      className={`flex flex-col rounded-2xl border p-6 shadow-[var(--shadow-raised)] ${toneStyles[tone]} ${className}`}
+      className={`flex flex-col rounded-lg border p-5 ${toneStyles[tone]} ${className}`}
     >
       {children}
     </div>

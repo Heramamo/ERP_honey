@@ -13,11 +13,11 @@ interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement>
 export function SelectField({ label, options, className = '', ...props }: SelectFieldProps) {
   return (
     <div>
-      <label className="block text-xs font-semibold text-[var(--t2)] mb-1.5">
+      <label className="block text-xs font-medium text-[var(--t2)] mb-1.5">
         {label}
       </label>
       <select
-        className={`w-full px-4 py-2.5 rounded-lg bg-[var(--panel-deep)] border border-[var(--line)] text-[var(--t1)] text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/25 transition appearance-none ${className}`}
+        className={`w-full px-3 py-2 rounded-md bg-[var(--panel-deep)] border border-[var(--line)] text-[var(--t1)] text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]/20 transition appearance-none ${className}`}
         {...props}
       >
         {options.map((opt) => (

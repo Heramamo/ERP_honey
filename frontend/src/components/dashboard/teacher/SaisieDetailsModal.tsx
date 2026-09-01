@@ -1,21 +1,13 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import type { SaisiePayload } from '../../../types/saisieFeuille';
+import { StatusBadge } from '../../common/StatusBadge';
 
 interface SaisieDetailsModalProps {
   open: boolean;
   saisie: SaisiePayload | null;
   onClose: () => void;
 }
-
-const STATUT_STYLES: Record<string, string> = {
-  VALIDE: 'text-[var(--success)] bg-[var(--success-bg)] border-[var(--success-line)]',
-  REFUSE: 'text-[var(--danger)] bg-[var(--danger-bg)] border-[var(--danger-line)]',
-  EN_ATTENTE: 'text-[var(--warning)] bg-[var(--warning-bg)] border-[var(--warning-line)]',
-};
-
-const getStatutStyle = (statut: SaisiePayload['statut']) =>
-  STATUT_STYLES[String(statut)] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--line)]';
 
 const getStatutLabel = (statut: SaisiePayload['statut']) => {
   switch (String(statut)) {
@@ -35,72 +27,65 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
   if (!open || !saisie) return null;
 
   const rows: { label: string; value: React.ReactNode }[] = [
-    { label: 'Date', value: formatDate(saisie.date) },
+    { label: 'Date', value: <span className="font-mono tabular-nums">{formatDate(saisie.date)}</span> },
     {
       label: "Type d'activité",
       value: (
-        <span className="inline-block px-3 py-1 rounded-full text-[10px] font-bold tracking-wide border bg-[var(--info-bg)] text-[var(--info)] border-[var(--info-line)]">
+        <span className="inline-block px-2 py-0.5 rounded text-[11px] font-medium bg-[var(--info-bg)] text-[var(--info)]">
           {saisie.typeActivite}
         </span>
       ),
     },
-    { label: 'Heures de base', value: `${saisie.heuresEffectuees} h` },
-    { label: 'Heures supplémentaires', value: `${saisie.heuresSupp} h` },
+    { label: 'Heures de base', value: <span className="font-mono tabular-nums">{saisie.heuresEffectuees} h</span> },
+    { label: 'Heures supplémentaires', value: <span className="font-mono tabular-nums">{saisie.heuresSupp} h</span> },
     {
       label: 'Statut',
-      value: (
-        <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border ${getStatutStyle(saisie.statut)}`}>
-          {getStatutLabel(saisie.statut)}
-        </span>
-      ),
+      value: <StatusBadge status={getStatutLabel(saisie.statut)} />,
     },
   ];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
 
-      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--line)] rounded-2xl shadow-[var(--shadow-raised)] overflow-y-auto scroll-thin">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)] bg-[var(--panel-deep)]">
-          <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Détails de la Saisie</h2>
+      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--line)] rounded-lg shadow-[var(--shadow-raised)] overflow-y-auto scroll-thin">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[var(--line)]">
+          <h2 className="text-sm font-semibold text-[var(--t1)]">Détails de la saisie</h2>
           <button
             onClick={onClose}
-            className="p-1.5 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--chip)] rounded-lg transition cursor-pointer"
+            className="p-1 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] rounded-md transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="p-5 space-y-4">
           <dl className="space-y-3">
             {rows.map((row) => (
               <div key={row.label} className="flex items-center justify-between gap-4">
-                <dt className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">{row.label}</dt>
-                <dd className="text-sm font-semibold text-[var(--t2)] text-right">{row.value}</dd>
+                <dt className="text-[11px] font-medium text-[var(--t3)]">{row.label}</dt>
+                <dd className="text-sm font-medium text-[var(--t2)] text-right">{row.value}</dd>
               </div>
             ))}
           </dl>
 
-          {/* Validateur */}
           <div className="pt-4 border-t border-[var(--line)]">
-            <p className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider mb-3">Validation</p>
+            <p className="text-[11px] font-medium text-[var(--t3)] mb-3">Validation</p>
             {saisie.validePar ? (
-              <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[var(--panel-deep)] border border-[var(--line)]">
-                <div className="w-9 h-9 rounded-full bg-[var(--accent)] text-slate-950 font-black text-xs flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-3 px-3 py-3 rounded-md bg-[var(--panel-deep)] border border-[var(--line)]">
+                <div className="w-8 h-8 rounded-md bg-[var(--accent)] text-[#1a1408] font-semibold text-[11px] flex items-center justify-center shrink-0">
                   {(saisie.validePar.prenom[0] ?? '') + (saisie.validePar.nom[0] ?? '')}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-bold text-[var(--t1)] truncate">
+                  <p className="text-xs font-medium text-[var(--t1)] truncate">
                     {saisie.validePar.nom} {saisie.validePar.prenom}
                   </p>
-                  <p className="text-[10px] font-semibold text-[var(--t3)] truncate">
-                    {saisie.validePar.role} • {saisie.validePar.email}
+                  <p className="text-[10px] text-[var(--t3)] truncate">
+                    {saisie.validePar.role} · {saisie.validePar.email}
                   </p>
                 </div>
-                <span
-                  className={`ml-auto inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border shrink-0 ${getStatutStyle(saisie.statut)}`}
-                >
-                  {getStatutLabel(saisie.statut)}
+                <span className="ml-auto shrink-0">
+                  <StatusBadge status={getStatutLabel(saisie.statut)} />
                 </span>
               </div>
             ) : (
@@ -108,11 +93,11 @@ export const SaisieDetailsModal: React.FC<SaisieDetailsModalProps> = ({ open, sa
             )}
           </div>
 
-          <div className="flex items-center justify-end pt-2">
+          <div className="flex items-center justify-end pt-1">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-lg border border-[var(--line)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
+              className="px-3.5 py-2 rounded-md border border-[var(--line)] text-sm font-medium text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
             >
               Fermer
             </button>

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  TrendingUp,
-  TrendingDown,
-  Scale,
-  Info,
   FileSpreadsheet,
   FileText,
   FolderArchive,
@@ -40,82 +36,56 @@ export const PoleReportsTable: React.FC = () => {
   const totalRevenus = poles.reduce((s, p) => s + (bilans[p.id]?.totalRevenu ?? 0), 0);
   const totalCharges = poles.reduce((s, p) => s + (bilans[p.id]?.totalCharge ?? 0), 0);
   const beneficeNet = totalRevenus - totalCharges;
-  const margeGlobale = totalRevenus > 0 ? (beneficeNet / totalRevenus) * 100 : 0;
 
-  const kpiCard = (border: string, label: string, value: string, note: React.ReactNode) => (
-    <div className={`bg-[var(--panel)] border border-[var(--line)] border-l-4 ${border} rounded-xl p-5 shadow-[var(--shadow-raised)]`}>
-      <p className="text-xs font-semibold text-[var(--t3)]">{label}</p>
-      <div className="flex items-baseline gap-2 mt-2">
-        <span className="text-2xl font-bold text-[var(--t1)]">{value}</span>
-      </div>
-      <div className="flex items-center gap-1.5 mt-2 text-xs font-medium">{note}</div>
+  const kpi = (label: string, value: string, tone: string) => (
+    <div className="bg-[var(--panel)] border border-[var(--line)] rounded-lg p-4">
+      <p className="text-[11px] font-medium text-[var(--t3)]">{label}</p>
+      <p className={`mt-1.5 text-xl font-medium font-mono tabular-nums ${tone}`}>{value}</p>
     </div>
   );
 
   return (
-    <div className="space-y-6">
-      {/* 1. Cartes KPI Consolidation Financière */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {kpiCard('border-l-[var(--success)]', 'Total Revenus', formatAr(totalRevenus), (
-          <span className="flex items-center gap-1.5 text-[var(--success)]">
-            <TrendingUp className="w-4 h-4" />
-            <span>{formatMonthYear(mois)}</span>
-          </span>
-        ))}
-        {kpiCard('border-l-[var(--danger)]', 'Total Charges', formatAr(totalCharges), (
-          <span className="flex items-center gap-1.5 text-[var(--danger)]">
-            <TrendingDown className="w-4 h-4" />
-            <span>Charges consolidées</span>
-          </span>
-        ))}
-        {kpiCard('border-l-[var(--warning)]', 'Bénéfice Net', formatAr(beneficeNet), (
-          <span className="flex items-center gap-1.5 text-[var(--warning)]">
-            <Scale className="w-4 h-4 text-[var(--warning)]" />
-            <span>Marge nette globale : <strong>{margeGlobale.toFixed(1)}%</strong></span>
-          </span>
-        ))}
+    <div className="space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        {kpi('Total revenus · ' + formatMonthYear(mois), formatAr(totalRevenus), 'text-[var(--success)]')}
+        {kpi('Total charges', formatAr(totalCharges), 'text-[var(--danger)]')}
+        {kpi('Bénéfice net', formatAr(beneficeNet), 'text-[var(--t1)]')}
       </div>
 
-      {/* Sélecteur de mois */}
-      <div className="bg-[var(--panel)] border border-[var(--line)] rounded-xl p-5 shadow-[var(--shadow-raised)]">
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div className="bg-[var(--panel)] border border-[var(--line)] rounded-lg">
+        <div className="flex flex-wrap items-center justify-between gap-3 p-4 border-b border-[var(--line)]">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--t3)]" />
+              <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--t3)]" />
               <input
                 type="month"
                 value={mois}
                 onChange={(e) => setMois(e.target.value)}
-                className="bg-[var(--panel-deep)] border border-[var(--line)] rounded-lg pl-9 pr-4 py-2 text-sm text-[var(--t2)] focus:outline-none focus:border-[var(--accent)]"
+                className="bg-[var(--panel-deep)] border border-[var(--line)] rounded-md pl-8 pr-3 py-1.5 text-sm text-[var(--t2)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-muted)] cursor-pointer"
               />
             </div>
             {loading && <Loader2 className="w-4 h-4 animate-spin text-[var(--accent)]" />}
           </div>
-          <div className="flex items-center gap-2 bg-[var(--panel-deep)] border border-[var(--line)] rounded-lg px-4 py-2.5 text-xs text-[var(--t3)] w-fit">
-            <Info className="w-4 h-4 text-[var(--t3)] shrink-0" />
-            <span>
-              <strong className="text-[var(--t2)]">Bénéfice Net</strong> = Total Revenus - (Charges Fixes + Charges Variables)
-            </span>
-          </div>
+          <span className="text-xs text-[var(--t3)]">
+            Bénéfice net = Revenus - (Charges fixes + Charges variables)
+          </span>
         </div>
 
-        {/* Table */}
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto scroll-thin">
           {poles.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-              <FolderArchive className="w-8 h-8 text-[var(--t3)]" />
+            <div className="flex items-center justify-center py-16 gap-2 text-[var(--t3)]">
               <span className="text-sm">Aucun pôle enregistré.</span>
             </div>
           ) : (
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-[var(--line)] text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">
-                  <th className="py-3 px-4">Pôle d'activité</th>
-                  <th className="py-3 px-4 text-right">Revenus Bruts (Ar)</th>
-                  <th className="py-3 px-4 text-right">Charges Fixes (Ar)</th>
-                  <th className="py-3 px-4 text-right">Charges Variables (Ar)</th>
-                  <th className="py-3 px-4 text-right">Bénéfice Net (Ar)</th>
-                  <th className="py-3 px-4 text-right">Marge Nette (%)</th>
+                <tr className="border-b border-[var(--line)] text-[10px] font-semibold text-[var(--t3)] uppercase tracking-wider">
+                  <th className="py-2.5 px-4">Pôle d'activité</th>
+                  <th className="py-2.5 px-4 text-right">Revenus bruts</th>
+                  <th className="py-2.5 px-4 text-right">Charges fixes</th>
+                  <th className="py-2.5 px-4 text-right">Charges variables</th>
+                  <th className="py-2.5 px-4 text-right">Bénéfice net</th>
+                  <th className="py-2.5 px-4 text-right">Marge nette</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--line)] text-sm">
@@ -124,31 +94,31 @@ export const PoleReportsTable: React.FC = () => {
                   const benefice = bilan ? bilan.beneficeNet : 0;
                   const marge = bilan && bilan.totalRevenu > 0 ? (bilan.beneficeNet / bilan.totalRevenu) * 100 : 0;
                   return (
-                    <tr key={pole.id} className="hover:bg-[var(--surface-hover)] transition-colors">
-                      <td className="py-4 px-4 font-semibold text-[var(--t1)]">
-                        <div className="flex items-center gap-3">
-                          <span className={`inline-block h-2.5 w-2.5 rounded-full ${getPoleDot(pole.id)}`} />
-                          <span>{pole.nom}</span>
-                        </div>
+                    <tr key={pole.id} className="hover:bg-[var(--chip)]/50 transition-colors">
+                      <td className="py-3 px-4 font-medium text-[var(--t1)]">
+                        <span className="inline-flex items-center gap-2.5">
+                          <span className={`inline-block h-2 w-2 rounded-full ${getPoleDot(pole.id)}`} />
+                          {pole.nom}
+                        </span>
                       </td>
-                      <td className="py-4 px-4 text-right text-[var(--t2)] font-medium">
+                      <td className="py-3 px-4 text-right text-[var(--t2)] font-mono tabular-nums">
                         {bilan ? formatAr(bilan.totalRevenu) : <Loader2 className="w-3.5 h-3.5 animate-spin text-[var(--t3)] inline" />}
                       </td>
-                      <td className="py-4 px-4 text-right text-[var(--t2)] font-medium">
+                      <td className="py-3 px-4 text-right text-[var(--t2)] font-mono tabular-nums">
                         {bilan ? formatAr(bilan.totalChargesFixe) : '-'}
                       </td>
-                      <td className="py-4 px-4 text-right text-[var(--t2)] font-medium">
+                      <td className="py-3 px-4 text-right text-[var(--t2)] font-mono tabular-nums">
                         {bilan ? formatAr(bilan.totalChargeVariable) : '-'}
                       </td>
-                      <td className={`py-4 px-4 text-right font-bold ${benefice >= 0 ? 'text-[var(--success)]' : 'text-[var(--danger)]'}`}>
+                      <td className={`py-3 px-4 text-right font-medium font-mono tabular-nums ${benefice >= 0 ? 'text-[var(--success)]' : 'text-[var(--danger)]'}`}>
                         {bilan ? formatAr(benefice) : '-'}
                       </td>
-                      <td className="py-4 px-4 text-right">
+                      <td className="py-3 px-4 text-right">
                         {bilan ? (
-                          <span className={`inline-block px-2.5 py-1 text-xs font-bold rounded-md ${
+                          <span className={`inline-block px-2 py-0.5 text-[11px] font-medium rounded-md ${
                             marge >= 0
-                              ? 'text-[var(--success)] bg-[var(--success-bg)] border border-[var(--success-line)]'
-                              : 'text-[var(--danger)] bg-[var(--danger-bg)] border border-[var(--danger-line)]'
+                              ? 'text-[var(--success)] bg-[var(--success-bg)]'
+                              : 'text-[var(--danger)] bg-[var(--danger-bg)]'
                           }`}>
                             {marge.toFixed(1)}%
                           </span>
@@ -165,34 +135,33 @@ export const PoleReportsTable: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. Section Rapports Téléchargeables */}
-      <div className="space-y-4 pt-2">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="space-y-3 pt-1">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 className="text-base font-bold text-[var(--t1)]">Rapports Téléchargeables</h3>
-            <p className="text-sm text-[var(--t3)]">Générez ou téléchargez les bilans archivés.</p>
+            <h3 className="text-sm font-semibold text-[var(--t1)]">Rapports téléchargeables</h3>
+            <p className="text-xs text-[var(--t3)]">Générez ou téléchargez les bilans archivés.</p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button className="bg-[var(--panel-deep)] hover:bg-[var(--surface-hover)] border border-[var(--line)] text-[var(--t2)] text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer">
+          <div className="flex items-center gap-2">
+            <button className="bg-[var(--panel-deep)] hover:bg-[var(--chip)] border border-[var(--line)] text-[var(--t2)] text-xs font-medium px-3 py-2 rounded-md flex items-center gap-1.5 transition-colors cursor-pointer">
               <FileSpreadsheet className="w-4 h-4 text-[var(--success)]" />
               Exporter en Excel
             </button>
 
-            <button className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-slate-950 text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-2 transition-colors cursor-pointer">
-              Générer Bilan PDF
+            <button className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[#1a1408] text-xs font-semibold px-3 py-2 rounded-md flex items-center gap-1.5 transition-colors cursor-pointer">
+              Générer bilan PDF
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-[var(--panel)] border border-[var(--line)] hover:border-[var(--accent)]/50 rounded-xl p-4 flex items-center justify-center gap-2 transition-colors cursor-pointer text-[var(--t2)] hover:text-[var(--accent)]">
-            <FolderArchive className="w-5 h-5 text-[var(--t3)]" />
-            <span className="text-xs font-semibold">Voir toutes les archives</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="bg-[var(--panel)] border border-[var(--line)] hover:border-[var(--accent-muted)] rounded-lg p-4 flex items-center justify-center gap-2 transition-colors cursor-pointer text-[var(--t2)] hover:text-[var(--accent)]">
+            <FolderArchive className="w-4 h-4 text-[var(--t3)]" />
+            <span className="text-xs font-medium">Voir toutes les archives</span>
           </div>
-          <div className="bg-[var(--panel)] border border-[var(--line)] rounded-xl p-4 flex items-center justify-center gap-2 text-[var(--t3)]">
-            <FileText className="w-5 h-5" />
-            <span className="text-xs font-semibold">Aucun rapport archivé</span>
+          <div className="bg-[var(--panel)] border border-[var(--line)] rounded-lg p-4 flex items-center justify-center gap-2 text-[var(--t3)]">
+            <FileText className="w-4 h-4" />
+            <span className="text-xs font-medium">Aucun rapport archivé</span>
           </div>
         </div>
       </div>

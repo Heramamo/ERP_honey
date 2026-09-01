@@ -58,27 +58,27 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
   };
 
   const inputClass =
-    'w-full bg-[var(--panel-deep)] border border-[var(--line)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] placeholder-slate-500 focus:outline-none focus:border-[var(--accent-muted)] transition-colors';
+    'w-full bg-[var(--panel-deep)] border border-[var(--line)] rounded-md px-3 py-2 text-sm text-[var(--t1)] placeholder:text-[var(--t3)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]/20 transition-colors';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
 
-      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--line)] rounded-2xl shadow-[var(--shadow-raised)] overflow-y-auto scroll-thin">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--line)] bg-[var(--panel-deep)]">
-          <h2 className="text-sm font-bold text-[var(--t1)] uppercase tracking-wider">Nouvelle Saisie</h2>
+      <div className="relative w-full max-w-md max-h-[85vh] bg-[var(--panel)] border border-[var(--line)] rounded-lg shadow-[var(--shadow-raised)] overflow-y-auto scroll-thin">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[var(--line)]">
+          <h2 className="text-sm font-semibold text-[var(--t1)]">Nouvelle saisie</h2>
           <button
             onClick={onClose}
-            className="p-1.5 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--chip)] rounded-lg transition cursor-pointer"
+            className="p-1 text-[var(--t3)] hover:text-[var(--t1)] hover:bg-[var(--surface-hover)] rounded-md transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">Date</label>
+              <label className="text-xs font-medium text-[var(--t2)]">Date</label>
               <input
                 type="date"
                 required
@@ -88,12 +88,12 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
                   setDate(e.target.value);
                   setLocalError(null);
                 }}
-                className={`${inputClass}`}
+                className={inputClass}
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">Type d'activité</label>
+              <label className="text-xs font-medium text-[var(--t2)]">Type d'activité</label>
               <select
                 value={typeActivite}
                 onChange={(e) => setTypeActivite(e.target.value)}
@@ -108,9 +108,9 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">Heures de base</label>
+              <label className="text-xs font-medium text-[var(--t2)]">Heures de base</label>
               <input
                 type="number"
                 min="0"
@@ -118,43 +118,43 @@ export const CreateSaisieModal: React.FC<CreateSaisieModalProps> = ({ open, onCl
                 required
                 value={heuresEffectuees}
                 onChange={(e) => setHeuresEffectuees(e.target.value)}
-                className={inputClass}
+                className={`${inputClass} font-mono tabular-nums`}
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-[var(--t3)] uppercase tracking-wider">Heures supp.</label>
+              <label className="text-xs font-medium text-[var(--t2)]">Heures supp.</label>
               <input
                 type="number"
                 min="0"
                 step="0.5"
                 value={heuresSupp}
                 onChange={(e) => setHeuresSupp(e.target.value)}
-                className={inputClass}
+                className={`${inputClass} font-mono tabular-nums`}
               />
             </div>
           </div>
 
           {(localError || error) && (
-            <div className="px-4 py-3 rounded-lg bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-sm">
+            <div className="px-3 py-2 rounded-md bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-xs">
               {localError ?? error}
             </div>
           )}
 
-          <div className="flex items-center justify-end gap-3 pt-2">
+          <div className="flex items-center justify-end gap-2 pt-1">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-lg border border-[var(--line)] text-sm font-semibold text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
+              className="px-3.5 py-2 rounded-md border border-[var(--line)] text-sm font-medium text-[var(--t2)] hover:bg-[var(--chip)] transition cursor-pointer"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+              className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[#1a1408] font-semibold px-4 py-2 rounded-md flex items-center gap-1.5 text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
-              {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
+              {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               {submitting ? 'Enregistrement...' : 'Enregistrer'}
             </button>
           </div>

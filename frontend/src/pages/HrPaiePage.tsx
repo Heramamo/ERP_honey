@@ -3,8 +3,10 @@ import { Loader2, Inbox, Plus } from 'lucide-react';
 import RoleGuard from '../components/RoleGuard';
 import type { Role } from '../types/auth';
 import type { PaiePayload } from '../types/paie';
-import { fetchAllPaies, updateStatutPaie, clearError as clearPaieError } from '../store/slices/paieSlice';import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { fetchAllPaies, updateStatutPaie, clearError as clearPaieError } from '../store/slices/paieSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { GeneratePaieModal } from '../components/dashboard/hr/GeneratePaieModal';
+import { StatusBadge } from '../components/common/StatusBadge';
 
 interface HrPaiePageProps {
   allowedRoles?: Role[];
@@ -19,11 +21,6 @@ const formatMois = (mois: string) => {
   const [year, month] = mois.split('-');
   const label = MONTHS_FR[Number(month) - 1];
   return label ? `${label} ${year}` : mois;
-};
-
-const STATUT_STYLES: Record<string, string> = {
-  PAYE: 'text-[var(--success)] bg-[var(--success-bg)] border-[var(--success-line)]',
-  EN_ATTENTE: 'text-[var(--warning)] bg-[var(--warning-bg)] border-[var(--warning-line)]',
 };
 
 const getStatutLabel = (statut: string) => {
@@ -53,9 +50,9 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
   };
 
   const content = (
-    <div className="w-full h-full text-[var(--t1)] font-sans p-6 flex flex-col min-h-0">
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 shrink-0">
-        <h1 className="text-2xl font-bold tracking-tight text-[var(--t1)]">Gestion de la Paie</h1>
+    <div className="w-full h-full text-[var(--t1)] font-sans p-6 md:p-8 flex flex-col min-h-0">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-5 shrink-0">
+        <h1 className="text-lg font-semibold tracking-tight">Gestion de la paie</h1>
 
         <div className="flex items-center gap-3">
           <input
@@ -63,80 +60,78 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
             value={moisFilter}
             onChange={(e) => setMoisFilter(e.target.value)}
             placeholder="Filtrer par mois"
-            className="bg-[var(--panel-deep)] border border-[var(--line)] rounded-lg px-3.5 py-2.5 text-sm text-[var(--t2)] focus:outline-none focus:border-[var(--accent-muted)] transition-colors"
+            className="bg-[var(--panel-deep)] border border-[var(--line)] rounded-md px-3 py-2 text-sm text-[var(--t2)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]/20 transition-colors"
           />
           {moisFilter && (
             <button
               onClick={() => setMoisFilter('')}
-              className="text-xs font-semibold text-[var(--t3)] hover:text-[var(--t1)] transition-colors cursor-pointer"
+              className="text-xs font-medium text-[var(--t3)] hover:text-[var(--t1)] transition-colors cursor-pointer"
             >
               Réinitialiser
             </button>
           )}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-slate-950 font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm transition-colors cursor-pointer"
+            className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[#1a1408] font-semibold px-4 py-2 rounded-md flex items-center gap-1.5 text-sm transition-colors cursor-pointer"
           >
-            <Plus className="w-4 h-4 stroke-[3]" />
+            <Plus className="w-3.5 h-3.5 stroke-[3]" />
             Générer une fiche
           </button>
         </div>
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-lg bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-sm shrink-0">
+        <div className="mb-5 px-3 py-2 rounded-md bg-[var(--danger-bg)] border border-[var(--danger-line)] text-[var(--danger)] text-xs shrink-0">
           {error}
         </div>
       )}
 
-      <div className="bg-[var(--panel)] border border-[var(--line)] rounded-xl overflow-hidden shadow-[var(--shadow-raised)] flex-1 min-h-0 flex flex-col">
+      <div className="bg-[var(--panel)] border border-[var(--line)] rounded-lg overflow-hidden flex-1 min-h-0 flex flex-col">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Loader2 className="w-6 h-6 animate-spin text-[var(--accent)]" />
-            <span className="text-sm">Chargement des fiches de paie...</span>
+          <div className="flex flex-col items-center justify-center py-16 gap-2.5 text-[var(--t3)]">
+            <Loader2 className="w-5 h-5 animate-spin text-[var(--accent)]" />
+            <span className="text-xs">Chargement des fiches de paie...</span>
           </div>
         ) : paies.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-[var(--t3)]">
-            <Inbox className="w-8 h-8 text-[var(--t3)]" />
-            <span className="text-sm">Aucune fiche de paie pour le moment.</span>
+          <div className="flex flex-col items-center justify-center py-16 gap-2 text-[var(--t3)]">
+            <Inbox className="w-6 h-6" />
+            <span className="text-xs">Aucune fiche de paie pour le moment.</span>
           </div>
         ) : (
           <div className="flex-1 min-h-0 overflow-auto scroll-thin">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="sticky top-0 z-10 border-b border-[var(--line)] text-[11px] font-bold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
-                <th className="py-4 px-6">ENSEIGNANT</th>
-                <th className="py-4 px-6">PÉRIODE</th>
-                <th className="py-4 px-6">MONTANT TOTAL</th>
-                <th className="py-4 px-6">STATUT</th>
-                <th className="py-4 px-6 text-right">ACTION</th>
+              <tr className="sticky top-0 z-10 border-b border-[var(--line)] text-[10px] font-semibold text-[var(--t3)] tracking-wider uppercase bg-[var(--panel-deep)]">
+                <th className="py-3 px-5">Enseignant</th>
+                <th className="py-3 px-5">Période</th>
+                <th className="py-3 px-5">Montant total</th>
+                <th className="py-3 px-5">Statut</th>
+                <th className="py-3 px-5 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--line)] text-sm">
               {paies.map((paie: PaiePayload) => (
-                <tr key={paie.id} className="hover:bg-[var(--chip)] transition-colors">
-                  <td className="py-4 px-6 font-bold text-[var(--t1)]">
+                <tr key={paie.id} className="hover:bg-[var(--chip)]/50 transition-colors">
+                  <td className="py-3 px-5 font-medium text-[var(--t1)]">
                     {paie.enseignant
                       ? `${paie.enseignant.utilisateur.nom} ${paie.enseignant.utilisateur.prenom}`
                       : `Enseignant #${paie.enseignantId}`}
                     {paie.enseignant && (
-                      <span className="block text-xs font-normal text-[var(--t3)]">{paie.enseignant.utilisateur.email}</span>
+                      <span className="block text-[11px] font-normal text-[var(--t3)]">{paie.enseignant.utilisateur.email}</span>
                     )}
                   </td>
-                  <td className="py-4 px-6 text-[var(--t3)] text-xs">{formatMois(paie.mois)}</td>
-                  <td className="py-4 px-6 font-semibold text-[var(--success)]">
+                  <td className="py-3 px-5 text-[var(--t3)] text-xs">{formatMois(paie.mois)}</td>
+                  <td className="py-3 px-5 font-medium text-[var(--success)] font-mono tabular-nums">
                     {paie.totalSalaire.toLocaleString('fr-FR')} Ar
                   </td>
-                  <td className="py-4 px-6">
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide border ${STATUT_STYLES[paie.statutpaie] ?? 'bg-[var(--chip)] text-[var(--t2)] border-[var(--line)]'}`}>
-                      {getStatutLabel(paie.statutpaie)}
-                    </span>
+                  <td className="py-3 px-5">
+                    <StatusBadge status={getStatutLabel(paie.statutpaie)} />
                   </td>
-                  <td className="py-4 px-6 text-right">
+                  <td className="py-3 px-5 text-right">
                     {paie.statutpaie === 'EN_ATTENTE' ? (
                       <button
                         onClick={() => handleMarkPaid(paie.id)}
-                        className="px-3 py-1.5 rounded-lg bg-[var(--success-bg)] border border-[var(--success-line)] hover:brightness-95 text-[var(--success)] text-xs font-bold transition-colors cursor-pointer"
+                        className="px-2.5 py-1 rounded-md bg-[var(--success-bg)] border border-[var(--success-line)] hover:brightness-95 text-[var(--success)] text-xs font-medium transition-colors cursor-pointer"
                       >
                         Marquer payé
                       </button>
