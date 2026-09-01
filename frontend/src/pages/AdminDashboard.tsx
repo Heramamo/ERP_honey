@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   TrendingUp,
   TrendingDown,
@@ -86,6 +87,7 @@ const requestColumns: DataColumn<RecentRequest>[] = [
 
 export const AdminDashboard: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const revenus = useAppSelector((state) => state.revenus.revenus);
   const charges = useAppSelector((state) => state.charges.charges);
@@ -291,7 +293,10 @@ export const AdminDashboard: React.FC = () => {
           <div>
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-sm font-semibold text-[var(--t1)]">Demandes récentes</h3>
-              <button className="text-[11px] text-[var(--accent)] hover:text-[var(--accent-strong)] transition font-medium cursor-pointer">
+              <button
+                onClick={() => navigate('/dashboard/feuilles-de-saisie')}
+                className="text-[11px] text-[var(--accent)] hover:text-[var(--accent-strong)] transition font-medium cursor-pointer"
+              >
                 Tout voir →
               </button>
             </div>
