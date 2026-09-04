@@ -200,7 +200,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   : 'max-h-12 opacity-100 flex-1'
               }`}
             >
-              <p className="text-[12px] font-medium text-[var(--t1)] truncate">{formatDisplayName(user?.email)}</p>
+              <p className="text-[12px] font-medium text-[var(--t1)] truncate">{formatDisplayName(user?.nom)}</p>
               <p className="text-[10px] text-[var(--t3)] truncate">
                 {user?.role ?? 'Utilisateur'}
               </p>
