@@ -62,7 +62,7 @@ export class UserService {
         if (!isPassword) {
             throw new UnauthorizedException('Identifiants invalides');
         }
-        const payload = { sub: user.id_utilisateur, email: user.email, role: user.role };
+        const payload = { sub: user.id_utilisateur, email: user.email, role: user.role,nom:user.nom };
         return {
             access_token: await this.jwtService.signAsync(payload),
             user: {

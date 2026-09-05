@@ -4,7 +4,8 @@ export interface UserPayload {
   sub: number;       
   email: string;
   role: Role;
-  exp: number;       
+  exp: number;
+  nom:string       
 }
 
 export interface AuthState {
