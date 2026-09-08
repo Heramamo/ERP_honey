@@ -83,12 +83,12 @@ export default function LoginPage(): React.ReactElement {
 
                 <div className="h-px bg-[var(--line)] w-full" />
 
-                <p className="text-xs text-[var(--t3)]">
+                {/* <p className="text-xs text-[var(--t3)]">
                   Pas encore de compte ?{' '}
                   <Link to="/register" className="text-[var(--accent)] font-semibold hover:underline">
                     Créer un compte
                   </Link>
-                </p>
+                </p> */}
               </div>
 
             </div>

@@ -30,7 +30,7 @@ export const App: React.FC = () => {
         <Routes>
           <Route element={<ProtectedPublicRoute />}>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            {/* <Route path="/register" element={<RegisterPage />} /> */}
           </Route>
           <Route path="/complete-profile" element={<CompleteProfilePage />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
