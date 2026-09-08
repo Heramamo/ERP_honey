@@ -26,5 +26,10 @@ export const userService = {
     create: async (data: CreateUserRequest): Promise<CreateUserResponse> => {
         const response = await api.post<CreateUserResponse>('/user/register', data);
         return response.data;
+    },
+
+    fetchAll: async (): Promise<User[]> => {
+        const response = await api.get<User[]>('/user');
+        return response.data;
     }
 };
