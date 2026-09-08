@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreatePoleDto } from './dto/create-pole.dto';
 
@@ -14,5 +14,11 @@ export class PoleService {
             message:"Liste des poles",
             poles
         }
+    }
+    async getPoleByName(nom:string){
+        const pole = await this.prisma.pole.findFirst({where:{nom}})
+        if (!pole)
+            throw new NotFoundException("Auccun pole avec ce nom")
+        return pole
     }
 }

@@ -77,7 +77,11 @@ export const financeService = {
         return res.data;
     },
 
-    // Revenus
+    getPoleByName:async (nom:string):Promise<Pole>=>{
+        const res = await api.get('/pole/name', {params: nom ? {nom} : "Default"})
+        return res.data;
+    },
+
     createRevenu: async (dto: CreateRevenuDto): Promise<Revenu> => {
         const res = await api.post('/revenu', dto);
         return res.data;
@@ -87,7 +91,6 @@ export const financeService = {
         return res.data;
     },
 
-    // Charges
     createCharge: async (dto: CreateChargeDto): Promise<Charge> => {
         const res = await api.post('/charge', dto);
         return res.data;
@@ -100,8 +103,8 @@ export const financeService = {
         const res = await api.get(`/charge/${id}`);
         return res.data;
     },
-
-    // Bilans
+   
+ 
     getBilanPole: async (idPole: number, mois: string): Promise<BilanPole> => {
         const res = await api.get(`/bilan/pole/${idPole}`, { params: { mois } });
         return res.data;

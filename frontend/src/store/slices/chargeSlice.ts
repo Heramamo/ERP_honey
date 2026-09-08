@@ -4,6 +4,8 @@ import type { ChargeState } from "../../types/finance";
 import type { Charge, CreateChargeDto } from "../../service/finance.service";
 import { financeService } from "../../service/finance.service";
 import { getApiErrorMessage } from "../../service/error";
+import { updateStatutPaie } from "./paieSlice";
+import type { UpdateStatutPaieResult } from "./paieSlice";
 
 const initialState: ChargeState = {
     charges: [],
@@ -86,6 +88,12 @@ const ChargeSlice = createSlice({
             .addCase(createCharge.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
+            })
+
+            .addCase(updateStatutPaie.fulfilled, (state, action: PayloadAction<UpdateStatutPaieResult>) => {
+                if (action.payload.charge) {
+                    state.charges.unshift(action.payload.charge);
+                }
             });
     },
 });

@@ -1,5 +1,6 @@
 import { api } from "./api";
-
+import { financeService } from "./finance.service";
+import type { Charge } from "./finance.service";
 export interface PaieUtilisateurInfo {
     id_utilisateur: number;
     nom: string;
@@ -43,8 +44,23 @@ export const paieService = {
         const res = await api.post('/paie/generer', data);
         return res.data;
     },
-    updateStatus: async (id: number, statutpaie: string) => {
+    updateStatus: async (id: number, statutpaie: string, paie?: Pick<PaiePayload, 'totalSalaire' | 'date'>): Promise<{ paie: PaiePayload; charge?: Charge }> => {
         const res = await api.patch(`/paie/${id}/statut`, { statutpaie });
-        return res.data;
+        let charge: Charge | undefined;
+        if (statutpaie === 'PAYE' && paie) {
+            try {
+                const pole = await financeService.getPoleByName("ENSEIGNANT");
+                charge = await financeService.createCharge({
+                    idPole: pole.id,
+                    libelle: "Paiement salaire",
+                    montant: paie.totalSalaire,
+                    typeCharge: "FIXE",
+                    date: paie.date,
+                });
+            } catch (error) {
+                console.error("Erreur lors de la création de la charge:", error);
+            }
+        }
+        return { paie: res.data, charge };
     },
 }

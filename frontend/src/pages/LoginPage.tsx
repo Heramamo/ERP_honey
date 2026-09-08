@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthHeader } from '../components/ui/AuthHeader';
 import { LoginForm } from '../components/auth/LoginForm';
 import type { LoginFormValues } from '../components/auth/LoginForm';

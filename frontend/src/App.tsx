@@ -7,7 +7,6 @@ import { DashboardLayout } from './components/layout/DashboardLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
 import CompleteProfilePage from './pages/CompleteProfilePage';
 import UnauthorizedPage from './pages/Unauthorizedpage';
 import DashboardPage from './pages/DashboardPage';
