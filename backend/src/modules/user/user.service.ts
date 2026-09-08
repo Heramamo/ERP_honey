@@ -87,4 +87,14 @@ export class UserService {
         })
         return { message: 'Mot de passe modifié avec succès' }
     }
+    async   getUser(){
+        return await this.prisma.utilisateur.findMany({select:{
+            id_utilisateur:true,
+            nom:true,
+            prenom:true,
+            email:true,
+            role:true,
+            date_creation:true
+        }})
+    }
 }

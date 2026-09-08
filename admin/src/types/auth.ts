@@ -12,3 +12,11 @@ export interface AuthState {
   user: UserPayload | null;
   isAuthenticated: boolean;
 }
+
+export interface  UserType
+{
+  email:string
+  role:string
+  nom:string
+  prenom:string
+}

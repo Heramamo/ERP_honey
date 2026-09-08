@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, HttpCode, HttpStatus, Post, Req, Request, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -35,5 +35,14 @@ export class UserController {
     @ApiResponse({ status: 401, description: 'Mot de passe actuel incorrect.' })
     changePassword(@Request() req, @Body() dto: ChangePasswordDto) {
         return this.userService.changePassword(req.user.sub, dto);
+    }
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @ApiOperation({ summary: 'Recuperer tous les utilisiateur' })
+    @Get()
+    async getUser(@Req() req){
+        if (req.user.role != "ADMIN")
+            throw new ForbiddenException("Access reserve pour admin")
+        return this.userService.getUser()
     }
 }
