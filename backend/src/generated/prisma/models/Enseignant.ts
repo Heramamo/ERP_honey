@@ -247,6 +247,7 @@ export type EnseignantOrderByWithRelationInput = {
   utilisateur?: Prisma.UtilisateurOrderByWithRelationInput
   feuilleDeTemps?: Prisma.FeuilleDeTempsOrderByRelationAggregateInput
   paie?: Prisma.PaieOrderByRelationAggregateInput
+  _relevance?: Prisma.EnseignantOrderByRelevanceInput
 }
 
 export type EnseignantWhereUniqueInput = Prisma.AtLeast<{
@@ -360,6 +361,12 @@ export type EnseignantUncheckedUpdateManyInput = {
 export type EnseignantNullableScalarRelationFilter = {
   is?: Prisma.EnseignantWhereInput | null
   isNot?: Prisma.EnseignantWhereInput | null
+}
+
+export type EnseignantOrderByRelevanceInput = {
+  fields: Prisma.EnseignantOrderByRelevanceFieldEnum | Prisma.EnseignantOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type EnseignantCountOrderByAggregateInput = {
@@ -689,25 +696,7 @@ export type EnseignantSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   _count?: boolean | Prisma.EnseignantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["enseignant"]>
 
-export type EnseignantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  tauxHoraireBase?: boolean
-  statut?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  id_utilisateur?: boolean
-  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["enseignant"]>
 
-export type EnseignantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  tauxHoraireBase?: boolean
-  statut?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  id_utilisateur?: boolean
-  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["enseignant"]>
 
 export type EnseignantSelectScalar = {
   id?: boolean
@@ -724,12 +713,6 @@ export type EnseignantInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   feuilleDeTemps?: boolean | Prisma.Enseignant$feuilleDeTempsArgs<ExtArgs>
   paie?: boolean | Prisma.Enseignant$paieArgs<ExtArgs>
   _count?: boolean | Prisma.EnseignantCountOutputTypeDefaultArgs<ExtArgs>
-}
-export type EnseignantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
-}
-export type EnseignantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  utilisateur?: boolean | Prisma.UtilisateurDefaultArgs<ExtArgs>
 }
 
 export type $EnseignantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -864,30 +847,6 @@ export interface EnseignantDelegate<ExtArgs extends runtime.Types.Extensions.Int
   createMany<T extends EnseignantCreateManyArgs>(args?: Prisma.SelectSubset<T, EnseignantCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Create many Enseignants and returns the data saved in the database.
-   * @param {EnseignantCreateManyAndReturnArgs} args - Arguments to create many Enseignants.
-   * @example
-   * // Create many Enseignants
-   * const enseignant = await prisma.enseignant.createManyAndReturn({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Create many Enseignants and only return the `id`
-   * const enseignantWithIdOnly = await prisma.enseignant.createManyAndReturn({
-   *   select: { id: true },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  createManyAndReturn<T extends EnseignantCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, EnseignantCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EnseignantPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-  /**
    * Delete a Enseignant.
    * @param {EnseignantDeleteArgs} args - Arguments to delete one Enseignant.
    * @example
@@ -950,36 +909,6 @@ export interface EnseignantDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * 
    */
   updateMany<T extends EnseignantUpdateManyArgs>(args: Prisma.SelectSubset<T, EnseignantUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
-
-  /**
-   * Update zero or more Enseignants and returns the data updated in the database.
-   * @param {EnseignantUpdateManyAndReturnArgs} args - Arguments to update many Enseignants.
-   * @example
-   * // Update many Enseignants
-   * const enseignant = await prisma.enseignant.updateManyAndReturn({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Update zero or more Enseignants and only return the `id`
-   * const enseignantWithIdOnly = await prisma.enseignant.updateManyAndReturn({
-   *   select: { id: true },
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  updateManyAndReturn<T extends EnseignantUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, EnseignantUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EnseignantPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Enseignant.
@@ -1416,29 +1345,6 @@ export type EnseignantCreateManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Enseignant createManyAndReturn
- */
-export type EnseignantCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Enseignant
-   */
-  select?: Prisma.EnseignantSelectCreateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Enseignant
-   */
-  omit?: Prisma.EnseignantOmit<ExtArgs> | null
-  /**
-   * The data used to create many Enseignants.
-   */
-  data: Prisma.EnseignantCreateManyInput | Prisma.EnseignantCreateManyInput[]
-  skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EnseignantIncludeCreateManyAndReturn<ExtArgs> | null
-}
-
-/**
  * Enseignant update
  */
 export type EnseignantUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1480,36 +1386,6 @@ export type EnseignantUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Enseignants to update.
    */
   limit?: number
-}
-
-/**
- * Enseignant updateManyAndReturn
- */
-export type EnseignantUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Enseignant
-   */
-  select?: Prisma.EnseignantSelectUpdateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Enseignant
-   */
-  omit?: Prisma.EnseignantOmit<ExtArgs> | null
-  /**
-   * The data used to update Enseignants.
-   */
-  data: Prisma.XOR<Prisma.EnseignantUpdateManyMutationInput, Prisma.EnseignantUncheckedUpdateManyInput>
-  /**
-   * Filter which Enseignants to update
-   */
-  where?: Prisma.EnseignantWhereInput
-  /**
-   * Limit how many Enseignants to update.
-   */
-  limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EnseignantIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

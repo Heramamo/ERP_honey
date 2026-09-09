@@ -261,6 +261,7 @@ export type ChargeOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   pole?: Prisma.PoleOrderByWithRelationInput
+  _relevance?: Prisma.ChargeOrderByRelevanceInput
 }
 
 export type ChargeWhereUniqueInput = Prisma.AtLeast<{
@@ -389,6 +390,12 @@ export type ChargeListRelationFilter = {
 
 export type ChargeOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ChargeOrderByRelevanceInput = {
+  fields: Prisma.ChargeOrderByRelevanceFieldEnum | Prisma.ChargeOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type ChargeCountOrderByAggregateInput = {
@@ -590,29 +597,7 @@ export type ChargeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["charge"]>
 
-export type ChargeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  libelle?: boolean
-  montant?: boolean
-  date?: boolean
-  typeCharge?: boolean
-  idPole?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["charge"]>
 
-export type ChargeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  libelle?: boolean
-  montant?: boolean
-  date?: boolean
-  typeCharge?: boolean
-  idPole?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["charge"]>
 
 export type ChargeSelectScalar = {
   id?: boolean
@@ -627,12 +612,6 @@ export type ChargeSelectScalar = {
 
 export type ChargeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "libelle" | "montant" | "date" | "typeCharge" | "idPole" | "createdAt" | "updatedAt", ExtArgs["result"]["charge"]>
 export type ChargeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
-}
-export type ChargeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
-}
-export type ChargeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
 }
 
@@ -768,30 +747,6 @@ export interface ChargeDelegate<ExtArgs extends runtime.Types.Extensions.Interna
   createMany<T extends ChargeCreateManyArgs>(args?: Prisma.SelectSubset<T, ChargeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Create many Charges and returns the data saved in the database.
-   * @param {ChargeCreateManyAndReturnArgs} args - Arguments to create many Charges.
-   * @example
-   * // Create many Charges
-   * const charge = await prisma.charge.createManyAndReturn({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Create many Charges and only return the `id`
-   * const chargeWithIdOnly = await prisma.charge.createManyAndReturn({
-   *   select: { id: true },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  createManyAndReturn<T extends ChargeCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ChargeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChargePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-  /**
    * Delete a Charge.
    * @param {ChargeDeleteArgs} args - Arguments to delete one Charge.
    * @example
@@ -854,36 +809,6 @@ export interface ChargeDelegate<ExtArgs extends runtime.Types.Extensions.Interna
    * 
    */
   updateMany<T extends ChargeUpdateManyArgs>(args: Prisma.SelectSubset<T, ChargeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
-
-  /**
-   * Update zero or more Charges and returns the data updated in the database.
-   * @param {ChargeUpdateManyAndReturnArgs} args - Arguments to update many Charges.
-   * @example
-   * // Update many Charges
-   * const charge = await prisma.charge.updateManyAndReturn({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Update zero or more Charges and only return the `id`
-   * const chargeWithIdOnly = await prisma.charge.updateManyAndReturn({
-   *   select: { id: true },
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  updateManyAndReturn<T extends ChargeUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ChargeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChargePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Charge.
@@ -1320,29 +1245,6 @@ export type ChargeCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Charge createManyAndReturn
- */
-export type ChargeCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Charge
-   */
-  select?: Prisma.ChargeSelectCreateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Charge
-   */
-  omit?: Prisma.ChargeOmit<ExtArgs> | null
-  /**
-   * The data used to create many Charges.
-   */
-  data: Prisma.ChargeCreateManyInput | Prisma.ChargeCreateManyInput[]
-  skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChargeIncludeCreateManyAndReturn<ExtArgs> | null
-}
-
-/**
  * Charge update
  */
 export type ChargeUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1384,36 +1286,6 @@ export type ChargeUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Charges to update.
    */
   limit?: number
-}
-
-/**
- * Charge updateManyAndReturn
- */
-export type ChargeUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Charge
-   */
-  select?: Prisma.ChargeSelectUpdateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Charge
-   */
-  omit?: Prisma.ChargeOmit<ExtArgs> | null
-  /**
-   * The data used to update Charges.
-   */
-  data: Prisma.XOR<Prisma.ChargeUpdateManyMutationInput, Prisma.ChargeUncheckedUpdateManyInput>
-  /**
-   * Filter which Charges to update
-   */
-  where?: Prisma.ChargeWhereInput
-  /**
-   * Limit how many Charges to update.
-   */
-  limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChargeIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

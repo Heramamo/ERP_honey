@@ -228,6 +228,7 @@ export type PoleOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   charges?: Prisma.ChargeOrderByRelationAggregateInput
   revenus?: Prisma.RevenuOrderByRelationAggregateInput
+  _relevance?: Prisma.PoleOrderByRelevanceInput
 }
 
 export type PoleWhereUniqueInput = Prisma.AtLeast<{
@@ -326,6 +327,12 @@ export type PoleUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PoleOrderByRelevanceInput = {
+  fields: Prisma.PoleOrderByRelevanceFieldEnum | Prisma.PoleOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type PoleCountOrderByAggregateInput = {
@@ -544,21 +551,7 @@ export type PoleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   _count?: boolean | Prisma.PoleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pole"]>
 
-export type PoleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  nom?: boolean
-  description?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-}, ExtArgs["result"]["pole"]>
 
-export type PoleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  nom?: boolean
-  description?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-}, ExtArgs["result"]["pole"]>
 
 export type PoleSelectScalar = {
   id?: boolean
@@ -574,8 +567,6 @@ export type PoleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   revenus?: boolean | Prisma.Pole$revenusArgs<ExtArgs>
   _count?: boolean | Prisma.PoleCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type PoleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type PoleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $PolePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Pole"
@@ -707,30 +698,6 @@ export interface PoleDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
   createMany<T extends PoleCreateManyArgs>(args?: Prisma.SelectSubset<T, PoleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Create many Poles and returns the data saved in the database.
-   * @param {PoleCreateManyAndReturnArgs} args - Arguments to create many Poles.
-   * @example
-   * // Create many Poles
-   * const pole = await prisma.pole.createManyAndReturn({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Create many Poles and only return the `id`
-   * const poleWithIdOnly = await prisma.pole.createManyAndReturn({
-   *   select: { id: true },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  createManyAndReturn<T extends PoleCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, PoleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PolePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-  /**
    * Delete a Pole.
    * @param {PoleDeleteArgs} args - Arguments to delete one Pole.
    * @example
@@ -793,36 +760,6 @@ export interface PoleDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    * 
    */
   updateMany<T extends PoleUpdateManyArgs>(args: Prisma.SelectSubset<T, PoleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
-
-  /**
-   * Update zero or more Poles and returns the data updated in the database.
-   * @param {PoleUpdateManyAndReturnArgs} args - Arguments to update many Poles.
-   * @example
-   * // Update many Poles
-   * const pole = await prisma.pole.updateManyAndReturn({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Update zero or more Poles and only return the `id`
-   * const poleWithIdOnly = await prisma.pole.updateManyAndReturn({
-   *   select: { id: true },
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  updateManyAndReturn<T extends PoleUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, PoleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PolePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Pole.
@@ -1257,25 +1194,6 @@ export type PoleCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Pole createManyAndReturn
- */
-export type PoleCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Pole
-   */
-  select?: Prisma.PoleSelectCreateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Pole
-   */
-  omit?: Prisma.PoleOmit<ExtArgs> | null
-  /**
-   * The data used to create many Poles.
-   */
-  data: Prisma.PoleCreateManyInput | Prisma.PoleCreateManyInput[]
-  skipDuplicates?: boolean
-}
-
-/**
  * Pole update
  */
 export type PoleUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1305,32 +1223,6 @@ export type PoleUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
  * Pole updateMany
  */
 export type PoleUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * The data used to update Poles.
-   */
-  data: Prisma.XOR<Prisma.PoleUpdateManyMutationInput, Prisma.PoleUncheckedUpdateManyInput>
-  /**
-   * Filter which Poles to update
-   */
-  where?: Prisma.PoleWhereInput
-  /**
-   * Limit how many Poles to update.
-   */
-  limit?: number
-}
-
-/**
- * Pole updateManyAndReturn
- */
-export type PoleUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Pole
-   */
-  select?: Prisma.PoleSelectUpdateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Pole
-   */
-  omit?: Prisma.PoleOmit<ExtArgs> | null
   /**
    * The data used to update Poles.
    */

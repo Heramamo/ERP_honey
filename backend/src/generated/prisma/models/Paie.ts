@@ -261,6 +261,7 @@ export type PaieOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   enseignant?: Prisma.EnseignantOrderByWithRelationInput
+  _relevance?: Prisma.PaieOrderByRelevanceInput
 }
 
 export type PaieWhereUniqueInput = Prisma.AtLeast<{
@@ -389,6 +390,12 @@ export type PaieListRelationFilter = {
 
 export type PaieOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type PaieOrderByRelevanceInput = {
+  fields: Prisma.PaieOrderByRelevanceFieldEnum | Prisma.PaieOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type PaieCountOrderByAggregateInput = {
@@ -590,29 +597,7 @@ export type PaieSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["paie"]>
 
-export type PaieSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  enseignantId?: boolean
-  totalSalaire?: boolean
-  statutpaie?: boolean
-  date?: boolean
-  mois?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["paie"]>
 
-export type PaieSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  enseignantId?: boolean
-  totalSalaire?: boolean
-  statutpaie?: boolean
-  date?: boolean
-  mois?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["paie"]>
 
 export type PaieSelectScalar = {
   id?: boolean
@@ -627,12 +612,6 @@ export type PaieSelectScalar = {
 
 export type PaieOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "enseignantId" | "totalSalaire" | "statutpaie" | "date" | "mois" | "createdAt" | "updatedAt", ExtArgs["result"]["paie"]>
 export type PaieInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
-}
-export type PaieIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
-}
-export type PaieIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
 }
 
@@ -768,30 +747,6 @@ export interface PaieDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
   createMany<T extends PaieCreateManyArgs>(args?: Prisma.SelectSubset<T, PaieCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Create many Paies and returns the data saved in the database.
-   * @param {PaieCreateManyAndReturnArgs} args - Arguments to create many Paies.
-   * @example
-   * // Create many Paies
-   * const paie = await prisma.paie.createManyAndReturn({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Create many Paies and only return the `id`
-   * const paieWithIdOnly = await prisma.paie.createManyAndReturn({
-   *   select: { id: true },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  createManyAndReturn<T extends PaieCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, PaieCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaiePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-  /**
    * Delete a Paie.
    * @param {PaieDeleteArgs} args - Arguments to delete one Paie.
    * @example
@@ -854,36 +809,6 @@ export interface PaieDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    * 
    */
   updateMany<T extends PaieUpdateManyArgs>(args: Prisma.SelectSubset<T, PaieUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
-
-  /**
-   * Update zero or more Paies and returns the data updated in the database.
-   * @param {PaieUpdateManyAndReturnArgs} args - Arguments to update many Paies.
-   * @example
-   * // Update many Paies
-   * const paie = await prisma.paie.updateManyAndReturn({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Update zero or more Paies and only return the `id`
-   * const paieWithIdOnly = await prisma.paie.updateManyAndReturn({
-   *   select: { id: true },
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  updateManyAndReturn<T extends PaieUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, PaieUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaiePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Paie.
@@ -1320,29 +1245,6 @@ export type PaieCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Paie createManyAndReturn
- */
-export type PaieCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Paie
-   */
-  select?: Prisma.PaieSelectCreateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Paie
-   */
-  omit?: Prisma.PaieOmit<ExtArgs> | null
-  /**
-   * The data used to create many Paies.
-   */
-  data: Prisma.PaieCreateManyInput | Prisma.PaieCreateManyInput[]
-  skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PaieIncludeCreateManyAndReturn<ExtArgs> | null
-}
-
-/**
  * Paie update
  */
 export type PaieUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1384,36 +1286,6 @@ export type PaieUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Paies to update.
    */
   limit?: number
-}
-
-/**
- * Paie updateManyAndReturn
- */
-export type PaieUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Paie
-   */
-  select?: Prisma.PaieSelectUpdateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Paie
-   */
-  omit?: Prisma.PaieOmit<ExtArgs> | null
-  /**
-   * The data used to update Paies.
-   */
-  data: Prisma.XOR<Prisma.PaieUpdateManyMutationInput, Prisma.PaieUncheckedUpdateManyInput>
-  /**
-   * Filter which Paies to update
-   */
-  where?: Prisma.PaieWhereInput
-  /**
-   * Limit how many Paies to update.
-   */
-  limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PaieIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

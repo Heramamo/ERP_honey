@@ -261,6 +261,7 @@ export type RevenuOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   pole?: Prisma.PoleOrderByWithRelationInput
+  _relevance?: Prisma.RevenuOrderByRelevanceInput
 }
 
 export type RevenuWhereUniqueInput = Prisma.AtLeast<{
@@ -389,6 +390,12 @@ export type RevenuListRelationFilter = {
 
 export type RevenuOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type RevenuOrderByRelevanceInput = {
+  fields: Prisma.RevenuOrderByRelevanceFieldEnum | Prisma.RevenuOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type RevenuCountOrderByAggregateInput = {
@@ -590,29 +597,7 @@ export type RevenuSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["revenu"]>
 
-export type RevenuSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  libelle?: boolean
-  montant?: boolean
-  date?: boolean
-  typeRevenu?: boolean
-  idPole?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["revenu"]>
 
-export type RevenuSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  libelle?: boolean
-  montant?: boolean
-  date?: boolean
-  typeRevenu?: boolean
-  idPole?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["revenu"]>
 
 export type RevenuSelectScalar = {
   id?: boolean
@@ -627,12 +612,6 @@ export type RevenuSelectScalar = {
 
 export type RevenuOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "libelle" | "montant" | "date" | "typeRevenu" | "idPole" | "createdAt" | "updatedAt", ExtArgs["result"]["revenu"]>
 export type RevenuInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
-}
-export type RevenuIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
-}
-export type RevenuIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pole?: boolean | Prisma.PoleDefaultArgs<ExtArgs>
 }
 
@@ -768,30 +747,6 @@ export interface RevenuDelegate<ExtArgs extends runtime.Types.Extensions.Interna
   createMany<T extends RevenuCreateManyArgs>(args?: Prisma.SelectSubset<T, RevenuCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Create many Revenus and returns the data saved in the database.
-   * @param {RevenuCreateManyAndReturnArgs} args - Arguments to create many Revenus.
-   * @example
-   * // Create many Revenus
-   * const revenu = await prisma.revenu.createManyAndReturn({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Create many Revenus and only return the `id`
-   * const revenuWithIdOnly = await prisma.revenu.createManyAndReturn({
-   *   select: { id: true },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  createManyAndReturn<T extends RevenuCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, RevenuCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RevenuPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-  /**
    * Delete a Revenu.
    * @param {RevenuDeleteArgs} args - Arguments to delete one Revenu.
    * @example
@@ -854,36 +809,6 @@ export interface RevenuDelegate<ExtArgs extends runtime.Types.Extensions.Interna
    * 
    */
   updateMany<T extends RevenuUpdateManyArgs>(args: Prisma.SelectSubset<T, RevenuUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
-
-  /**
-   * Update zero or more Revenus and returns the data updated in the database.
-   * @param {RevenuUpdateManyAndReturnArgs} args - Arguments to update many Revenus.
-   * @example
-   * // Update many Revenus
-   * const revenu = await prisma.revenu.updateManyAndReturn({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Update zero or more Revenus and only return the `id`
-   * const revenuWithIdOnly = await prisma.revenu.updateManyAndReturn({
-   *   select: { id: true },
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  updateManyAndReturn<T extends RevenuUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, RevenuUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RevenuPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Revenu.
@@ -1320,29 +1245,6 @@ export type RevenuCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Revenu createManyAndReturn
- */
-export type RevenuCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Revenu
-   */
-  select?: Prisma.RevenuSelectCreateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Revenu
-   */
-  omit?: Prisma.RevenuOmit<ExtArgs> | null
-  /**
-   * The data used to create many Revenus.
-   */
-  data: Prisma.RevenuCreateManyInput | Prisma.RevenuCreateManyInput[]
-  skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.RevenuIncludeCreateManyAndReturn<ExtArgs> | null
-}
-
-/**
  * Revenu update
  */
 export type RevenuUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1384,36 +1286,6 @@ export type RevenuUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Revenus to update.
    */
   limit?: number
-}
-
-/**
- * Revenu updateManyAndReturn
- */
-export type RevenuUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Revenu
-   */
-  select?: Prisma.RevenuSelectUpdateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Revenu
-   */
-  omit?: Prisma.RevenuOmit<ExtArgs> | null
-  /**
-   * The data used to update Revenus.
-   */
-  data: Prisma.XOR<Prisma.RevenuUpdateManyMutationInput, Prisma.RevenuUncheckedUpdateManyInput>
-  /**
-   * Filter which Revenus to update
-   */
-  where?: Prisma.RevenuWhereInput
-  /**
-   * Limit how many Revenus to update.
-   */
-  limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.RevenuIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

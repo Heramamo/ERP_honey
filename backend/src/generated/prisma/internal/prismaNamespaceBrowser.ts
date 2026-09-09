@@ -178,12 +178,21 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
+export const UtilisateurOrderByRelevanceFieldEnum = {
+  email: 'email',
+  mot_de_passe: 'mot_de_passe',
+  nom: 'nom',
+  prenom: 'prenom'
 } as const
 
-export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+export type UtilisateurOrderByRelevanceFieldEnum = (typeof UtilisateurOrderByRelevanceFieldEnum)[keyof typeof UtilisateurOrderByRelevanceFieldEnum]
+
+
+export const EnseignantOrderByRelevanceFieldEnum = {
+  statut: 'statut'
+} as const
+
+export type EnseignantOrderByRelevanceFieldEnum = (typeof EnseignantOrderByRelevanceFieldEnum)[keyof typeof EnseignantOrderByRelevanceFieldEnum]
 
 
 export const NullsOrder = {
@@ -192,4 +201,43 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const FeuilleDeTempsOrderByRelevanceFieldEnum = {
+  typeActivite: 'typeActivite'
+} as const
+
+export type FeuilleDeTempsOrderByRelevanceFieldEnum = (typeof FeuilleDeTempsOrderByRelevanceFieldEnum)[keyof typeof FeuilleDeTempsOrderByRelevanceFieldEnum]
+
+
+export const PaieOrderByRelevanceFieldEnum = {
+  statutpaie: 'statutpaie',
+  mois: 'mois'
+} as const
+
+export type PaieOrderByRelevanceFieldEnum = (typeof PaieOrderByRelevanceFieldEnum)[keyof typeof PaieOrderByRelevanceFieldEnum]
+
+
+export const PoleOrderByRelevanceFieldEnum = {
+  nom: 'nom',
+  description: 'description'
+} as const
+
+export type PoleOrderByRelevanceFieldEnum = (typeof PoleOrderByRelevanceFieldEnum)[keyof typeof PoleOrderByRelevanceFieldEnum]
+
+
+export const ChargeOrderByRelevanceFieldEnum = {
+  libelle: 'libelle',
+  typeCharge: 'typeCharge'
+} as const
+
+export type ChargeOrderByRelevanceFieldEnum = (typeof ChargeOrderByRelevanceFieldEnum)[keyof typeof ChargeOrderByRelevanceFieldEnum]
+
+
+export const RevenuOrderByRelevanceFieldEnum = {
+  libelle: 'libelle',
+  typeRevenu: 'typeRevenu'
+} as const
+
+export type RevenuOrderByRelevanceFieldEnum = (typeof RevenuOrderByRelevanceFieldEnum)[keyof typeof RevenuOrderByRelevanceFieldEnum]
 

@@ -289,6 +289,7 @@ export type FeuilleDeTempsOrderByWithRelationInput = {
   valideParId?: Prisma.SortOrderInput | Prisma.SortOrder
   enseignant?: Prisma.EnseignantOrderByWithRelationInput
   validePar?: Prisma.UtilisateurOrderByWithRelationInput
+  _relevance?: Prisma.FeuilleDeTempsOrderByRelevanceInput
 }
 
 export type FeuilleDeTempsWhereUniqueInput = Prisma.AtLeast<{
@@ -437,6 +438,12 @@ export type FeuilleDeTempsListRelationFilter = {
 
 export type FeuilleDeTempsOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type FeuilleDeTempsOrderByRelevanceInput = {
+  fields: Prisma.FeuilleDeTempsOrderByRelevanceFieldEnum | Prisma.FeuilleDeTempsOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type FeuilleDeTempsCountOrderByAggregateInput = {
@@ -815,35 +822,7 @@ export type FeuilleDeTempsSelect<ExtArgs extends runtime.Types.Extensions.Intern
   validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
 }, ExtArgs["result"]["feuilleDeTemps"]>
 
-export type FeuilleDeTempsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  enseignantId?: boolean
-  date?: boolean
-  heuresEffectuees?: boolean
-  heuresSupp?: boolean
-  typeActivite?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  statut?: boolean
-  valideParId?: boolean
-  enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
-  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
-}, ExtArgs["result"]["feuilleDeTemps"]>
 
-export type FeuilleDeTempsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  enseignantId?: boolean
-  date?: boolean
-  heuresEffectuees?: boolean
-  heuresSupp?: boolean
-  typeActivite?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  statut?: boolean
-  valideParId?: boolean
-  enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
-  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
-}, ExtArgs["result"]["feuilleDeTemps"]>
 
 export type FeuilleDeTempsSelectScalar = {
   id?: boolean
@@ -860,14 +839,6 @@ export type FeuilleDeTempsSelectScalar = {
 
 export type FeuilleDeTempsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "enseignantId" | "date" | "heuresEffectuees" | "heuresSupp" | "typeActivite" | "createdAt" | "updatedAt" | "statut" | "valideParId", ExtArgs["result"]["feuilleDeTemps"]>
 export type FeuilleDeTempsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
-  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
-}
-export type FeuilleDeTempsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
-  validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
-}
-export type FeuilleDeTempsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   enseignant?: boolean | Prisma.EnseignantDefaultArgs<ExtArgs>
   validePar?: boolean | Prisma.FeuilleDeTemps$valideParArgs<ExtArgs>
 }
@@ -1007,30 +978,6 @@ export interface FeuilleDeTempsDelegate<ExtArgs extends runtime.Types.Extensions
   createMany<T extends FeuilleDeTempsCreateManyArgs>(args?: Prisma.SelectSubset<T, FeuilleDeTempsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Create many FeuilleDeTemps and returns the data saved in the database.
-   * @param {FeuilleDeTempsCreateManyAndReturnArgs} args - Arguments to create many FeuilleDeTemps.
-   * @example
-   * // Create many FeuilleDeTemps
-   * const feuilleDeTemps = await prisma.feuilleDeTemps.createManyAndReturn({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Create many FeuilleDeTemps and only return the `id`
-   * const feuilleDeTempsWithIdOnly = await prisma.feuilleDeTemps.createManyAndReturn({
-   *   select: { id: true },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  createManyAndReturn<T extends FeuilleDeTempsCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, FeuilleDeTempsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeuilleDeTempsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-  /**
    * Delete a FeuilleDeTemps.
    * @param {FeuilleDeTempsDeleteArgs} args - Arguments to delete one FeuilleDeTemps.
    * @example
@@ -1093,36 +1040,6 @@ export interface FeuilleDeTempsDelegate<ExtArgs extends runtime.Types.Extensions
    * 
    */
   updateMany<T extends FeuilleDeTempsUpdateManyArgs>(args: Prisma.SelectSubset<T, FeuilleDeTempsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
-
-  /**
-   * Update zero or more FeuilleDeTemps and returns the data updated in the database.
-   * @param {FeuilleDeTempsUpdateManyAndReturnArgs} args - Arguments to update many FeuilleDeTemps.
-   * @example
-   * // Update many FeuilleDeTemps
-   * const feuilleDeTemps = await prisma.feuilleDeTemps.updateManyAndReturn({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Update zero or more FeuilleDeTemps and only return the `id`
-   * const feuilleDeTempsWithIdOnly = await prisma.feuilleDeTemps.updateManyAndReturn({
-   *   select: { id: true },
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  updateManyAndReturn<T extends FeuilleDeTempsUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, FeuilleDeTempsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeuilleDeTempsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one FeuilleDeTemps.
@@ -1562,29 +1479,6 @@ export type FeuilleDeTempsCreateManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * FeuilleDeTemps createManyAndReturn
- */
-export type FeuilleDeTempsCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FeuilleDeTemps
-   */
-  select?: Prisma.FeuilleDeTempsSelectCreateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the FeuilleDeTemps
-   */
-  omit?: Prisma.FeuilleDeTempsOmit<ExtArgs> | null
-  /**
-   * The data used to create many FeuilleDeTemps.
-   */
-  data: Prisma.FeuilleDeTempsCreateManyInput | Prisma.FeuilleDeTempsCreateManyInput[]
-  skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FeuilleDeTempsIncludeCreateManyAndReturn<ExtArgs> | null
-}
-
-/**
  * FeuilleDeTemps update
  */
 export type FeuilleDeTempsUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1626,36 +1520,6 @@ export type FeuilleDeTempsUpdateManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many FeuilleDeTemps to update.
    */
   limit?: number
-}
-
-/**
- * FeuilleDeTemps updateManyAndReturn
- */
-export type FeuilleDeTempsUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FeuilleDeTemps
-   */
-  select?: Prisma.FeuilleDeTempsSelectUpdateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the FeuilleDeTemps
-   */
-  omit?: Prisma.FeuilleDeTempsOmit<ExtArgs> | null
-  /**
-   * The data used to update FeuilleDeTemps.
-   */
-  data: Prisma.XOR<Prisma.FeuilleDeTempsUpdateManyMutationInput, Prisma.FeuilleDeTempsUncheckedUpdateManyInput>
-  /**
-   * Filter which FeuilleDeTemps to update
-   */
-  where?: Prisma.FeuilleDeTempsWhereInput
-  /**
-   * Limit how many FeuilleDeTemps to update.
-   */
-  limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FeuilleDeTempsIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
