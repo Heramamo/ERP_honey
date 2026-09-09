@@ -1,65 +1,30 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('ADMIN', 'RH', 'FINANCE', 'ENSEIGNANT');
 
-  - You are about to drop the `Project` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `ProjectMember` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Task` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `TaskAssignment` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
+-- CreateEnum
+CREATE TYPE "STATUT_FEUILLE" AS ENUM ('VALIDE', 'REFUSE', 'EN_ATTENTE');
 
-*/
--- DropForeignKey
-ALTER TABLE "Project" DROP CONSTRAINT "Project_ownerId_fkey";
+-- CreateTable
+CREATE TABLE "Utilisateur" (
+    "id_utilisateur" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "mot_de_passe" TEXT NOT NULL,
+    "nom" TEXT NOT NULL,
+    "prenom" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'ENSEIGNANT',
+    "date_creation" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
--- DropForeignKey
-ALTER TABLE "ProjectMember" DROP CONSTRAINT "ProjectMember_projectId_fkey";
-
--- DropForeignKey
-ALTER TABLE "ProjectMember" DROP CONSTRAINT "ProjectMember_userId_fkey";
-
--- DropForeignKey
-ALTER TABLE "Task" DROP CONSTRAINT "Task_projectId_fkey";
-
--- DropForeignKey
-ALTER TABLE "TaskAssignment" DROP CONSTRAINT "TaskAssignment_UserId_fkey";
-
--- DropForeignKey
-ALTER TABLE "TaskAssignment" DROP CONSTRAINT "TaskAssignment_taskId_fkey";
-
--- DropTable
-DROP TABLE "Project";
-
--- DropTable
-DROP TABLE "ProjectMember";
-
--- DropTable
-DROP TABLE "Task";
-
--- DropTable
-DROP TABLE "TaskAssignment";
-
--- DropTable
-DROP TABLE "User";
-
--- DropEnum
-DROP TYPE "Priority";
-
--- DropEnum
-DROP TYPE "ProjectStatus";
-
--- DropEnum
-DROP TYPE "TaskStatus";
+    CONSTRAINT "Utilisateur_pkey" PRIMARY KEY ("id_utilisateur")
+);
 
 -- CreateTable
 CREATE TABLE "Enseignant" (
     "id" SERIAL NOT NULL,
-    "nom" TEXT NOT NULL,
-    "prenom" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
     "tauxHoraireBase" DOUBLE PRECISION NOT NULL,
     "statut" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "id_utilisateur" INTEGER NOT NULL,
 
     CONSTRAINT "Enseignant_pkey" PRIMARY KEY ("id")
 );
@@ -74,6 +39,8 @@ CREATE TABLE "FeuilleDeTemps" (
     "typeActivite" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "statut" "STATUT_FEUILLE" NOT NULL DEFAULT 'EN_ATTENTE',
+    "valideParId" INTEGER,
 
     CONSTRAINT "FeuilleDeTemps_pkey" PRIMARY KEY ("id")
 );
@@ -132,10 +99,19 @@ CREATE TABLE "Revenu" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Enseignant_email_key" ON "Enseignant"("email");
+CREATE UNIQUE INDEX "Utilisateur_email_key" ON "Utilisateur"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Enseignant_id_utilisateur_key" ON "Enseignant"("id_utilisateur");
+
+-- AddForeignKey
+ALTER TABLE "Enseignant" ADD CONSTRAINT "Enseignant_id_utilisateur_fkey" FOREIGN KEY ("id_utilisateur") REFERENCES "Utilisateur"("id_utilisateur") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FeuilleDeTemps" ADD CONSTRAINT "FeuilleDeTemps_enseignantId_fkey" FOREIGN KEY ("enseignantId") REFERENCES "Enseignant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FeuilleDeTemps" ADD CONSTRAINT "FeuilleDeTemps_valideParId_fkey" FOREIGN KEY ("valideParId") REFERENCES "Utilisateur"("id_utilisateur") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Paie" ADD CONSTRAINT "Paie_enseignantId_fkey" FOREIGN KEY ("enseignantId") REFERENCES "Enseignant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
