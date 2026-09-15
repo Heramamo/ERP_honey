@@ -1,6 +1,12 @@
+export const formatNumber = (value: number | null | undefined): string => {
+  if (value === null || value === undefined || isNaN(value)) return '0';
+  const rounded = Math.round(value);
+  return rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+};
+
 export const formatAr = (value: number | null | undefined): string => {
   if (value === null || value === undefined || isNaN(value)) return '0 Ar';
-  return `${value.toLocaleString('fr-FR', { maximumFractionDigits: 0 })} Ar`;
+  return `${formatNumber(value)} Ar`;
 };
 
 const POLE_PALETTE = [

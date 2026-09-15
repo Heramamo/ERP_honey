@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchMySaisie } from '../store/slices/saisieSlice';
 import { fetchMyProfile } from '../store/slices/enseignantSlice';
 import type { SaisiePayload } from '../types/saisieFeuille';
+import { formatNumber } from '../utils/finance';
 
 const getRawStatut = (statut: SaisiePayload['statut']) => {
   return String(statut);
@@ -74,7 +75,7 @@ export const TeacherDashboard: React.FC = () => {
         id: String(index),
         periode: label.charAt(0).toUpperCase() + label.slice(1),
         totalHeures: `${Math.round((value.base + value.supp) * 10) / 10}h`,
-        montant: `${((value.base + value.supp) * taux).toLocaleString('fr-FR')} Ar`,
+        montant: `${formatNumber((value.base + value.supp) * taux)} Ar`,
         statut: (value.allValidated ? 'Validé' : 'En attente') as 'Validé' | 'En attente',
       };
     })
@@ -111,7 +112,7 @@ export const TeacherDashboard: React.FC = () => {
           title="Estimation salaire"
           value={
             taux > 0 ? (
-              <span>{estimatedSalary.toLocaleString('fr-FR')} <span className="text-base font-medium text-[var(--success)]">Ar</span></span>
+              <span>{formatNumber(estimatedSalary)} <span className="text-base font-medium text-[var(--success)]">Ar</span></span>
             ) : (
               <span className="text-[var(--t3)]">N/A</span>
             )

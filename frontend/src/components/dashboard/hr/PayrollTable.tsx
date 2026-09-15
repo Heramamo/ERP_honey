@@ -3,6 +3,7 @@ import { Download } from 'lucide-react';
 import {StatusBadge} from '../../common/StatusBadge';
 import RoleGuard from '../../RoleGuard';
 import type { Role } from '../../../types/auth';
+import { formatNumber } from '../../../utils/finance';
 
 interface PayrollRecord {
   id: string;
@@ -42,7 +43,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ allowedRoles }) => {
               <td className="py-3 px-5 font-medium text-[var(--t1)]">{payroll.teacherName}</td>
               <td className="py-3 px-5 text-[var(--t3)] text-xs">{payroll.month}</td>
               <td className="py-3 px-5 text-right font-medium font-mono tabular-nums text-[var(--success)]">
-                {payroll.netAmount.toLocaleString('fr-FR')} Ar
+                {formatNumber(payroll.netAmount)} Ar
               </td>
               <td className="py-3 px-5">
                 <StatusBadge status={payroll.status} />

@@ -17,6 +17,7 @@ import HrPaiePage from './pages/HrPaiePage';
 import MyPaiesTable from './pages/MyPaiesTable';
 import SettingsPage from './pages/SettingsPage';
 import PolesPage from './pages/PolesPage';
+import PoleGuard from './components/common/PoleGuard';
 import TeachersTable from './components/dashboard/hr/TeachersTable';
 import PayrollTable from './components/dashboard/hr/PayrollTable';
 import SaisiesTable from './components/dashboard/teacher/SaisiesTable';
@@ -50,7 +51,9 @@ export const App: React.FC = () => {
                 path="/dashboard/enseignants"
                 element={
                   <RoleGuard allowedRoles={['ADMIN', 'RH']}>
-                    <TeachersTable role="admin" allowedRoles={['ADMIN', 'RH']} />
+                    <PoleGuard poleName="ENSEIGNANT">
+                      <TeachersTable role="admin" allowedRoles={['ADMIN', 'RH']} />
+                    </PoleGuard>
                   </RoleGuard>
                 }
               />

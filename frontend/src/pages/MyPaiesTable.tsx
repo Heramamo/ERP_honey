@@ -4,6 +4,7 @@ import type { PaiePayload } from '../types/paie';
 import { fetchMyPaies, clearError as clearPaieError } from '../store/slices/paieSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { StatusBadge } from '../components/common/StatusBadge';
+import { formatNumber } from '../utils/finance';
 
 const MONTHS_FR = [
   'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
@@ -79,7 +80,7 @@ export const MyPaiesTable: React.FC = () => {
                     {new Date(paie.date).toLocaleDateString('fr-FR')}
                   </td>
                   <td className="py-3 px-5 font-medium text-[var(--success)] font-mono tabular-nums">
-                    {paie.totalSalaire.toLocaleString('fr-FR')} Ar
+                    {formatNumber(paie.totalSalaire)} Ar
                   </td>
                   <td className="py-3 px-5">
                     <StatusBadge status={getStatutLabel(paie.statutpaie)} />

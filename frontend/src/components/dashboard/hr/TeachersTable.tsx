@@ -5,6 +5,7 @@ import type { Role } from '../../../types/auth';
 import { fetchAllTeachers } from '../../../store/slices/teacherSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { formatDateShort } from '../../../const/date';
+import { formatNumber } from '../../../utils/finance';
 import { CreateTeacherModal } from './CreateTeacherModal';
 import { StatusBadge } from '../../common/StatusBadge';
 
@@ -145,7 +146,7 @@ export const TeachersTable: React.FC<TeachersTableProps> = ({ role = 'admin', al
                   )}
 
                   <td className="py-3 px-5 font-medium text-[var(--t2)] font-mono tabular-nums">
-                    {teacher.tauxHoraire.toLocaleString('fr-FR')} Ar/h
+                    {formatNumber(teacher.tauxHoraire)} Ar/h
                   </td>
 
                   <td className="py-3 px-5 text-[var(--t3)] text-xs">

@@ -11,6 +11,11 @@ import { fetchPoles } from '../../../store/slices/poleSlice';
 import { fetchBilanPole } from '../../../store/slices/bilanSlice';
 import { formatAr, getPoleDot } from '../../../utils/finance';
 import { formatMonthYear } from '../../../const/date';
+import { generateBilanPdf, type BilanExportRow } from '../../../utils/bilanPdf';
+import { csvEscape, downloadBlob } from '../../../utils/export';
+
+const frNumber = (value: number): string =>
+  Number.isInteger(value) ? String(value) : String(value).replace('.', ',');
 
 const currentMonth = () => {
   const d = new Date();
@@ -24,6 +29,7 @@ export const PoleReportsTable: React.FC = () => {
   const loading = useAppSelector((state) => state.bilans.loading);
 
   const [mois, setMois] = useState(currentMonth());
+  const [exporting, setExporting] = useState<'idle' | 'excel' | 'pdf'>('idle');
 
   useEffect(() => {
     dispatch(fetchPoles());
@@ -32,6 +38,50 @@ export const PoleReportsTable: React.FC = () => {
   useEffect(() => {
     poles.forEach((pole) => dispatch(fetchBilanPole({ idPole: pole.id, mois })));
   }, [dispatch, poles, mois]);
+
+  const rows: BilanExportRow[] = poles.map((pole) => {
+    const bilan = bilans[pole.id];
+    const benefice = bilan ? bilan.beneficeNet : 0;
+    const marge = bilan && bilan.totalRevenu > 0 ? (bilan.beneficeNet / bilan.totalRevenu) * 100 : 0;
+    return {
+      nom: pole.nom,
+      totalRevenu: bilan?.totalRevenu ?? 0,
+      totalChargesFixe: bilan?.totalChargesFixe ?? 0,
+      totalChargeVariable: bilan?.totalChargeVariable ?? 0,
+      beneficeNet: benefice,
+      marge,
+    };
+  });
+
+  const totalChargesFixe = rows.reduce((s, r) => s + r.totalChargesFixe, 0);
+  const totalChargeVariable = rows.reduce((s, r) => s + r.totalChargeVariable, 0);
+
+  const handleExcelExport = () => {
+    const header = ['Pôle d\'activité', 'Revenus bruts', 'Charges fixes', 'Charges variables', 'Bénéfice net', 'Marge nette (%)'];
+    const lines = [
+      header.map(csvEscape).join(';'),
+      ...rows.map((r) =>
+        [r.nom, frNumber(r.totalRevenu), frNumber(r.totalChargesFixe), frNumber(r.totalChargeVariable), frNumber(r.beneficeNet), frNumber(r.marge)].map(csvEscape).join(';')
+      ),
+      ['TOTAL', frNumber(totalRevenus), frNumber(totalChargesFixe), frNumber(totalChargeVariable), frNumber(beneficeNet), ''].map(csvEscape).join(';'),
+    ].join('\r\n');
+    const blob = new Blob(['\uFEFF' + lines], { type: 'text/csv;charset=utf-8;' });
+    downloadBlob(blob, `bilan-${mois}.csv`);
+  };
+
+  const handlePdfExport = async () => {
+    const blob = await generateBilanPdf({
+      mois,
+      rows,
+      totals: {
+        revenus: totalRevenus,
+        chargesFixes: totalChargesFixe,
+        chargesVariables: totalChargeVariable,
+        benefice: beneficeNet,
+      },
+    });
+    downloadBlob(blob, `bilan-${mois}.pdf`);
+  };
 
   const totalRevenus = poles.reduce((s, p) => s + (bilans[p.id]?.totalRevenu ?? 0), 0);
   const totalCharges = poles.reduce((s, p) => s + (bilans[p.id]?.totalCharge ?? 0), 0);
@@ -143,12 +193,43 @@ export const PoleReportsTable: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <button className="bg-[var(--panel-deep)] hover:bg-[var(--chip)] border border-[var(--line)] text-[var(--t2)] text-xs font-medium px-3 py-2 rounded-md flex items-center gap-1.5 transition-colors cursor-pointer">
-              <FileSpreadsheet className="w-4 h-4 text-[var(--success)]" />
+            <button
+              onClick={() => {
+                setExporting('excel');
+                try {
+                  handleExcelExport();
+                } finally {
+                  setExporting('idle');
+                }
+              }}
+              disabled={exporting !== 'idle' || poles.length === 0}
+              className="bg-[var(--panel-deep)] hover:bg-[var(--chip)] border border-[var(--line)] text-[var(--t2)] text-xs font-medium px-3 py-2 rounded-md flex items-center gap-1.5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            >
+              {exporting === 'excel' ? (
+                <Loader2 className="w-4 h-4 animate-spin text-[var(--success)]" />
+              ) : (
+                <FileSpreadsheet className="w-4 h-4 text-[var(--success)]" />
+              )}
               Exporter en Excel
             </button>
 
-            <button className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[#1a1408] text-xs font-semibold px-3 py-2 rounded-md flex items-center gap-1.5 transition-colors cursor-pointer">
+            <button
+              onClick={async () => {
+                setExporting('pdf');
+                try {
+                  await handlePdfExport();
+                } finally {
+                  setExporting('idle');
+                }
+              }}
+              disabled={exporting !== 'idle' || poles.length === 0}
+              className="bg-[var(--accent)] hover:bg-[var(--accent-strong)] text-[#1a1408] text-xs font-semibold px-3 py-2 rounded-md flex items-center gap-1.5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            >
+              {exporting === 'pdf' ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <FileText className="w-4 h-4" />
+              )}
               Générer bilan PDF
             </button>
           </div>

@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Loader2, Inbox, Plus } from 'lucide-react';
+import { Loader2, Inbox, Plus, FileDown } from 'lucide-react';
 import RoleGuard from '../components/RoleGuard';
 import type { Role } from '../types/auth';
 import type { PaiePayload } from '../types/paie';
+import type { SaisiePayload } from '../types/saisieFeuille';
 import { fetchAllPaies, updateStatutPaie, clearError as clearPaieError } from '../store/slices/paieSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { GeneratePaieModal } from '../components/dashboard/hr/GeneratePaieModal';
 import { StatusBadge } from '../components/common/StatusBadge';
+import { formatNumber } from '../utils/finance';
+import { generateFichePaiePdf } from '../utils/fichePaiePdf';
+import { downloadBlob } from '../utils/export';
+import { saisieFeuilleService } from '../service/saisieFeuille.service';
 
 interface HrPaiePageProps {
   allowedRoles?: Role[];
@@ -31,11 +36,38 @@ const getStatutLabel = (statut: string) => {
   }
 };
 
+const detailsFromSaisies = (paie: PaiePayload, saisies: SaisiePayload[]) => {
+  const [year, month] = paie.mois.split('-');
+  const validated = saisies.filter((s) => {
+    const datePrefix = String(s.date).slice(0, 10);
+    return (
+      s.statut === 'VALIDE' &&
+      s.enseignantId === paie.enseignantId &&
+      datePrefix.startsWith(`${year}-${month}`)
+    );
+  });
+
+  const taux = paie.enseignant?.tauxHoraireBase ?? 0;
+  const heures = validated.reduce((acc, s) => acc + s.heuresEffectuees, 0);
+  const heuresSupp = validated.reduce((acc, s) => acc + s.heuresSupp, 0);
+  const COEFF = 1.25;
+  const tauxSupp = taux * COEFF;
+
+  const lignes = [
+    { designation: 'Heures normales', heures, taux, montant: heures * taux },
+    { designation: 'Heures supplémentaires (×1,25)', heures: heuresSupp, taux: tauxSupp, montant: heuresSupp * tauxSupp },
+  ];
+  const brut = lignes.reduce((acc, l) => acc + l.montant, 0);
+
+  return { lignes, brut };
+};
+
 export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
   const dispatch = useAppDispatch();
   const { all: paies, loading, error } = useAppSelector((state) => state.paie);
   const [moisFilter, setMoisFilter] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [generatingId, setGeneratingId] = useState<number | null>(null);
 
   useEffect(() => {
     dispatch(fetchAllPaies(moisFilter || undefined));
@@ -47,6 +79,31 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
   const handleMarkPaid = (id: number | undefined) => {
     if (!id) return;
     dispatch(updateStatutPaie({ id, statutpaie: 'PAYE' }));
+  };
+
+  const handleGenerateFiche = async (paie: PaiePayload) => {
+    setGeneratingId(paie.id);
+    try {
+      const saisies = await saisieFeuilleService.getAll();
+      const { lignes, brut } = detailsFromSaisies(paie, saisies);
+      const utilisateur = paie.enseignant?.utilisateur;
+      const blob = await generateFichePaiePdf({
+        paieId: paie.id,
+        mois: paie.mois,
+        date: paie.date,
+        statut: paie.statutpaie,
+        nom: utilisateur?.nom ?? '—',
+        prenom: utilisateur?.prenom ?? '—',
+        email: utilisateur?.email ?? '—',
+        tauxHoraire: paie.enseignant?.tauxHoraireBase ?? 0,
+        lignes,
+        brut,
+        netAPayer: paie.totalSalaire,
+      });
+      downloadBlob(blob, `fiche-de-paie-${paie.id}-${paie.mois}.pdf`);
+    } finally {
+      setGeneratingId(null);
+    }
   };
 
   const content = (
@@ -122,22 +179,35 @@ export const HrPaiePage: React.FC<HrPaiePageProps> = ({ allowedRoles }) => {
                   </td>
                   <td className="py-3 px-5 text-[var(--t3)] text-xs">{formatMois(paie.mois)}</td>
                   <td className="py-3 px-5 font-medium text-[var(--success)] font-mono tabular-nums">
-                    {paie.totalSalaire.toLocaleString('fr-FR')} Ar
+                    {formatNumber(paie.totalSalaire)} Ar
                   </td>
                   <td className="py-3 px-5">
                     <StatusBadge status={getStatutLabel(paie.statutpaie)} />
                   </td>
                   <td className="py-3 px-5 text-right">
-                    {paie.statutpaie === 'EN_ATTENTE' ? (
+                    <div className="inline-flex items-center gap-2">
                       <button
-                        onClick={() => handleMarkPaid(paie.id)}
-                        className="px-2.5 py-1 rounded-md bg-[var(--success-bg)] border border-[var(--success-line)] hover:brightness-95 text-[var(--success)] text-xs font-medium transition-colors cursor-pointer"
+                        onClick={() => handleGenerateFiche(paie)}
+                        title="Générer la fiche de paie"
+                        className="inline-flex items-center justify-center p-2 rounded-md border border-[var(--line)] hover:bg-[var(--chip)] text-[var(--t2)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                       >
-                        Marquer payé
+                        {generatingId === paie.id ? (
+                          <Loader2 className="w-4 h-4 animate-spin text-[var(--accent)]" />
+                        ) : (
+                          <FileDown className="w-4 h-4 text-[var(--accent)]" />
+                        )}
                       </button>
-                    ) : (
-                      <span className="text-xs text-[var(--t3)]">—</span>
-                    )}
+                      {paie.statutpaie === 'EN_ATTENTE' ? (
+                        <button
+                          onClick={() => handleMarkPaid(paie.id)}
+                          className="px-2.5 py-1 rounded-md bg-[var(--success-bg)] border border-[var(--success-line)] hover:brightness-95 text-[var(--success)] text-xs font-medium transition-colors cursor-pointer"
+                        >
+                          Marquer payé
+                        </button>
+                      ) : (
+                        <span className="text-xs text-[var(--t3)]">Payé</span>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
